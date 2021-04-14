@@ -1,8 +1,7 @@
-import styled, { css } from "styled-components";
-import InputStyle from "./mixins/InputStyle.elements";
+import { css } from "styled-components";
 
-export const FormInput = styled.input`
-  /* padding: 1.25rem;
+const sharedStyle = css`
+  padding: 1.25rem;
   font-family: "Spartan", sans-serif;
   font-weight: bold;
   border: 1px solid ${props => props.theme.colors.white500};
@@ -14,6 +13,7 @@ export const FormInput = styled.input`
     outline: none;
     border: 1px solid ${props => props.theme.colors.primary};
     caret-color: ${props => props.theme.colors.primary};
-  } */
-  ${InputStyle}
+  }
 `;
+
+export default sharedStyle;

@@ -7,7 +7,14 @@ import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 
 import { StyledSelect } from "./components/shared/Dropdown.elements";
-
+import {
+  StyledDatePickerContainer,
+  StyledDatePicker
+} from "./components/shared/Datepicker.elements";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 const options = [
   { value: 1, label: "Net 1 Day" },
   { value: 7, label: "Net 7 Days" },
@@ -24,6 +31,8 @@ const customStyles = {
 };
 
 function App() {
+  const [startDate, setStartDate] = useState(new Date());
+
   const [selectedOption, setSelectedOption] = useState(
     options[options.length - 1]
   );
@@ -87,8 +96,21 @@ function App() {
             options={options}
             isSearchable={false}
             styles={customStyles}
+            readOnly
           />
         </div>
+
+        <StyledDatePickerContainer
+          style={{ width: "240px", marginLeft: "100px" }}
+        >
+          <StyledDatePicker
+            selected={startDate}
+            onChange={date => setStartDate(date)}
+            minDate={new Date()}
+            dateFormatCalendar={"MMM yyyy"}
+          />
+          <FontAwesomeIcon icon={faCalendarAlt} className="calendar-icon" />
+        </StyledDatePickerContainer>
       </Container>
     </ThemeProvider>
   );
