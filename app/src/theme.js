@@ -8,8 +8,9 @@ const colors = {
   white500: "#D3F3FA",
   white600: "#F8F8F8",
   red: "#EC5757",
-  pink: "#7E88C3",
-  gray: "#888EB0",
+  pink: "#FF9797",
+  gray400: "#373B53",
+  gray500: "#888EB0",
   blueGray: "#7E88C3"
 };
 

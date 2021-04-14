@@ -38,7 +38,16 @@ function App() {
           eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.
         </p>
 
+        <Button name="new">
+          <div className="plus-button"></div>
+          <span>New Invoice</span>
+        </Button>
         <Button>Mark as Paid</Button>
+        <Button color="white">Edit</Button>
+        <Button color="black">Edit</Button>
+        <Button color="gray">Save as Draft</Button>
+        <Button color="red">Delete</Button>
+        <Button size="large" color="white">+ Add New Item</Button>
       </Container>
     </ThemeProvider>
   );
