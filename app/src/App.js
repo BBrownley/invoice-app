@@ -1,10 +1,37 @@
+import React, { useState } from "react";
 import { Container } from "./App.elements";
 import { Button } from "./components/shared/Button.elements";
+import { FormInput } from "./components/shared/FormInput.elements";
 
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 
+import { StyledSelect } from "./components/shared/Dropdown.elements";
+
+const options = [
+  { value: 1, label: "Net 1 Day" },
+  { value: 7, label: "Net 7 Days" },
+  { value: 14, label: "Net 14 Days" },
+  { value: 30, label: "Net 30 Days" }
+];
+
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? theme.colors.primary : theme.colors.black600,
+    backgroundColor: state.isSelected ? "" : ""
+  })
+};
+
 function App() {
+  const [selectedOption, setSelectedOption] = useState(
+    options[options.length - 1]
+  );
+
+  const handleChange = selectedOption => {
+    setSelectedOption(selectedOption);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -47,7 +74,21 @@ function App() {
         <Button color="black">Edit</Button>
         <Button color="gray">Save as Draft</Button>
         <Button color="red">Delete</Button>
-        <Button size="large" color="white">+ Add New Item</Button>
+        <Button size="large" color="white">
+          + Add New Item
+        </Button>
+        <FormInput value="Lorem Ipsum Dolor" />
+        <br></br>
+
+        <div style={{ width: "240px", marginLeft: "300px" }}>
+          <StyledSelect
+            value={selectedOption}
+            onChange={handleChange}
+            options={options}
+            isSearchable={false}
+            styles={customStyles}
+          />
+        </div>
       </Container>
     </ThemeProvider>
   );

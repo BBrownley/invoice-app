@@ -130,6 +130,10 @@ table {
 
 /* ----- */
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: #0c0e16;
   font-size: 0.75rem;
