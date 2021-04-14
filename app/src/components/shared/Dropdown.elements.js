@@ -4,6 +4,7 @@ import Select from "react-select";
 
 export const StyledSelect = styled(Select)`
   .css-yk16xz-control {
+    height: 52px;
     &:hover {
       cursor: pointer;
       border: 1px solid ${props => props.theme.colors.primary};
@@ -47,5 +48,11 @@ export const StyledSelect = styled(Select)`
   }
   .css-1okebmr-indicatorSeparator {
     display: none;
+  }
+  .css-g1d714-ValueContainer {
+    padding-left: 1.25rem;
+  }
+  .css-1pahdxg-control {
+    height: 52px;
   }
 `;
