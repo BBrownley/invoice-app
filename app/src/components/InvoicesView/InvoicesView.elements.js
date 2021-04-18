@@ -1,0 +1,161 @@
+import styled from "styled-components";
+import { StyledSelect } from "../shared/Dropdown.elements";
+import { Button } from "../shared/Button.elements";
+
+export const Container = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  padding-left: 100px;
+`;
+
+export const Wrapper = styled.div`
+  width: 90%;
+  max-width: 1200px;
+  padding: 80px 10px 0 10px;
+  margin: 0 auto;
+  height: 100vh;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  div:nth-of-type(2) {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-left: 2.5rem;
+    }
+    .select-container {
+      width: 193px;
+      margin-right: -52px;
+    }
+  }
+`;
+
+export const Filters = styled.div`
+  width: 192px;
+  height: 128px;
+  border-radius: 0.5rem;
+  margin-left: -12px;
+  -webkit-box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  input[type="checkbox"] {
+    background-color: blue;
+  }
+  > div {
+    border: 1px dashed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* The container */
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 29px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: ${props => props.theme.colors.white500};
+    border-radius: 2px;
+  }
+
+  .container:hover input ~ .checkmark {
+    border: 1px solid ${props => props.theme.colors.primary};
+  }
+
+  .container input ~ .checkmark {
+    border: 1px solid transparent;
+  }
+
+  .container input:checked ~ .checkmark {
+    background-color: ${props => props.theme.colors.primary};
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .container .checkmark:after {
+    left: 5px;
+    top: 1.3px;
+    width: 3px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .draft {
+    left: -41px;
+    top: 24px;
+  }
+
+  .pending {
+    top: 28px;
+    left: -31px;
+  }
+
+  .paid {
+    top: 32px;
+    left: -43px;
+  }
+`;
+
+export const Select = styled(StyledSelect)`
+  .css-yk16xz-control,
+  .css-1pahdxg-control {
+    width: 154px;
+  }
+  .css-2b097c-container {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+export const StyledButton = styled(Button)`
+  align-self: end;
+`;

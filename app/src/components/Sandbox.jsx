@@ -14,12 +14,12 @@
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
-// const options = [
-//   { value: 1, label: "Net 1 Day" },
-//   { value: 7, label: "Net 7 Days" },
-//   { value: 14, label: "Net 14 Days" },
-//   { value: 30, label: "Net 30 Days" }
-// ];
+const options = [
+  { value: 1, label: "Net 1 Day" },
+  { value: 7, label: "Net 7 Days" },
+  { value: 14, label: "Net 14 Days" },
+  { value: 30, label: "Net 30 Days" }
+];
 
 // const customStyles = {
 //   option: (provided, state) => ({
@@ -32,13 +32,13 @@
 // export default function Sandbox() {
 //   const [startDate, setStartDate] = useState(new Date());
 
-//   const [selectedOption, setSelectedOption] = useState(
-//     options[options.length - 1]
-//   );
+  const [selectedOption, setSelectedOption] = useState(
+    options[options.length - 1]
+  );
 
-//   const handleChange = selectedOption => {
-//     setSelectedOption(selectedOption);
-//   };
+  const handleChange = selectedOption => {
+    setSelectedOption(selectedOption);
+  };
 //   return (
 //     <div>
 //       <h1>Aliquam porttitor mauris sit amet orci Aenean</h1>
@@ -86,16 +86,16 @@
 //         <FormInput value="Lorem Ipsum Dolor" />
 //         <br></br>
 
-//         <div style={{ width: "240px", marginLeft: "300px" }}>
-//           <StyledSelect
-//             value={selectedOption}
-//             onChange={handleChange}
-//             options={options}
-//             isSearchable={false}
-//             styles={customStyles}
-//             readOnly
-//           />
-//         </div>
+        <div style={{ width: "240px", marginLeft: "300px" }}>
+          <StyledSelect
+            value={selectedOption}
+            onChange={handleChange}
+            options={options}
+            isSearchable={false}
+            styles={customStyles}
+            readOnly
+          />
+        </div>
 
 //         <StyledDatePickerContainer
 //           style={{ width: "240px", marginLeft: "100px" }}

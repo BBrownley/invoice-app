@@ -20,6 +20,8 @@ export const Sidebar = styled.div`
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   justify-content: space-between;
+  position: relative;
+  z-index: 20;
   @media (max-width: ${breakpoints.tablet}) {
     height: 80px;
     width: 100vw;
