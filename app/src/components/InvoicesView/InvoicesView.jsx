@@ -20,7 +20,10 @@ import { Button } from "../shared/Button.elements";
 
 export default function InvoicesView() {
   const [filterSelectOpen, setFilterSelectOpen] = useState(true);
+  const [allInvoices, setAllInvoices] = useState([]);
   const [invoices, setInvoices] = useState([]);
+  const [filters, setFilters] = useState(["draft", "pending", "paid"]);
+
   let optionsRef = useRef(null);
 
   const handleFilterSelectOpen = () => {
@@ -57,9 +60,30 @@ export default function InvoicesView() {
     const fetchInvoices = async () => {
       const invoices = await invoiceService.getInvoices();
       setInvoices(invoices);
+      setAllInvoices(invoices);
     };
     fetchInvoices();
   }, []);
+
+  // Filter invoices based off status
+  useEffect(() => {
+    setInvoices(
+      allInvoices.filter(invoice => {
+        return filters.includes(invoice.status);
+      })
+    );
+  }, [filters]);
+
+  const handleFilterCheckbox = e => {
+    // Toggle filter
+    if (filters.includes(e.target.value)) {
+      setFilters(prevState =>
+        prevState.filter(filterValue => filterValue !== e.target.value)
+      );
+    } else {
+      setFilters(prevState => [...prevState, e.target.value]);
+    }
+  };
 
   return (
     <Container>
@@ -90,6 +114,8 @@ export default function InvoicesView() {
                     id="filter-draft"
                     name="filter-draft"
                     value="draft"
+                    checked={filters.includes("draft")}
+                    onClick={e => handleFilterCheckbox(e)}
                   />
                   <span class="checkmark"></span>
                 </label>
@@ -100,6 +126,8 @@ export default function InvoicesView() {
                     id="filter-pending"
                     name="filter-pending"
                     value="pending"
+                    checked={filters.includes("pending")}
+                    onClick={e => handleFilterCheckbox(e)}
                   />
                   <span class="checkmark"></span>
                 </label>
@@ -110,6 +138,8 @@ export default function InvoicesView() {
                     id="filter-paid"
                     name="filter-paid"
                     value="paid"
+                    checked={filters.includes("paid")}
+                    onClick={e => handleFilterCheckbox(e)}
                   />
                   <span class="checkmark"></span>
                 </label>
