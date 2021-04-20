@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { StyledSelect } from "../shared/Dropdown.elements";
 import { Button } from "../shared/Button.elements";
 
@@ -10,6 +10,10 @@ export const Container = styled.div`
   left: 0;
   z-index: 10;
   padding-left: 100px;
+  @media (max-width: 768px) {
+    padding-left: 0;
+    padding-top: 60px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -23,10 +27,9 @@ export const Wrapper = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  div:nth-of-type(2) {
+  > div:nth-of-type(2) {
+    align-items: flex-start;
     display: flex;
-    align-items: center;
-
     button {
       margin-left: 2.5rem;
     }
@@ -37,16 +40,50 @@ export const Header = styled.div`
   }
 `;
 
-export const Filters = styled.div`
+const openOptions = keyframes`
+  from {
+    /* transform: rotate(0deg); */
+    opacity: 0;
+    margin-top: -6px;
+  }
+
+  to {
+    /* transform: rotate(360deg); */
+    opacity: 1;
+    margin-top: 12px;
+  }
+`;
+
+export const Options = styled.div`
   width: 192px;
   height: 128px;
   border-radius: 0.5rem;
   margin-left: -12px;
+  margin-top: 12px;
+  padding-left: 1.5rem;
   -webkit-box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
   box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
   background-color: white;
-  display: flex;
+  /* display: none; */
   flex-direction: column;
+
+  @media (max-width: 630px) {
+    margin-left: 18px;
+    width: 140px;
+  }
+
+  [class="closing"] {
+    opacity: 0;
+    transition: 0.5s;
+    background-color: blue;
+  }
+
+  .closing {
+    opacity: 0;
+    transition: 0.5s;
+    background-color: blue;
+  }
+
   input[type="checkbox"] {
     background-color: blue;
   }
@@ -130,19 +167,36 @@ export const Filters = styled.div`
   }
 
   .draft {
-    left: -41px;
     top: 24px;
   }
 
   .pending {
     top: 28px;
-    left: -31px;
   }
 
   .paid {
     top: 32px;
-    left: -43px;
   }
+
+  /* Handle open/close animation*/
+
+  animation: ${openOptions} 0.25s linear;
+  transition: 0.25s;
+  position: relative;
+
+  ${props => {
+    if (props.opened) {
+      return css`
+        display: flex;
+      `;
+    } else {
+      return css`
+        opacity: 0;
+        margin-top: -6px;
+        z-index: -10000;
+      `;
+    }
+  }}
 `;
 
 export const Select = styled(StyledSelect)`
@@ -158,4 +212,41 @@ export const Select = styled(StyledSelect)`
 
 export const StyledButton = styled(Button)`
   align-self: end;
+`;
+
+export const CustomDropdown = styled.div`
+  margin-top: 7px;
+  margin-right: -37px;
+  @media (max-width: 630px) {
+    margin-right: -66px;
+  }
+`;
+
+export const CustomDropdownHeader = styled.div`
+  padding: 10px 0;
+  font-weight: bold;
+  margin-left: -10px;
+  width: 190px;
+  text-align: center;
+
+  .angle-icon {
+    margin-left: 15px;
+    transition: 0.25s;
+    backface-visibility: hidden;
+
+    ${props => {
+      if (props.opened) {
+        return css`
+          transform: rotate(180deg);
+        `;
+      } else {
+        return css`
+          transform: rotate(0deg);
+        `;
+      }
+    }}
+  }
+  &:hover {
+    cursor: pointer;
+  }
 `;

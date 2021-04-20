@@ -90,6 +90,20 @@ export const StyledSelect = styled(Select)`
       if (props.secondary) {
         return css`
           color: ${props.theme.colors.primary};
+          transition: 1.25s;
+        `;
+      }
+    }}
+    ${props => {
+      if (props.customOpen) {
+        return css`
+          transform: rotate(180deg);
+          transition: 1.25s;
+        `;
+      } else {
+        return css`
+          transform: rotate(0deg);
+          transition: 1.25s;
         `;
       }
     }}
