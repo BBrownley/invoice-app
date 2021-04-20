@@ -27,6 +27,7 @@ export const Wrapper = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 130px;
   > div:nth-of-type(2) {
     align-items: flex-start;
     display: flex;
@@ -37,6 +38,11 @@ export const Header = styled.div`
       width: 193px;
       margin-right: -52px;
     }
+  }
+  .invoice-count {
+    font-weight: normal;
+    color: ${props => props.theme.colors.gray500};
+    margin-top: 0.625rem;
   }
 `;
 
@@ -188,6 +194,7 @@ export const Options = styled.div`
     if (props.opened) {
       return css`
         display: flex;
+        z-index: 10000;
       `;
     } else {
       return css`

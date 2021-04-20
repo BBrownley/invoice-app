@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import invoiceService from "../../services/invoices";
+
+import InvoicesList from "../InvoicesList/InvoicesList";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +20,7 @@ import { Button } from "../shared/Button.elements";
 
 export default function InvoicesView() {
   const [filterSelectOpen, setFilterSelectOpen] = useState(true);
+  const [invoices, setInvoices] = useState([]);
   let optionsRef = useRef(null);
 
   const handleFilterSelectOpen = () => {
@@ -49,13 +53,25 @@ export default function InvoicesView() {
     return () => window.removeEventListener("click", handleCloseDropdown);
   });
 
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      const invoices = await invoiceService.getInvoices();
+      setInvoices(invoices);
+    };
+    fetchInvoices();
+  }, []);
+
   return (
     <Container>
       <Wrapper>
         <Header>
           <div>
             <h1>Invoices</h1>
-            <p>No invoices</p>
+            <p className="invoice-count">
+              {invoices.length > 0
+                ? `There are ${invoices.length} total invoices`
+                : "No invoices"}
+            </p>
           </div>
           <div>
             <CustomDropdown>
@@ -105,6 +121,7 @@ export default function InvoicesView() {
             </StyledButton>
           </div>
         </Header>
+        <InvoicesList invoices={invoices} />
       </Wrapper>
     </Container>
   );
