@@ -19,7 +19,7 @@ import {
 import { Button } from "../shared/Button.elements";
 
 export default function InvoicesView() {
-  const [filterSelectOpen, setFilterSelectOpen] = useState(true);
+  const [filterSelectOpen, setFilterSelectOpen] = useState(false);
   const [allInvoices, setAllInvoices] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [filters, setFilters] = useState(["draft", "pending", "paid"]);
@@ -107,7 +107,7 @@ export default function InvoicesView() {
                 <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
               </CustomDropdownHeader>
               <Options opened={filterSelectOpen} ref={optionsRef}>
-                <label class="container draft">
+                <label className="container draft">
                   Draft
                   <input
                     type="checkbox"
@@ -115,11 +115,11 @@ export default function InvoicesView() {
                     name="filter-draft"
                     value="draft"
                     checked={filters.includes("draft")}
-                    onClick={e => handleFilterCheckbox(e)}
+                    onChange={e => handleFilterCheckbox(e)}
                   />
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                 </label>
-                <label class="container pending">
+                <label className="container pending">
                   Pending
                   <input
                     type="checkbox"
@@ -127,11 +127,11 @@ export default function InvoicesView() {
                     name="filter-pending"
                     value="pending"
                     checked={filters.includes("pending")}
-                    onClick={e => handleFilterCheckbox(e)}
+                    onChange={e => handleFilterCheckbox(e)}
                   />
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                 </label>
-                <label class="container paid">
+                <label className="container paid">
                   Paid
                   <input
                     type="checkbox"
@@ -139,9 +139,9 @@ export default function InvoicesView() {
                     name="filter-paid"
                     value="paid"
                     checked={filters.includes("paid")}
-                    onClick={e => handleFilterCheckbox(e)}
+                    onChange={e => handleFilterCheckbox(e)}
                   />
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                 </label>
               </Options>
             </CustomDropdown>
@@ -151,7 +151,7 @@ export default function InvoicesView() {
             </StyledButton>
           </div>
         </Header>
-        <InvoicesList invoices={invoices} />
+        <InvoicesList invoices={invoices} handleSelectInvoice />
       </Wrapper>
     </Container>
   );

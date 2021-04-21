@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import _ from "lodash";
+
+import { useInvoiceUpdate } from "../../InvoiceContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -15,10 +18,12 @@ import {
 } from "./Invoice.elements";
 
 export default function Invoice({ invoice }) {
+  const selectInvoice = useInvoiceUpdate();
+
   return (
     <Container>
       <InvoiceId>
-        <span>#</span>
+        <span className="gray-500">#</span>
         {invoice.id}
       </InvoiceId>
       <PaymentDue>
@@ -32,7 +37,12 @@ export default function Invoice({ invoice }) {
           {_.capitalize(invoice.status)}
         </span>
       </Status>
-      <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
+      <Link
+        to={`/invoices/${invoice.id}`}
+        onClick={() => selectInvoice(invoice)}
+      >
+        <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
+      </Link>
     </Container>
   );
 }
