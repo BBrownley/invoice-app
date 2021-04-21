@@ -3,9 +3,12 @@ import { Redirect, Link } from "react-router-dom";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
 
+import ItemList from "../ItemList/ItemList";
+
 import { Button } from "../shared/Button.elements";
 import {
   Container,
+  GoBack,
   InvoiceActions,
   InvoiceInfo
 } from "./SingleInvoiceView.elements";
@@ -23,70 +26,73 @@ export default function SingleInvoiceView() {
   }
 
   return (
-    <Container>
-      <div>
+    <>
+      <GoBack>
         <Link to="/">
           <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
           <span> Go Back</span>
         </Link>
-      </div>
-      <InvoiceActions>
-        <div>
-          <span>Status</span>
-          <Status status={invoice.status} className="status">
-            <span>
-              <FontAwesomeIcon icon={faCircle} className="fa-circle" />
-              {_.capitalize(invoice.status)}
-            </span>
-          </Status>
-        </div>
-        <div>
-          <Button color="white">Edit</Button>
-          <Button color="red">Delete</Button>
-          <Button>Mark as Paid</Button>
-        </div>
-      </InvoiceActions>
-      <InvoiceInfo>
-        <div>
+      </GoBack>
+      <Container>
+        <InvoiceActions>
           <div>
-            <h2 className="invoice-id">
-              <span>#</span>
-              {invoice.id}
-            </h2>
-            <span>{invoice.description}</span>
+            <span>Status</span>
+            <Status status={invoice.status} className="status">
+              <span>
+                <FontAwesomeIcon icon={faCircle} className="fa-circle" />
+                {_.capitalize(invoice.status)}
+              </span>
+            </Status>
           </div>
           <div>
-            <span>{invoice.senderAddress.street}</span>
-            <span>{invoice.senderAddress.city}</span>
-            <span>{invoice.senderAddress.postCode}</span>
-            <span>{invoice.senderAddress.country}</span>
+            <Button color="white">Edit</Button>
+            <Button color="red">Delete</Button>
+            <Button>Mark as Paid</Button>
           </div>
-        </div>
-        <div>
+        </InvoiceActions>
+        <InvoiceInfo>
           <div>
             <div>
-              <span>Invoice Date</span>
-              <h2>{invoice.createdAt}</h2>
+              <h2 className="invoice-id">
+                <span>#</span>
+                {invoice.id}
+              </h2>
+              <span>{invoice.description}</span>
             </div>
             <div>
-              <span>Payment Due</span>
-              <h2>{invoice.paymentDue}</h2>
+              <span>{invoice.senderAddress.street}</span>
+              <span>{invoice.senderAddress.city}</span>
+              <span>{invoice.senderAddress.postCode}</span>
+              <span>{invoice.senderAddress.country}</span>
             </div>
           </div>
           <div>
-            <span>Bill To</span>
-            <h2>{invoice.clientName}</h2>
-            <span>{invoice.clientAddress.street}</span>
-            <span>{invoice.clientAddress.city}</span>
-            <span>{invoice.clientAddress.postCode}</span>
-            <span>{invoice.clientAddress.country}</span>
+            <div>
+              <div>
+                <span>Invoice Date</span>
+                <h2>{invoice.createdAt}</h2>
+              </div>
+              <div>
+                <span>Payment Due</span>
+                <h2>{invoice.paymentDue}</h2>
+              </div>
+            </div>
+            <div>
+              <span>Bill To</span>
+              <h2>{invoice.clientName}</h2>
+              <span>{invoice.clientAddress.street}</span>
+              <span>{invoice.clientAddress.city}</span>
+              <span>{invoice.clientAddress.postCode}</span>
+              <span>{invoice.clientAddress.country}</span>
+            </div>
+            <div>
+              <span>Sent to</span>
+              <h2>{invoice.clientEmail}</h2>
+            </div>
           </div>
-          <div>
-            <span>Sent to</span>
-            <h2>{invoice.clientEmail}</h2>
-          </div>
-        </div>
-      </InvoiceInfo>
-    </Container>
+          <ItemList items={invoice.items} total={invoice.total} />
+        </InvoiceInfo>
+      </Container>
+    </>
   );
 }

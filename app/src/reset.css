@@ -140,6 +140,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   font-weight: 600;
+  overflow: hidden;
 }
 
 h1,
