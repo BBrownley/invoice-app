@@ -23,10 +23,14 @@ export default function InvoicesView() {
   const [allInvoices, setAllInvoices] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [filters, setFilters] = useState(["draft", "pending", "paid"]);
+  const [selectOpened, setSelectOpened] = useState(false);
 
   let optionsRef = useRef(null);
 
   const handleFilterSelectOpen = () => {
+    if (!selectOpened) {
+      setSelectOpened(true);
+    }
     setFilterSelectOpen(prevState => !prevState);
   };
 
@@ -61,6 +65,7 @@ export default function InvoicesView() {
       const invoices = await invoiceService.getInvoices();
       setInvoices(invoices);
       setAllInvoices(invoices);
+      console.log(selectOpened.current);
     };
     fetchInvoices();
   }, []);
@@ -106,45 +111,48 @@ export default function InvoicesView() {
                 {width > 630 ? "Filter by status" : "Filter"}{" "}
                 <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
               </CustomDropdownHeader>
-              <Options opened={filterSelectOpen} ref={optionsRef}>
-                <label className="container draft">
-                  Draft
-                  <input
-                    type="checkbox"
-                    id="filter-draft"
-                    name="filter-draft"
-                    value="draft"
-                    checked={filters.includes("draft")}
-                    onChange={e => handleFilterCheckbox(e)}
-                  />
-                  <span className="checkmark"></span>
-                </label>
-                <label className="container pending">
-                  Pending
-                  <input
-                    type="checkbox"
-                    id="filter-pending"
-                    name="filter-pending"
-                    value="pending"
-                    checked={filters.includes("pending")}
-                    onChange={e => handleFilterCheckbox(e)}
-                  />
-                  <span className="checkmark"></span>
-                </label>
-                <label className="container paid">
-                  Paid
-                  <input
-                    type="checkbox"
-                    id="filter-paid"
-                    name="filter-paid"
-                    value="paid"
-                    checked={filters.includes("paid")}
-                    onChange={e => handleFilterCheckbox(e)}
-                  />
-                  <span className="checkmark"></span>
-                </label>
-              </Options>
+              {selectOpened && (
+                <Options opened={filterSelectOpen} ref={optionsRef}>
+                  <label className="container draft">
+                    Draft
+                    <input
+                      type="checkbox"
+                      id="filter-draft"
+                      name="filter-draft"
+                      value="draft"
+                      checked={filters.includes("draft")}
+                      onChange={e => handleFilterCheckbox(e)}
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                  <label className="container pending">
+                    Pending
+                    <input
+                      type="checkbox"
+                      id="filter-pending"
+                      name="filter-pending"
+                      value="pending"
+                      checked={filters.includes("pending")}
+                      onChange={e => handleFilterCheckbox(e)}
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                  <label className="container paid">
+                    Paid
+                    <input
+                      type="checkbox"
+                      id="filter-paid"
+                      name="filter-paid"
+                      value="paid"
+                      checked={filters.includes("paid")}
+                      onChange={e => handleFilterCheckbox(e)}
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </Options>
+              )}
             </CustomDropdown>
+            )
             <StyledButton name="new">
               <div className="plus-button"></div>
               <span>New Invoice</span>
