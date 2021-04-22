@@ -1,4 +1,13 @@
 import styled from "styled-components";
+import { Status } from "../Invoice/Invoice.elements";
+
+export const StyledStatus = styled(Status)`
+  @media (max-width: 700px) {
+    position: absolute;
+    top: -19rem;
+    right: 3rem;
+  }
+`;
 
 export const Container = styled.div`
   position: absolute;
@@ -31,7 +40,17 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     padding-left: 0;
-    padding-top: 3.75rem;
+    padding-top: 0;
+    top: 5rem;
+  }
+
+  @media (max-width: 700px) {
+    bottom: 8.75rem;
+    padding-top: 0;
+
+    left: 1rem;
+    right: 1rem;
+    width: auto;
   }
 `;
 
@@ -64,6 +83,20 @@ export const GoBack = styled.div`
     color: ${props => props.theme.colors.primary};
     margin-right: 1rem;
   }
+
+  @media (max-width: 768px) {
+    left: 0;
+    top: 6.25rem;
+  }
+  @media (max-width: 700px) {
+    > div {
+      margin: 0;
+      margin-left: 1rem;
+      a {
+        padding: 1rem 0;
+      }
+    }
+  }
 `;
 
 export const InvoiceActions = styled.div`
@@ -91,6 +124,15 @@ export const InvoiceActions = styled.div`
   .status {
     margin-left: 1rem;
   }
+  @media (max-width: 700px) {
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    margin-bottom: 0;
+  }
 `;
 
 export const InvoiceInfo = styled.div`
@@ -100,6 +142,8 @@ export const InvoiceInfo = styled.div`
   -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   border-radius: 0.5rem;
+  position: relative;
+
   > * {
     display: flex;
   }
@@ -121,12 +165,13 @@ export const InvoiceInfo = styled.div`
   }
   > div:nth-of-type(1) {
     justify-content: space-between;
-    div:nth-of-type(2) {
+    .sender-address {
       text-align: right;
     }
   }
   > div:nth-of-type(2) {
     margin-top: 1.5rem;
+    flex-wrap: wrap;
     div:nth-of-type(1) {
       display: flex;
       flex-direction: column;
@@ -138,6 +183,35 @@ export const InvoiceInfo = styled.div`
     div:nth-of-type(1),
     div:nth-of-type(2) {
       margin-right: 4rem;
+      margin-bottom: 2rem;
+    }
+  }
+  .break {
+    flex-basis: 100%;
+    height: 2rem;
+  }
+  @media (max-width: 700px) {
+    .invoice-id {
+      font-size: 0.75rem;
+      margin-bottom: 0;
+    }
+
+    > div:nth-of-type(1) {
+      flex-direction: column;
+
+      .sender-address {
+        text-align: left;
+        margin-top: 1.5rem;
+      }
+    }
+
+    > div:nth-of-type(2) {
+      justify-content: space-between;
+      div:nth-of-type(1),
+      div:nth-of-type(2) {
+        margin-right: 0;
+        margin-bottom: 0;
+      }
     }
   }
 `;

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import invoiceService from "../../services/invoices";
 
+import useScreenWidth from "../custom-hooks/useScreenWidth"
+
 import InvoicesList from "../InvoicesList/InvoicesList";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,11 +36,7 @@ export default function InvoicesView() {
     setFilterSelectOpen(prevState => !prevState);
   };
 
-  const [width, setWidth] = useState(window.innerWidth);
-
-  const updateWidthAndHeight = () => {
-    setWidth(window.innerWidth);
-  };
+  const width = useScreenWidth();
 
   const handleCloseDropdown = e => {
     if (
@@ -49,11 +47,6 @@ export default function InvoicesView() {
       setFilterSelectOpen(false);
     }
   };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateWidthAndHeight);
-    return () => window.removeEventListener("resize", updateWidthAndHeight);
-  });
 
   useEffect(() => {
     window.addEventListener("click", handleCloseDropdown);

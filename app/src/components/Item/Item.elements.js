@@ -20,7 +20,25 @@ export const Container = styled.li`
   span:nth-of-type(3) {
     text-align: right;
   }
-  span:nth-of-type(3)  {
+  span:nth-of-type(3) {
     color: black;
+  }
+`;
+
+export const MobileItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  .info-left,
+  .info-right {
+    flex: initial;
+  }
+  .info-right {
+    color: ${props => props.theme.colors.black600};
+  }
+  > div:nth-of-type(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;

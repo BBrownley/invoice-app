@@ -44,7 +44,7 @@ export const InvoiceId = styled.div`
   width: 80px;
   @media (max-width: 700px) {
     position: absolute;
-    left: 25px;
+    left: 15px;
     top: 25px;
   }
 `;
@@ -90,6 +90,7 @@ export const Status = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  z-index: 10000;
   span {
     background-color: #302759;
     width: 104px;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 3.5rem;
+  margin-top: 1.5rem;
   > * {
     padding: 3rem;
   }
@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const ListWrapper = styled.div`
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-  background-color: ${props => props.theme.colors.white600};
+  background-color: #f5f5f5;
   div {
     display: flex;
     align-items: center;

@@ -3,6 +3,8 @@ import { Redirect, Link } from "react-router-dom";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
 
+import useScreenWidth from "../custom-hooks/useScreenWidth";
+
 import ItemList from "../ItemList/ItemList";
 
 import { Button } from "../shared/Button.elements";
@@ -10,7 +12,8 @@ import {
   Container,
   GoBack,
   InvoiceActions,
-  InvoiceInfo
+  InvoiceInfo,
+  StyledStatus
 } from "./SingleInvoiceView.elements";
 import { Status } from "../Invoice/Invoice.elements";
 
@@ -19,7 +22,7 @@ import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function SingleInvoiceView() {
   const invoice = useInvoice();
-  console.log(invoice);
+  const width = useScreenWidth();
 
   if (invoice === null) {
     return <Redirect to="/" />;
@@ -36,22 +39,32 @@ export default function SingleInvoiceView() {
         </div>
       </GoBack>
       <Container>
-        <InvoiceActions>
-          <div>
-            <span>Status</span>
-            <Status status={invoice.status} className="status">
-              <span>
-                <FontAwesomeIcon icon={faCircle} className="fa-circle" />
-                {_.capitalize(invoice.status)}
-              </span>
-            </Status>
-          </div>
-          <div>
-            <Button color="white">Edit</Button>
-            <Button color="red">Delete</Button>
-            <Button>Mark as Paid</Button>
-          </div>
-        </InvoiceActions>
+        {width >= 700 && (
+          <InvoiceActions>
+            <div>
+              <span>Status</span>
+              <Status status={invoice.status} className="status">
+                <span>
+                  <FontAwesomeIcon icon={faCircle} className="fa-circle" />
+                  {_.capitalize(invoice.status)}
+                </span>
+              </Status>
+            </div>
+            <div>
+              <Button color="white">Edit</Button>
+              <Button color="red">Delete</Button>
+              <Button>Mark as Paid</Button>
+            </div>
+          </InvoiceActions>
+        )}
+        {width < 700 && (
+          <StyledStatus status={invoice.status} className="status">
+            <span>
+              <FontAwesomeIcon icon={faCircle} className="fa-circle" />
+              {_.capitalize(invoice.status)}
+            </span>
+          </StyledStatus>
+        )}
         <InvoiceInfo>
           <div>
             <div>
@@ -61,7 +74,7 @@ export default function SingleInvoiceView() {
               </h2>
               <span>{invoice.description}</span>
             </div>
-            <div>
+            <div className="sender-address">
               <span>{invoice.senderAddress.street}</span>
               <span>{invoice.senderAddress.city}</span>
               <span>{invoice.senderAddress.postCode}</span>
@@ -87,7 +100,8 @@ export default function SingleInvoiceView() {
               <span>{invoice.clientAddress.postCode}</span>
               <span>{invoice.clientAddress.country}</span>
             </div>
-            <div>
+            {width < 700 && <div className="break"></div>}
+            <div className="client-email">
               <span>Sent to</span>
               <h2>{invoice.clientEmail}</h2>
             </div>
@@ -95,6 +109,15 @@ export default function SingleInvoiceView() {
           <ItemList items={invoice.items} total={invoice.total} />
         </InvoiceInfo>
       </Container>
+      {width < 700 && (
+        <InvoiceActions>
+          <div>
+            <Button color="white">Edit</Button>
+            <Button color="red">Delete</Button>
+            <Button>Mark as Paid</Button>
+          </div>
+        </InvoiceActions>
+      )}
     </>
   );
 }
