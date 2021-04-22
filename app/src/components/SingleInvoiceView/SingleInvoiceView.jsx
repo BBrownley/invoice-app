@@ -28,10 +28,12 @@ export default function SingleInvoiceView() {
   return (
     <>
       <GoBack>
-        <Link to="/">
-          <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
-          <span> Go Back</span>
-        </Link>
+        <div>
+          <Link to="/">
+            <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
+            <span> Go Back</span>
+          </Link>
+        </div>
       </GoBack>
       <Container>
         <InvoiceActions>

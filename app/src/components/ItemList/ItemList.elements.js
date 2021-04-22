@@ -32,6 +32,11 @@ export const ListWrapper = styled.div`
       text-align: right;
     }
   }
+  @media (max-width: 700px) {
+    > div:nth-of-type(1) {
+      display: none;
+    }
+  }
 `;
 
 export const Total = styled.div`

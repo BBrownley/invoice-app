@@ -11,7 +11,8 @@ const colors = {
   pink: "#FF9797",
   gray400: "#373B53",
   gray500: "#888EB0",
-  blueGray: "#7E88C3"
+  blueGray: "#7E88C3",
+  blueGrayLight: "#cad1f6"
 };
 
-export default {colors};
+export default { colors };

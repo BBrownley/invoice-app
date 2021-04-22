@@ -25,6 +25,10 @@ export const Container = styled.div`
     border-radius: 10px;
   }
 
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${props => props.theme.colors.blueGrayLight};
+  }
+
   @media (max-width: 768px) {
     padding-left: 0;
     padding-top: 3.75rem;
@@ -34,19 +38,28 @@ export const Container = styled.div`
 export const GoBack = styled.div`
   position: absolute;
   top: 3.75rem;
-  left: 17rem;
+  left: 6rem;
+  right: 0;
   z-index: 10000;
-  a {
-    text-decoration: none;
-    font-weight: bold;
-    span {
-      color: black;
-    }
+  /* border: 2px dashed red; */
+  > div {
+    max-width: 1084px;
+    /* border: 2px dashed blue; */
+    margin: 0 auto;
+    width: 87.5%;
+    a {
+      text-decoration: none;
+      font-weight: bold;
 
-    &:visited {
-      color: ${props => props.theme.colors.black600};
+      span {
+        color: black;
+      }
+      &:visited {
+        color: ${props => props.theme.colors.black600};
+      }
     }
   }
+
   .fa-chevron-left {
     color: ${props => props.theme.colors.primary};
     margin-right: 1rem;

@@ -2,13 +2,13 @@ import React from 'react'
 
 import Item from "../Item/Item";
 
-import {Container, ListWrapper, Total, List} from "./ItemList.elements";
+import {Container, ListWrapper, Header, Total, List} from "./ItemList.elements";
 
 export default function ItemList({items, total}) {
   return (
     <Container>
       <ListWrapper>
-        <div>
+        <div className="header">
           <span>Item Name</span>
           <span>QTY.</span>
           <span>Price</span>
