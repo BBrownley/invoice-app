@@ -10,6 +10,7 @@ export const Container = styled.div`
   left: 0;
   z-index: 10;
   padding-left: 100px;
+
   @media (max-width: 768px) {
     padding-left: 0;
     padding-top: 60px;
@@ -22,6 +23,19 @@ export const Wrapper = styled.div`
   padding: 80px 10px 0 10px;
   margin: 0 auto;
   height: 100vh;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.colors.white500};
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${props => props.theme.colors.blueGrayLight};
+  }
 `;
 
 export const Header = styled.div`

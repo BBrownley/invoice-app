@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import {
+  OuterContainer,
   Container,
   InvoiceId,
   PaymentDue,
@@ -21,28 +22,31 @@ export default function Invoice({ invoice }) {
   const selectInvoice = useInvoiceUpdate();
 
   return (
-    <Container>
-      <InvoiceId>
-        <span className="gray-500">#</span>
-        {invoice.id}
-      </InvoiceId>
-      <PaymentDue>
-        Due {format(new Date(invoice.paymentDue), "LLL d yyyy")}
-      </PaymentDue>
-      <Name>{invoice.clientName}</Name>
-      <Total>$ {invoice.total.toFixed(2)}</Total>
-      <Status status={invoice.status}>
-        <span>
-          <FontAwesomeIcon icon={faCircle} className="fa-circle" />
-          {_.capitalize(invoice.status)}
-        </span>
-      </Status>
+    <OuterContainer>
       <Link
         to={`/invoices/${invoice.id}`}
         onClick={() => selectInvoice(invoice)}
       >
-        <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
+        <Container>
+          <InvoiceId>
+            <span className="gray-500">#</span>
+            {invoice.id}
+          </InvoiceId>
+          <PaymentDue>
+            Due {format(new Date(invoice.paymentDue), "LLL d yyyy")}
+          </PaymentDue>
+          <Name>{invoice.clientName}</Name>
+          <Total>$ {invoice.total.toFixed(2)}</Total>
+          <Status status={invoice.status}>
+            <span>
+              <FontAwesomeIcon icon={faCircle} className="fa-circle" />
+              {_.capitalize(invoice.status)}
+            </span>
+          </Status>
+
+          <FontAwesomeIcon icon={faChevronRight} className="fa-chevron-right" />
+        </Container>
       </Link>
-    </Container>
+    </OuterContainer>
   );
 }

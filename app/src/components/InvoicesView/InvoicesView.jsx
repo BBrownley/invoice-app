@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import invoiceService from "../../services/invoices";
 
-import useScreenWidth from "../custom-hooks/useScreenWidth"
+import useScreenWidth from "../custom-hooks/useScreenWidth";
 
 import InvoicesList from "../InvoicesList/InvoicesList";
 
@@ -145,10 +145,10 @@ export default function InvoicesView() {
                 </Options>
               )}
             </CustomDropdown>
-            )
+            
             <StyledButton name="new">
               <div className="plus-button"></div>
-              <span>New Invoice</span>
+              <span>{width >= 550 ? "New Invoice" : "New"}</span>
             </StyledButton>
           </div>
         </Header>

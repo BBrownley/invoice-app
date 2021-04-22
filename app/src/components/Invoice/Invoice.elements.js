@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+export const OuterContainer = styled.div`
+  a {
+    text-decoration: none;
+  }
+`;
+
 export const Container = styled.div`
   border-radius: 0.5rem;
   width: 100%;
@@ -25,6 +31,7 @@ export const Container = styled.div`
   }
   @media (max-width: 700px) {
     height: 144px;
+    margin-bottom: 1rem;
     .fa-chevron-right {
       display: none;
     }
