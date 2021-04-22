@@ -10,7 +10,7 @@ export const Container = styled.li`
     flex: 1;
     /* border: 1px dashed; */
   }
-  h3 {
+  .item-name {
     flex: 2;
   }
   span:nth-of-type(1) {
@@ -28,17 +28,21 @@ export const Container = styled.li`
 export const MobileItem = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0;
-  .info-left,
-  .info-right {
-    flex: initial;
-  }
-  .info-right {
-    color: ${props => props.theme.colors.black600};
-  }
-  > div:nth-of-type(1) {
+
+  .info-left {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    flex: 1;
+  }
+
+  .info-right {
+    flex: initial;
+  }
+
+  > span:nth-of-type(1) {
+    text-align: right;
+    color: ${props => props.theme.colors.black600};
+    flex: initial;
   }
 `;

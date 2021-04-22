@@ -4,7 +4,7 @@ import { Status } from "../Invoice/Invoice.elements";
 export const StyledStatus = styled(Status)`
   @media (max-width: 700px) {
     position: absolute;
-    top: -19rem;
+    top: -24rem;
     right: 3rem;
   }
 `;

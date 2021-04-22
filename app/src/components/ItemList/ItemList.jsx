@@ -1,10 +1,19 @@
-import React from 'react'
+import React from "react";
+import useScreenWidth from "../custom-hooks/useScreenWidth";
 
 import Item from "../Item/Item";
 
-import {Container, ListWrapper, Header, Total, List} from "./ItemList.elements";
+import {
+  Container,
+  ListWrapper,
+  Header,
+  Total,
+  List
+} from "./ItemList.elements";
 
-export default function ItemList({items, total}) {
+export default function ItemList({ items, total }) {
+  const width = useScreenWidth();
+
   return (
     <Container>
       <ListWrapper>
@@ -16,14 +25,16 @@ export default function ItemList({items, total}) {
         </div>
         <List>
           {items.map((item, key) => {
-            return <Item item={item} key={key}/>
+            return <Item item={item} key={key} />;
           })}
         </List>
       </ListWrapper>
       <Total>
-        <span className="amt-due">Amount Due</span>
+        <span className="amt-due">
+          {width >= 701 ? "Amount Due" : "Grand Total"}
+        </span>
         <h2>$ {total.toFixed(2)}</h2>
       </Total>
     </Container>
-  )
+  );
 }

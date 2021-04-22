@@ -8,16 +8,16 @@ export default function Item({ item }) {
 
   return (
     <Container>
-      {width >= 700 && (
+      {width >= 701 && (
         <>
-          <h3>{item.name}</h3>
+          <h3 className="item-name">{item.name}</h3>
           <span>{item.quantity}</span>
           <span>$ {item.price.toFixed(2)}</span>
           <span>$ {item.total.toFixed(2)}</span>
         </>
       )}
 
-      {width < 700 && (
+      {width < 701 && (
         <MobileItem>
           <div className="info-left">
             <h4>{item.name}</h4>

@@ -39,16 +39,16 @@ export default function SingleInvoiceView() {
         </div>
       </GoBack>
       <Container>
-        {width >= 700 && (
+        {width >= 701 && (
           <InvoiceActions>
             <div>
               <span>Status</span>
-              <Status status={invoice.status} className="status">
+              <StyledStatus status={invoice.status} className="status">
                 <span>
                   <FontAwesomeIcon icon={faCircle} className="fa-circle" />
                   {_.capitalize(invoice.status)}
                 </span>
-              </Status>
+              </StyledStatus>
             </div>
             <div>
               <Button color="white">Edit</Button>
@@ -57,7 +57,7 @@ export default function SingleInvoiceView() {
             </div>
           </InvoiceActions>
         )}
-        {width < 700 && (
+        {width < 701 && (
           <StyledStatus status={invoice.status} className="status">
             <span>
               <FontAwesomeIcon icon={faCircle} className="fa-circle" />
@@ -100,7 +100,7 @@ export default function SingleInvoiceView() {
               <span>{invoice.clientAddress.postCode}</span>
               <span>{invoice.clientAddress.country}</span>
             </div>
-            {width < 700 && <div className="break"></div>}
+            {width < 701 && <div className="break"></div>}
             <div className="client-email">
               <span>Sent to</span>
               <h2>{invoice.clientEmail}</h2>
@@ -109,7 +109,7 @@ export default function SingleInvoiceView() {
           <ItemList items={invoice.items} total={invoice.total} />
         </InvoiceInfo>
       </Container>
-      {width < 700 && (
+      {width < 701 && (
         <InvoiceActions>
           <div>
             <Button color="white">Edit</Button>

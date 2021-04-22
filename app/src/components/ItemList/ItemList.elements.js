@@ -7,6 +7,11 @@ export const Container = styled.div`
   > * {
     padding: 3rem;
   }
+  @media (max-width: 700px) {
+    > * {
+      padding: 1.5rem;
+    }
+  }
 `;
 
 export const ListWrapper = styled.div`
@@ -33,6 +38,7 @@ export const ListWrapper = styled.div`
     }
   }
   @media (max-width: 700px) {
+    padding-top: 0;
     > div:nth-of-type(1) {
       display: none;
     }
