@@ -4,6 +4,7 @@ import invoiceService from "../../services/invoices";
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
 import InvoicesList from "../InvoicesList/InvoicesList";
+import NewInvoiceForm from "../NewInvoiceForm/NewInvoiceForm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -145,7 +146,7 @@ export default function InvoicesView() {
                 </Options>
               )}
             </CustomDropdown>
-            
+
             <StyledButton name="new">
               <div className="plus-button"></div>
               <span>{width >= 550 ? "New Invoice" : "New"}</span>
@@ -153,6 +154,7 @@ export default function InvoicesView() {
           </div>
         </Header>
         <InvoicesList invoices={invoices} handleSelectInvoice />
+        <NewInvoiceForm />
       </Wrapper>
     </Container>
   );

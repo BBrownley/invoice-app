@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import { StyledSelect } from "../shared/Dropdown.elements";
 import { Button } from "../shared/Button.elements";
+import ScrollbarStyle from "../shared/mixins/Scrollbar.elements";
 
 export const Container = styled.div`
   position: absolute;
@@ -24,18 +25,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   height: 100vh;
   overflow: scroll;
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors.white500};
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${props => props.theme.colors.blueGrayLight};
-  }
+  ${ScrollbarStyle}
 `;
 
 export const Header = styled.div`

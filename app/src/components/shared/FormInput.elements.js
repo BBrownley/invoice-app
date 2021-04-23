@@ -15,5 +15,6 @@ export const FormInput = styled.input`
     border: 1px solid ${props => props.theme.colors.primary};
     caret-color: ${props => props.theme.colors.primary};
   } */
-  ${InputStyle}
+  ${InputStyle};
+  min-width: auto;
 `;

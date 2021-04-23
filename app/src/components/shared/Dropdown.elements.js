@@ -3,6 +3,9 @@ import { FormInput } from "./FormInput.elements";
 import Select from "react-select";
 
 export const StyledSelect = styled(Select)`
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
   .css-yk16xz-control {
     height: 52px;
     &:hover {
@@ -32,9 +35,14 @@ export const StyledSelect = styled(Select)`
   .css-1pahdxg-control {
     height: 52px;
     box-shadow: none;
-    border: 1px solid transparent;
+    border: 1px solid ${props => props.theme.colors.primary};
     &:hover {
       cursor: pointer;
+    }
+    &:active,
+    :focus {
+      border: 1px solid ${props => props.theme.colors.primary};
+      outline: none;
     }
     ${props => {
       if (props.secondary) {
@@ -52,7 +60,7 @@ export const StyledSelect = styled(Select)`
   }
   .css-26l3qy-menu {
     margin: 0;
-    margin-top: 25px;
+    margin-top: 1rem;
     filter: drop-shadow(0 12px 0.75rem rgba(0, 0, 0, 0.025));
     border-radius: 0.5rem;
     ${props => {

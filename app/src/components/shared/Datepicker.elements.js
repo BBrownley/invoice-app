@@ -52,10 +52,11 @@ export const StyledDatePickerContainer = styled.div`
   .calendar-icon {
     position: absolute;
     right: 1.25rem;
-    top: 50%;
+    top: 1.75rem;
     transform: translateY(-50%);
     font-size: 1.25rem;
     color: ${props => props.theme.colors.blueGray};
+    pointer-events: none;
   }
 `;
 

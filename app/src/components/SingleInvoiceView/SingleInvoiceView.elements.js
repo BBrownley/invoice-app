@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Status } from "../Invoice/Invoice.elements";
+import ScrollbarStyle from "../shared/mixins/Scrollbar.elements";
 
 export const StyledStatus = styled(Status)`
   @media (max-width: 700px) {
@@ -27,18 +28,7 @@ export const Container = styled.div`
   overflow-x: hidden;
   margin-top: 3.75rem;
 
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors.white500};
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${props => props.theme.colors.blueGrayLight};
-  }
+  ${ScrollbarStyle}
 
   @media (max-width: 768px) {
     padding-left: 0;
