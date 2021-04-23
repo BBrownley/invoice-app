@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { format } from "date-fns";
 
 import { FormInput } from "../shared/FormInput.elements";
 import {
@@ -33,7 +34,9 @@ export default function NewInvoiceForm() {
     clientCity: "",
     clientPostCode: "",
     clientCountry: "",
-    desc: ""
+    description: "",
+    createdAt: new Date(),
+    paymentTerms: netDays[netDays.length - 1] // {label: string, value: int}
   });
 
   const [startDate, setStartDate] = useState(new Date());
@@ -41,6 +44,19 @@ export default function NewInvoiceForm() {
   const handleFormInput = e => {
     setFormValues(prevState => {
       return { ...prevState, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleTerms = e => {
+    setFormValues(prevState => {
+      return { ...prevState, paymentTerms: e };
+    });
+  };
+
+  const handleDate = e => {
+    // format(e, "L-d-yyyy")
+    setFormValues(prevState => {
+      return { ...prevState, createdAt: e };
     });
   };
 
@@ -148,11 +164,12 @@ export default function NewInvoiceForm() {
               <label for="invoiceDate">Invoice Date</label>
               <StyledDatePickerContainer id="datepicker">
                 <StyledDatePicker
-                  selected={startDate}
-                  onChange={date => setStartDate(date)}
+                  selected={formValues.createdAt}
+                  onChange={date => handleDate(date)}
                   minDate={new Date()}
                   dateFormatCalendar={"MMM yyyy"}
                   name="invoiceDate"
+                  value={formValues.createdAt}
                 />
                 <FontAwesomeIcon
                   icon={faCalendarAlt}
@@ -165,18 +182,19 @@ export default function NewInvoiceForm() {
               <Select
                 options={netDays}
                 isSearchable={false}
-                value={netDays[netDays.length - 1]}
+                value={formValues.paymentTerms}
                 name="paymentTerms"
+                onChange={handleTerms}
               />
             </div>
           </div>
 
-          <label for="desc">Project Description</label>
+          <label for="description">Project Description</label>
           <FormInput
             type="text"
-            id="desc"
-            name="desc"
-            value={formValues.desc}
+            id="description"
+            name="description"
+            value={formValues.description}
           />
         </form>
       </Wrapper>
