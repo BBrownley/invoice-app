@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
+import { add, format } from "date-fns";
+import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
-
-import { format } from "date-fns";
 
 import { FormInput } from "../shared/FormInput.elements";
 import { Button } from "../shared/Button.elements";
@@ -31,15 +30,15 @@ const netDays = [
   { value: 30, label: "Net 30 Days" }
 ];
 
-export default function NewInvoiceForm() {
+export default function NewInvoiceForm({ handleFormOpened }) {
   const [formValues, setFormValues] = useState({
-    fromAddress: "",
+    fromStreet: "",
     fromCity: "",
     fromPostCode: "",
     fromCountry: "",
     clientName: "",
     clientEmail: "",
-    clientAddress: "",
+    clientStreet: "",
     clientCity: "",
     clientPostCode: "",
     clientCountry: "",
@@ -48,7 +47,14 @@ export default function NewInvoiceForm() {
     paymentTerms: netDays[netDays.length - 1] // {label: string, value: int}
   });
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [items, setItems] = useState([
+    {
+      name: "",
+      quantity: 0,
+      price: 0,
+      total: 0
+    }
+  ]);
 
   const handleFormInput = e => {
     setFormValues(prevState => {
@@ -69,6 +75,46 @@ export default function NewInvoiceForm() {
     });
   };
 
+  const handleFormSubmit = status => {
+    // Format data
+    const {
+      createdAt,
+      description,
+      paymentTerms,
+      clientName,
+      clientEmail
+    } = formValues;
+    const paymentDue = add(new Date(createdAt), { days: paymentTerms.value });
+    const senderAddress = {
+      street: formValues.fromStreet,
+      city: formValues.fromCity,
+      postCode: formValues.fromPostCode,
+      country: formValues.fromCountry
+    };
+    const clientAddress = {
+      street: formValues.clientStreet,
+      city: formValues.clientCity,
+      postCode: formValues.clientPostCode,
+      country: formValues.clientCountry
+    };
+    const total = items.reduce((acc, item) => {
+      return acc + item.total;
+    }, 0);
+    invoiceService.add({
+      items,
+      total,
+      senderAddress,
+      createdAt: format(createdAt, "L-d-yyyy"),
+      paymentDue: format(paymentDue, "L-d-yyyy"),
+      description,
+      clientName,
+      clientEmail,
+      status,
+      paymentTerms: paymentTerms.value,
+      clientAddress
+    });
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -76,12 +122,12 @@ export default function NewInvoiceForm() {
         <form>
           <h4>Bill From</h4>
 
-          <label htmlFor="fromAddress">Street Address</label>
+          <label htmlFor="fromStreet">Street Address</label>
           <FormInput
             type="text"
-            id="fromAddress"
-            name="fromAddress"
-            value={formValues.fromAddress}
+            id="fromStreet"
+            name="fromStreet"
+            value={formValues.fromStreet}
             onChange={handleFormInput}
           />
 
@@ -136,12 +182,12 @@ export default function NewInvoiceForm() {
             onChange={handleFormInput}
           />
 
-          <label htmlFor="clientAddress">Street Address</label>
+          <label htmlFor="clientStreet">Street Address</label>
           <FormInput
             type="text"
-            id="clientAddress"
-            name="clientAddress"
-            value={formValues.clientAddress}
+            id="clientStreet"
+            name="clientStreet"
+            value={formValues.clientStreet}
             onChange={handleFormInput}
           />
 
@@ -217,20 +263,28 @@ export default function NewInvoiceForm() {
             onChange={handleFormInput}
           />
         </form>
-        <FormItemList />
+        <FormItemList items={items} setItems={setItems} />
       </Wrapper>
       <FormOptions>
         <div>
           {" "}
-          <Button color="white">Discard</Button>
+          <Button color="white" onClick={() => handleFormOpened(false)}>
+            Discard
+          </Button>
         </div>
 
         <div className="btns-right">
           {" "}
-          <Button className="save-as" color="black">
+          <Button
+            className="save-as"
+            color="black"
+            onClick={() => handleFormSubmit("draft")}
+          >
             Save as Draft
           </Button>
-          <Button>Save &#38; Send</Button>
+          <Button onClick={() => handleFormSubmit("pending")}>
+            Save &#38; Send
+          </Button>
         </div>
       </FormOptions>
       <DarkBkg>wqerweqr</DarkBkg>

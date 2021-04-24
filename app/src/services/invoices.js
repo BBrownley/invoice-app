@@ -5,8 +5,13 @@ const getInvoices = async () => {
   return res.data;
 };
 
+const add = async invoice => {
+  const res = await axios.post("http://localhost:3001/invoices", invoice);
+};
+
 const invoiceService = {
-  getInvoices
-}
+  getInvoices,
+  add
+};
 
 export default invoiceService;

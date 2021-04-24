@@ -27,6 +27,7 @@ export default function InvoicesView() {
   const [invoices, setInvoices] = useState([]);
   const [filters, setFilters] = useState(["draft", "pending", "paid"]);
   const [selectOpened, setSelectOpened] = useState(false);
+  const [formOpened, setFormOpened] = useState(false);
 
   let optionsRef = useRef(null);
 
@@ -147,14 +148,14 @@ export default function InvoicesView() {
               )}
             </CustomDropdown>
 
-            <StyledButton name="new">
+            <StyledButton name="new" onClick={() => setFormOpened(true)}>
               <div className="plus-button"></div>
               <span>{width >= 550 ? "New Invoice" : "New"}</span>
             </StyledButton>
           </div>
         </Header>
         <InvoicesList invoices={invoices} handleSelectInvoice />
-        <NewInvoiceForm />
+        {formOpened && <NewInvoiceForm handleFormOpened={setFormOpened} />}
       </Wrapper>
     </Container>
   );

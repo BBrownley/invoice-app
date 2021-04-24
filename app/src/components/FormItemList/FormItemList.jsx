@@ -13,49 +13,7 @@ import { Button } from "../shared/Button.elements";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function FormItemList() {
-  const [items, setItems] = useState([
-    {
-      name: "Banner Design",
-      quantity: 1,
-      price: 156.0,
-      total: 156.0
-    },
-    {
-      name: "Email Design",
-      quantity: 2,
-      price: 200.0,
-      total: 400.0
-    },
-    {
-      name: "Banner Design",
-      quantity: 1,
-      price: 156.0,
-      total: 156.0
-    },
-    {
-      name: "Email Design",
-      quantity: 2,
-      price: 200.0,
-      total: 400.0
-    },
-    {
-      name: "Banner Design",
-      quantity: 1,
-      price: 156.0,
-      total: 156.0
-    },
-    {
-      name: "Email Design",
-      quantity: 2,
-      price: 200.0,
-      total: 400.0
-    }
-  ]);
-
-  // const [items, setItems] = useState([{}]);
-
-  useEffect(() => {}, []);
+export default function FormItemList({items, setItems}) {
 
   const addItem = () => {
     setItems(prevState => [
@@ -66,12 +24,12 @@ export default function FormItemList() {
 
   const deleteItem = index => {
     setItems(prevState => {
-      console.log(prevState);
+ 
       const result = [
         ...prevState.slice(0, index),
         ...prevState.slice(index + 1)
       ];
-      console.log(result);
+
       return result;
     });
   };
@@ -88,8 +46,7 @@ export default function FormItemList() {
       let result = [];
 
       for (let i = 0; i < prevState.length; i++) {
-        console.log(i);
-        console.log(index);
+
         if (i === index) {
           // Update object
           let updatedObject = {
@@ -98,7 +55,7 @@ export default function FormItemList() {
           };
           const updatedTotal = updatedObject.quantity * updatedObject.price;
           updatedObject = { ...updatedObject, total: updatedTotal };
-          console.log(updatedObject);
+       
           result.push(updatedObject);
         } else {
           result.push(prevState[i]);
@@ -107,8 +64,7 @@ export default function FormItemList() {
 
       return result;
     });
-    // console.log(e.target.getAttribute("data-index"));
-    // console.log(e.target.getAttribute("data-index"));
+
   };
 
   return (

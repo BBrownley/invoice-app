@@ -31,10 +31,17 @@ export const Container = styled.div`
     width: 100%;
     margin-bottom: 1.5rem;
   }
+  @media (max-width: 768px) {
+    left: 0;
+    padding-top: 10.25rem;
+  }
+  @media (max-width: 700px) {
+    width: 100vw;
+  }
 `;
 
 export const DarkBkg = styled.div`
-  height: 100vw;
+  height: 200vw;
   width: 100vw;
   content: " ";
   background: black;
@@ -42,7 +49,13 @@ export const DarkBkg = styled.div`
   top: 0;
   right: -100vw;
   z-index: 10;
-  opacity: .5;
+  opacity: 0.5;
+  @media (max-width: 768px) {
+    bottom: 20px;
+  }
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -88,5 +101,13 @@ export const FormOptions = styled.div`
     .save-as {
       margin-right: 1rem;
     }
+  }
+  @media (max-width: 768px) {
+    left: 0;
+  }
+  @media (max-width: 700px) {
+    width: 100vw;
+    left: 0;
+    border-radius: 0;
   }
 `;
