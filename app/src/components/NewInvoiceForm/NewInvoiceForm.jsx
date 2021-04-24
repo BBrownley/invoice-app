@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+
+import FormItemList from "../FormItemList/FormItemList";
+
 import { format } from "date-fns";
 
 import { FormInput } from "../shared/FormInput.elements";
@@ -64,104 +67,114 @@ export default function NewInvoiceForm() {
     <Container>
       <Wrapper>
         <h2>New Invoice</h2>
-        <form onChange={e => handleFormInput(e)}>
+        <form>
           <h4>Bill From</h4>
 
-          <label for="fromAddress">Street Address</label>
+          <label htmlFor="fromAddress">Street Address</label>
           <FormInput
             type="text"
             id="fromAddress"
             name="fromAddress"
             value={formValues.fromAddress}
+            onChange={handleFormInput}
           />
 
           <div className="form-row main">
             <div>
-              <label for="fromCity">City</label>
+              <label htmlFor="fromCity">City</label>
               <FormInput
                 type="text"
                 id="fromCity"
                 name="fromCity"
                 value={formValues.fromCity}
+                onChange={handleFormInput}
               />
             </div>
             <div>
-              <label for="fromPostCode">Post Code</label>
+              <label htmlFor="fromPostCode">Post Code</label>
               <FormInput
                 type="text"
                 id="fromPostCode"
                 name="fromPostCode"
                 value={formValues.fromPostCode}
+                onChange={handleFormInput}
               />
             </div>
             <div>
-              <label for="fromCountry">Country</label>
+              <label htmlFor="fromCountry">Country</label>
               <FormInput
                 type="text"
                 id="fromCountry"
                 name="fromCountry"
                 value={formValues.fromCountry}
+                onChange={handleFormInput}
               />
             </div>
           </div>
           <h4>Bill To</h4>
-          <label for="clientName">Client's Name</label>
+          <label htmlFor="clientName">Client's Name</label>
           <FormInput
             type="text"
             id="clientName"
             name="clientName"
             value={formValues.clientName}
+            onChange={handleFormInput}
           />
 
-          <label for="clientEmail">Client's Email</label>
+          <label htmlFor="clientEmail">Client's Email</label>
           <FormInput
             type="text"
             id="clientEmail"
             name="clientEmail"
             value={formValues.clientEmail}
+            onChange={handleFormInput}
           />
 
-          <label for="clientAddress">Street Address</label>
+          <label htmlFor="clientAddress">Street Address</label>
           <FormInput
             type="text"
             id="clientAddress"
             name="clientAddress"
             value={formValues.clientAddress}
+            onChange={handleFormInput}
           />
 
           <div className="form-row main">
             <div>
-              <label for="clientCity">City</label>
+              <label htmlFor="clientCity">City</label>
               <FormInput
                 type="text"
                 id="clientCity"
                 name="clientCity"
                 value={formValues.clientCity}
+                onChange={handleFormInput}
               />
             </div>
             <div>
-              <label for="clientPostCode">Post Code</label>
+              <label htmlFor="clientPostCode">Post Code</label>
               <FormInput
                 type="text"
                 id="clientPostCode"
                 name="clientPostCode"
                 value={formValues.clientPostCode}
+                onChange={handleFormInput}
               />
             </div>
             <div>
-              <label for="clientCountry">Country</label>
+              <label htmlFor="clientCountry">Country</label>
               <FormInput
                 type="text"
                 id="clientCountry"
                 name="clientCountry"
                 value={formValues.clientCountry}
+                onChange={handleFormInput}
               />
             </div>
           </div>
 
           <div className="form-row secondary">
             <div>
-              <label for="invoiceDate">Invoice Date</label>
+              <label htmlFor="invoiceDate">Invoice Date</label>
               <StyledDatePickerContainer id="datepicker">
                 <StyledDatePicker
                   selected={formValues.createdAt}
@@ -178,7 +191,7 @@ export default function NewInvoiceForm() {
               </StyledDatePickerContainer>
             </div>
             <div className="select-wrapper">
-              <label for="paymentTerms">Payment Terms</label>
+              <label htmlFor="paymentTerms">Payment Terms</label>
               <Select
                 options={netDays}
                 isSearchable={false}
@@ -189,14 +202,16 @@ export default function NewInvoiceForm() {
             </div>
           </div>
 
-          <label for="description">Project Description</label>
+          <label htmlFor="description">Project Description</label>
           <FormInput
             type="text"
             id="description"
             name="description"
             value={formValues.description}
+            onChange={handleFormInput}
           />
         </form>
+        <FormItemList />
       </Wrapper>
     </Container>
   );
