@@ -9,6 +9,9 @@ export const Container = styled.div`
   button {
     width: 100%;
   }
+  .add-item {
+    margin-bottom: 2rem;
+  }
 `;
 
 export const TableHeaders = styled.div`
@@ -62,7 +65,7 @@ export const Item = styled.li`
     align-items: center;
     justify-content: space-between;
     color: ${props => props.theme.colors.gray500};
-    border: 2px dashed;
+
     height: 50px;
   }
 `;

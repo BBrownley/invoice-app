@@ -9,8 +9,10 @@ export const Container = styled.div`
   width: 615px;
   background-color: white;
   padding: 3.5rem;
-  overflow: scroll;
-  ${ScrollbarStyle}
+  padding-bottom: 6rem;
+  padding-right: 2.25rem;
+  border-bottom-right-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
 
   h4 {
     color: ${props => props.theme.colors.primary};
@@ -31,7 +33,24 @@ export const Container = styled.div`
   }
 `;
 
+export const DarkBkg = styled.div`
+  height: 100vw;
+  width: 100vw;
+  content: " ";
+  background: black;
+  position: absolute;
+  top: 0;
+  right: -100vw;
+  z-index: 10;
+  opacity: .5;
+`;
+
 export const Wrapper = styled.div`
+  overflow: scroll;
+  height: 100%;
+  padding-right: 1.25rem;
+
+  ${ScrollbarStyle}
   .form-row {
     display: flex;
     .select-wrapper {
@@ -47,6 +66,27 @@ export const Wrapper = styled.div`
       &:last-of-type {
         margin-right: 0;
       }
+    }
+  }
+`;
+
+export const FormOptions = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 100px;
+  width: 615px;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 3.5rem;
+  background: white;
+  -webkit-box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
+  border-top-right-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+  .btns-right {
+    display: flex;
+    .save-as {
+      margin-right: 1rem;
     }
   }
 `;

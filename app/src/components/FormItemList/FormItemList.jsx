@@ -79,9 +79,11 @@ export default function FormItemList() {
   const updateItem = e => {
     const index = parseInt(e.target.getAttribute("data-index"));
     const fieldName = e.target.getAttribute("name");
-    const updatedValue =
+    let updatedValue =
       fieldName !== "name" ? parseInt(e.target.value) : e.target.value;
-    // console.log(e.target.value);
+
+    if (isNaN(updatedValue) && fieldName !== "name") updatedValue = 0;
+
     setItems(prevState => {
       let result = [];
 
@@ -129,6 +131,7 @@ export default function FormItemList() {
                   className="item-name"
                   data-index={index}
                   onChange={updateItem}
+                  placeholder="Item name"
                 />
                 <FormInput
                   value={item.quantity}
@@ -155,7 +158,7 @@ export default function FormItemList() {
           })}
         </List>
       </form>
-      <Button color="white" onClick={addItem}>
+      <Button color="white" onClick={addItem} className="add-item">
         + Add New item
       </Button>
     </Container>

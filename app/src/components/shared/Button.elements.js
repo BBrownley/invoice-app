@@ -88,8 +88,8 @@ export const Button = styled.button`
           background-color: ${props.theme.colors.black400};
           color: ${props.theme.colors.white600};
           &:hover {
-            background-color: white;
-            color: ${props.theme.colors.white500};
+            background-color: ${props.theme.colors.black400};
+            color: ${props.theme.colors.gray500};
           }
         `;
       case "gray":

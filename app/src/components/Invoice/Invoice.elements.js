@@ -97,7 +97,7 @@ export const Status = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  z-index: 10000;
+  /* z-index: 10000; */
   span {
     background-color: #302759;
     width: 104px;

@@ -5,12 +5,18 @@ import FormItemList from "../FormItemList/FormItemList";
 import { format } from "date-fns";
 
 import { FormInput } from "../shared/FormInput.elements";
+import { Button } from "../shared/Button.elements";
 import {
   StyledDatePickerContainer,
   StyledDatePicker
 } from "../shared/Datepicker.elements";
 import { StyledSelect as Select } from "../shared/Dropdown.elements";
-import { Container, Wrapper } from "./NewInvoiceForm.elements";
+import {
+  Container,
+  DarkBkg,
+  Wrapper,
+  FormOptions
+} from "./NewInvoiceForm.elements";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -213,6 +219,21 @@ export default function NewInvoiceForm() {
         </form>
         <FormItemList />
       </Wrapper>
+      <FormOptions>
+        <div>
+          {" "}
+          <Button color="white">Discard</Button>
+        </div>
+
+        <div className="btns-right">
+          {" "}
+          <Button className="save-as" color="black">
+            Save as Draft
+          </Button>
+          <Button>Save &#38; Send</Button>
+        </div>
+      </FormOptions>
+      <DarkBkg>wqerweqr</DarkBkg>
     </Container>
   );
 }
