@@ -7,7 +7,7 @@ const getInvoices = async () => {
 };
 
 const add = async invoice => {
-  const res = await axios.post(baseUrl, invoice);
+  const res = await axios.post(`${baseUrl}/invoices`, {invoice});
 };
 
 const invoiceService = {
