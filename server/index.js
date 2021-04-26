@@ -4,8 +4,20 @@ const http = require("http");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const PORT = process.env.PORT || 5000;
-const uri = process.env.MONGODB_URI;
+
+let PORT;
+
+if (process.env.NODE_ENV === "test") {
+  PORT = process.env.TEST_POST;
+} else {
+  PORT = process.env.PORT || 5000;
+}
+
+const uri =
+  process.env.NODE_ENV === "test"
+    ? process.env.TEST_MONGODB_URI
+    : process.env.MONGODB_URI;
+
 const connection = require("./db/connection");
 const cors = require("cors");
 
@@ -34,3 +46,5 @@ app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
   console.log(connection);
 });
+
+module.exports = app;
