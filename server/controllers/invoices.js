@@ -20,32 +20,35 @@ invoiceRouter.post("/", async (req, res, next) => {
     for (const [key, value] of Object.entries(invoice)) {
       if (key === "items") {
         if (value.length === 0) {
-          const error = new Error("Error: No items");
-
-          throw new Error("No items");
+          return next(new Error("No items"));
         } else {
           // Make sure all items have a name
+          let hasUnnamedItem = false;
           value.forEach(item => {
             if (item.name.trim().length === 0) {
-              const error = new Error("Please name all items");
-              throw new Error("Please name all items");
+              hasUnnamedItem = true;
             }
           });
+          if (hasUnnamedItem) {
+            return next(new Error("Please name all items"));
+          }
         }
       } else if (key === "clientAddress" || key === "senderAddress") {
-        Object.values(value).forEach(value => {
-          if (value.trim().length === 0) {
-            const error = new Error("Error: Fill out all fields");
-            throw new Error("Fill out all fields");
-          }
-        });
+        const addressValid = Object.values(value).every(
+          field => field.trim().length !== 0
+        );
+
+        if (!addressValid) {
+          return next(new Error("Fill out all fields"));
+        }
       } else if (typeof value === "string" && value.trim().length === 0) {
-        const error = new Error("Error: Fill out all fields");
-        throw new Error("Fill out all fields");
+        return next(new Error("Fill out all fields"));
       }
     }
 
-    res.status(200).json(invoice);
+    // Validation passes, create new invoice in DB
+    const newInvoice = await Invoice.create(invoice);
+    res.status(200).json(newInvoice);
   } else {
     res.status(400).json({ message: "Bad request" });
   }
