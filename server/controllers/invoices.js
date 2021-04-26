@@ -9,7 +9,7 @@ invoiceRouter.get("/", async (req, res) => {
   res.status(200).json(invoices);
 });
 
-invoiceRouter.post("/", async (req, res) => {
+invoiceRouter.post("/", async (req, res, next) => {
   const invoice = req.body.invoice;
 
   // Check if new invoice is draft or pending
@@ -18,21 +18,34 @@ invoiceRouter.post("/", async (req, res) => {
   } else if (invoice.status === "pending") {
     // Check that all fields are filled in
     for (const [key, value] of Object.entries(invoice)) {
-      console.log(key);
-      console.log(value);
+      if (key === "items") {
+        if (value.length === 0) {
+          const error = new Error("Error: No items");
 
-      if (key === "items" && value.length === 0) {
-        console.log("Error: No items");
-      }
-
-      if (key === clientAddress || key === senderAddress) {
+          throw new Error("No items");
+        } else {
+          // Make sure all items have a name
+          value.forEach(item => {
+            if (item.name.trim().length === 0) {
+              const error = new Error("Please name all items");
+              throw new Error("Please name all items");
+            }
+          });
+        }
+      } else if (key === "clientAddress" || key === "senderAddress") {
         Object.values(value).forEach(value => {
           if (value.trim().length === 0) {
-            console.log("Error: Fill out all forms")
+            const error = new Error("Error: Fill out all fields");
+            throw new Error("Fill out all fields");
           }
-        })
+        });
+      } else if (typeof value === "string" && value.trim().length === 0) {
+        const error = new Error("Error: Fill out all fields");
+        throw new Error("Fill out all fields");
       }
     }
+
+    res.status(200).json(invoice);
   } else {
     res.status(400).json({ message: "Bad request" });
   }

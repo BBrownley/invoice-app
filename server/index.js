@@ -25,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 const invoiceRouter = require("./controllers/invoices");
+const errorHandler = require("./utils/errorHandler");
 
 app.use("/invoices", invoiceRouter);
 
@@ -46,5 +47,7 @@ app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
   console.log(connection);
 });
+
+app.use(errorHandler);
 
 module.exports = app;
