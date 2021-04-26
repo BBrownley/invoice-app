@@ -1,12 +1,13 @@
 import axios from "axios";
+const baseUrl = process.env.baseURL || "http://localhost:5000";
 
 const getInvoices = async () => {
-  const res = await axios.get("http://localhost:3001/invoices");
+  const res = await axios.get(`${baseUrl}/invoices`);
   return res.data;
 };
 
 const add = async invoice => {
-  const res = await axios.post("http://localhost:3001/invoices", invoice);
+  const res = await axios.post(baseUrl, invoice);
 };
 
 const invoiceService = {

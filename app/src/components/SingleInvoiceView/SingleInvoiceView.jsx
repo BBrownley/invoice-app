@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
+import { format } from "date-fns";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
@@ -85,11 +86,11 @@ export default function SingleInvoiceView() {
             <div>
               <div>
                 <span>Invoice Date</span>
-                <h2>{invoice.createdAt}</h2>
+                <h2>{format(new Date(invoice.createdAt), "L-d-yyyy")}</h2>
               </div>
               <div>
                 <span>Payment Due</span>
-                <h2>{invoice.paymentDue}</h2>
+                <h2>{format(new Date(invoice.paymentDue), "L-d-yyyy")}</h2>
               </div>
             </div>
             <div>
