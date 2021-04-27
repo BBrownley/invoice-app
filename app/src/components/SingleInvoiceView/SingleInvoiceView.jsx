@@ -71,7 +71,7 @@ export default function SingleInvoiceView() {
             <div>
               <h2 className="invoice-id">
                 <span>#</span>
-                {invoice.id}
+                {invoice._id.toUpperCase()}
               </h2>
               <span>{invoice.description}</span>
             </div>

@@ -7,9 +7,13 @@ const getInvoices = async () => {
 };
 
 const add = async invoice => {
-  const res = await axios.post(`${baseUrl}/invoices`, { invoice });
-  const newInvoice = res.data;
-  return newInvoice;
+  try {
+    const res = await axios.post(`${baseUrl}/invoices`, { invoice });
+    const newInvoice = res.data;
+    return newInvoice;
+  } catch (exception) {
+    console.log(exception.message);
+  }
 };
 
 const invoiceService = {
@@ -18,3 +22,10 @@ const invoiceService = {
 };
 
 export default invoiceService;
+
+// Frontend form validation
+// NewInvoiceForm refactoring (helper functions for submit/validation)
+// Invoice draft backend logic
+// Close new invoice form when submitting form
+// Display first 6 chars of id in InvoiceList, with ... trailing it
+// Design app landing page (based off logo/branding icon)

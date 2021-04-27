@@ -30,7 +30,9 @@ export default function Invoice({ invoice }) {
         <Container>
           <InvoiceId>
             <span className="gray-500">#</span>
-            {invoice.id}
+            {`...${invoice._id
+              .toUpperCase()
+              .substring(invoice._id.length - 6)}`}
           </InvoiceId>
           <PaymentDue>
             Due {format(new Date(invoice.paymentDue), "LLL d yyyy")}

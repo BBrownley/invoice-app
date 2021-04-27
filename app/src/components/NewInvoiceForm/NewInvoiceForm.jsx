@@ -75,7 +75,41 @@ export default function NewInvoiceForm({ handleFormOpened }) {
     });
   };
 
-  const handleFormSubmit = status => {
+  const validateInvoice = invoice => {
+    if (invoice.status === "pending") {
+      // Check that all fields are filled in
+      for (const [key, value] of Object.entries(invoice)) {
+        if (key === "items") {
+          if (value.length === 0) {
+            throw new Error("Must have at least one item");
+          } else {
+            // Make sure all items have a name
+            value.forEach(item => {
+              if (item.name.trim().length === 0) {
+                throw new Error("All items must have a name");
+              }
+            });
+          }
+        } else if (key === "clientAddress" || key === "senderAddress") {
+          const addressValid = Object.values(value).every(
+            field => field.trim().length !== 0
+          );
+
+          if (!addressValid) {
+            throw new Error("Please fill out all fields");
+          }
+        } else if (typeof value === "string" && value.trim().length === 0) {
+          throw new Error("Please fill out all fields");
+        }
+      }
+    } else if (invoice.status !== "draft") {
+      // Submitted invoices must be either pending or draft
+      throw new Error("An unexpected error has occured");
+    }
+    return invoice;
+  };
+
+  const handleFormSubmit = async status => {
     // Format data
     const {
       createdAt,
@@ -100,7 +134,8 @@ export default function NewInvoiceForm({ handleFormOpened }) {
     const total = items.reduce((acc, item) => {
       return acc + item.total;
     }, 0);
-    invoiceService.add({
+
+    const newInvoice = {
       items,
       total,
       senderAddress,
@@ -112,7 +147,14 @@ export default function NewInvoiceForm({ handleFormOpened }) {
       status,
       paymentTerms: paymentTerms.value,
       clientAddress
-    });
+    };
+
+    try {
+      const validatedInvoice = await validateInvoice(newInvoice);
+      invoiceService.add(validatedInvoice);
+    } catch (exception) {
+      console.log(exception.message); // Create new error element out of exception msg
+    }
   };
 
   return (
