@@ -22,8 +22,3 @@ const invoiceService = {
 };
 
 export default invoiceService;
-
-// Frontend form validation
-// NewInvoiceForm refactoring (helper functions for submit/validation)
-// Invoice draft backend logic
-// Close new invoice form when submitting form

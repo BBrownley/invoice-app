@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { add, format } from "date-fns";
+
 import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
 
@@ -23,6 +23,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
+import helpers from "./helpers";
+
 const netDays = [
   { value: 1, label: "Net 1 Day" },
   { value: 7, label: "Net 7 Days" },
@@ -30,7 +32,7 @@ const netDays = [
   { value: 30, label: "Net 30 Days" }
 ];
 
-export default function NewInvoiceForm({ handleFormOpened }) {
+export default function NewInvoiceForm({ handleFormOpened, setAllInvoices }) {
   const [formValues, setFormValues] = useState({
     fromStreet: "",
     fromCity: "",
@@ -81,85 +83,17 @@ export default function NewInvoiceForm({ handleFormOpened }) {
     });
   };
 
-  const validateInvoice = invoice => {
-    if (invoice.status === "pending") {
-      // Check that all fields are filled in
-      for (const [key, value] of Object.entries(invoice)) {
-        if (key === "items") {
-          if (value.length === 0) {
-            throw new Error("Must have at least one item");
-          } else {
-            // Make sure all items have a name
-            value.forEach(item => {
-              if (item.name.trim().length === 0) {
-                throw new Error("All items must have a name");
-              }
-            });
-          }
-        } else if (key === "clientAddress" || key === "senderAddress") {
-          const addressValid = Object.values(value).every(
-            field => field.trim().length !== 0
-          );
-
-          if (!addressValid) {
-            throw new Error("Please fill out all fields");
-          }
-        } else if (typeof value === "string" && value.trim().length === 0) {
-          throw new Error("Please fill out all fields");
-        }
-      }
-    } else if (invoice.status !== "draft") {
-      // Submitted invoices must be either pending or draft
-      throw new Error("An unexpected error has occured");
-    }
-    return invoice;
-  };
-
   const handleFormSubmit = async status => {
     // Format data
-    const {
-      createdAt,
-      description,
-      paymentTerms,
-      clientName,
-      clientEmail
-    } = formValues;
-    const paymentDue = add(new Date(createdAt), { days: paymentTerms.value });
-    const senderAddress = {
-      street: formValues.fromStreet,
-      city: formValues.fromCity,
-      postCode: formValues.fromPostCode,
-      country: formValues.fromCountry
-    };
-    const clientAddress = {
-      street: formValues.clientStreet,
-      city: formValues.clientCity,
-      postCode: formValues.clientPostCode,
-      country: formValues.clientCountry
-    };
-    const total = items.reduce((acc, item) => {
-      return acc + item.total;
-    }, 0);
-
-    const newInvoice = {
-      items,
-      total,
-      senderAddress,
-      createdAt: format(createdAt, "L-d-yyyy"),
-      paymentDue: format(paymentDue, "L-d-yyyy"),
-      description,
-      clientName,
-      clientEmail,
-      status,
-      paymentTerms: paymentTerms.value,
-      clientAddress
-    };
+    const newInvoice = helpers.formatInvoice(formValues, items, status);
 
     try {
-      const validatedInvoice = await validateInvoice(newInvoice);
+      const validatedInvoice = await helpers.validateInvoice(newInvoice);
       invoiceService.add(validatedInvoice);
+      handleFormOpened(false);
+      setAllInvoices(validatedInvoice);
     } catch (exception) {
-      setFormError(exception.message); // Create new error element out of exception msg
+      setFormError(exception.message); 
     }
   };
 

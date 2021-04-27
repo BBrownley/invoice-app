@@ -155,7 +155,7 @@ export default function InvoicesView() {
           </div>
         </Header>
         <InvoicesList invoices={invoices} handleSelectInvoice />
-        {formOpened && <NewInvoiceForm handleFormOpened={setFormOpened} />}
+        {formOpened && <NewInvoiceForm handleFormOpened={setFormOpened} setAllInvoices={setAllInvoices} />}
       </Wrapper>
     </Container>
   );
