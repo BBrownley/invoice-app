@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { add, format } from "date-fns";
 import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
@@ -14,7 +14,7 @@ import {
   Container,
   DarkBkg,
   Wrapper,
-  FormOptions
+  FormBottom
 } from "./NewInvoiceForm.elements";
 
 import DatePicker from "react-datepicker";
@@ -55,6 +55,12 @@ export default function NewInvoiceForm({ handleFormOpened }) {
       total: 0
     }
   ]);
+
+  const [formError, setFormError] = useState("All fields must be added");
+
+  useEffect(() => {
+    setFormError("");
+  }, [items, formValues]);
 
   const handleFormInput = e => {
     setFormValues(prevState => {
@@ -153,7 +159,7 @@ export default function NewInvoiceForm({ handleFormOpened }) {
       const validatedInvoice = await validateInvoice(newInvoice);
       invoiceService.add(validatedInvoice);
     } catch (exception) {
-      console.log(exception.message); // Create new error element out of exception msg
+      setFormError(exception.message); // Create new error element out of exception msg
     }
   };
 
@@ -307,29 +313,33 @@ export default function NewInvoiceForm({ handleFormOpened }) {
         </form>
         <FormItemList items={items} setItems={setItems} />
       </Wrapper>
-      <FormOptions>
-        <div>
-          {" "}
-          <Button color="white" onClick={() => handleFormOpened(false)}>
-            Discard
-          </Button>
-        </div>
 
-        <div className="btns-right">
-          {" "}
-          <Button
-            className="save-as"
-            color="black"
-            onClick={() => handleFormSubmit("draft")}
-          >
-            Save as Draft
-          </Button>
-          <Button onClick={() => handleFormSubmit("pending")}>
-            Save &#38; Send
-          </Button>
+      <FormBottom>
+        <p className="form-error">{formError}</p>
+        <div className="options">
+          <div>
+            {" "}
+            <Button color="white" onClick={() => handleFormOpened(false)}>
+              Discard
+            </Button>
+          </div>
+
+          <div className="btns-right">
+            {" "}
+            <Button
+              className="save-as"
+              color="black"
+              onClick={() => handleFormSubmit("draft")}
+            >
+              Save as Draft
+            </Button>
+            <Button onClick={() => handleFormSubmit("pending")}>
+              Save &#38; Send
+            </Button>
+          </div>
         </div>
-      </FormOptions>
-      <DarkBkg>wqerweqr</DarkBkg>
+      </FormBottom>
+      <DarkBkg></DarkBkg>
     </Container>
   );
 }

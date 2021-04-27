@@ -83,31 +83,40 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const FormOptions = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 100px;
-  width: 615px;
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem 3.5rem;
-  background: white;
-  -webkit-box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
-  box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
-  border-top-right-radius: 1.25rem;
-  border-bottom-right-radius: 1.25rem;
-  .btns-right {
+export const FormBottom = styled.div`
+  .form-error {
+    position: absolute;
+    z-index: 1000;
+    bottom: 3.5rem;
+    color: ${props => props.theme.colors.red};
+  }
+  .options {
+    position: fixed;
+    bottom: 0;
+    left: 100px;
+    width: 615px;
     display: flex;
-    .save-as {
-      margin-right: 1rem;
+    justify-content: space-between;
+    padding: 2rem 3.5rem;
+
+    background: white;
+    -webkit-box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
+    box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
+    border-top-right-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
+    .btns-right {
+      display: flex;
+      .save-as {
+        margin-right: 1rem;
+      }
     }
-  }
-  @media (max-width: 768px) {
-    left: 0;
-  }
-  @media (max-width: 700px) {
-    width: 100vw;
-    left: 0;
-    border-radius: 0;
+    @media (max-width: 768px) {
+      left: 0;
+    }
+    @media (max-width: 700px) {
+      width: 100vw;
+      left: 0;
+      border-radius: 0;
+    }
   }
 `;
