@@ -27,5 +27,4 @@ export default invoiceService;
 // NewInvoiceForm refactoring (helper functions for submit/validation)
 // Invoice draft backend logic
 // Close new invoice form when submitting form
-// Display first 6 chars of id in InvoiceList, with ... trailing it
 // Design app landing page (based off logo/branding icon)
