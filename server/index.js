@@ -25,9 +25,11 @@ app.use(cors());
 app.use(express.json());
 
 const invoiceRouter = require("./controllers/invoices");
+const userRouter = require("./controllers/users");
 const errorHandler = require("./utils/errorHandler");
 
 app.use("/invoices", invoiceRouter);
+app.use("/users", userRouter);
 
 mongoose
   .connect(uri, {

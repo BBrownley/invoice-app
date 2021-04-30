@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { FormInput } from "./shared/FormInput.elements";
 import { Button } from "./shared/Button.elements";
 
+import usersService from "../services/users";
+
 const Container = styled.div`
   position: absolute;
   left: 0;
@@ -13,8 +15,6 @@ const Container = styled.div`
   bottom: 0;
   z-index: 100000;
   overflow: auto;
-
-  /* background-color: ${props => props.theme.colors.primary}; */
 `;
 
 const BgTop = styled.div`
@@ -182,6 +182,10 @@ export default function Sandbox() {
 
   const [registering, setRegistering] = useState(false);
 
+  const register = () => {
+    usersService.register({ newUsername, newEmail, newPassword, pwConfirm });
+  };
+
   return (
     <Container>
       <BgTop></BgTop>
@@ -283,7 +287,7 @@ export default function Sandbox() {
                 </form>
 
                 <Buttons>
-                  <Button>Create account</Button>
+                  <Button onClick={() => register()}>Create account</Button>
                   <Button color="white" onClick={() => setRegistering(false)}>
                     Cancel
                   </Button>

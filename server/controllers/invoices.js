@@ -3,12 +3,14 @@ const app = express();
 const invoiceRouter = express.Router();
 const Invoice = require("../models/Invoice");
 
+// Get all invoices
 invoiceRouter.get("/", async (req, res) => {
   const invoices = await Invoice.find({});
   console.log(invoices);
   res.status(200).json(invoices);
 });
 
+// Add a new invoice
 invoiceRouter.post("/", async (req, res, next) => {
   const invoice = req.body.invoice;
 
