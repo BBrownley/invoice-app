@@ -1,4 +1,6 @@
 import axios from "axios";
+import { storedToken, setStoredToken } from "./tokenUtil";
+
 const baseUrl = process.env.baseURL || "http://localhost:5000";
 
 const register = credentials => {
@@ -12,7 +14,9 @@ const login = async (username, password) => {
   };
 
   try {
-    const token = await axios.post(`${baseUrl}/users/login`, user);
+    const req = await axios.post(`${baseUrl}/users/login`, user);
+    const token = req.data;
+    setStoredToken(token);
     window.localStorage.setItem("loggedUser", token.data);
   } catch (exception) {
     console.log(exception);
