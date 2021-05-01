@@ -186,6 +186,10 @@ export default function Sandbox() {
     usersService.register({ newUsername, newEmail, newPassword, pwConfirm });
   };
 
+  const login = () => {
+    usersService.login(username, password);
+  };
+
   return (
     <Container>
       <BgTop></BgTop>
@@ -230,7 +234,7 @@ export default function Sandbox() {
                 </form>
 
                 <Buttons>
-                  <Button>Log in</Button>
+                  <Button onClick={() => login()}>Log in</Button>
                   <Button color="white" onClick={() => setRegistering(true)}>
                     Sign up
                   </Button>

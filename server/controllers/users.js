@@ -40,11 +40,34 @@ userRouter.post("/", async (req, res, next) => {
       email: newEmail,
       hashedPassword: hashedPassword
     });
-
   } catch (exception) {
     return next(new Error(exception));
   }
   next();
+});
+
+// Login
+userRouter.post("/login", async (req, res, next) => {
+  const { username, password } = req.body;
+
+  if (username.trim().length === 0 || password.trim().length === 0) {
+    return next(new Error("All fields must be filled"));
+  }
+
+  try {
+    // Verify user
+    const user = await User.findOne({ username });
+    const match = await bcrypt.compare(password, user.hashedPassword);
+    if (!match) {
+      throw new Error();
+    }
+
+    // Username/pw correct, sign token
+    const userToken = jwt.sign(JSON.stringify(user), process.env.SECRET);
+    res.json(`Bearer ${userToken}`);
+  } catch (exception) {
+    return next(new Error("Incorrect password"));
+  }
 });
 
 module.exports = userRouter;
