@@ -191,8 +191,8 @@ export default function Sandbox() {
 
   const login = async () => {
     await usersService.login(username, password);
-    const userInvoices = await invoiceService.getInvoices();
-    console.log(userInvoices);
+    // const userInvoices = await invoiceService.getInvoices();
+    // console.log(userInvoices);
     history.push("/");
   };
 

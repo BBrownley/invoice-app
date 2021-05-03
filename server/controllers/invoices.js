@@ -3,16 +3,19 @@ const jwt = require("jsonwebtoken");
 const invoiceRouter = express.Router();
 const Invoice = require("../models/Invoice");
 
-// Get all invoices
+// Get invoices by user
 invoiceRouter.get("/", async (req, res) => {
-  const invoices = await Invoice.find({});
+  if (req.isGuest) {
+    next(); // Their invoices are in localStorage
+  }
+  const decodedToken = jwt.verify(req.token, process.env.SECRET);
+  const invoices = await Invoice.find({ ownerId: decodedToken._id }).exec();
   res.status(200).json(invoices);
 });
 
 // Add a new invoice
 invoiceRouter.post("/", async (req, res, next) => {
   const invoice = req.body.invoice;
-  const token = req.token;
 
   // Check if new invoice is draft or pending
 
