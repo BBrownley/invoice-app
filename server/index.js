@@ -20,9 +20,11 @@ const uri =
 
 const connection = require("./db/connection");
 const cors = require("cors");
+const tokenExtractor = require("./middleware/tokenExtractor");
 
 app.use(cors());
 app.use(express.json());
+app.use(tokenExtractor);
 
 const invoiceRouter = require("./controllers/invoices");
 const userRouter = require("./controllers/users");

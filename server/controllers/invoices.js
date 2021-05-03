@@ -1,18 +1,18 @@
 const express = require("express");
-const app = express();
+const jwt = require("jsonwebtoken");
 const invoiceRouter = express.Router();
 const Invoice = require("../models/Invoice");
 
 // Get all invoices
 invoiceRouter.get("/", async (req, res) => {
   const invoices = await Invoice.find({});
-  console.log(invoices);
   res.status(200).json(invoices);
 });
 
 // Add a new invoice
 invoiceRouter.post("/", async (req, res, next) => {
   const invoice = req.body.invoice;
+  const token = req.token;
 
   // Check if new invoice is draft or pending
 
@@ -48,9 +48,21 @@ invoiceRouter.post("/", async (req, res, next) => {
       }
     }
 
-    // Validation passes, create new invoice in DB
-    const newInvoice = await Invoice.create(invoice);
-    res.status(200).json(newInvoice);
+    // Validation passes, create new invoice in DB if there's a user
+
+    if (!req.isGuest) {
+      try {
+        const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+        const newInvoice = await Invoice.create({
+          ...invoice,
+          ownerId: decodedToken._id
+        });
+        res.status(200).json(newInvoice);
+      } catch (exception) {
+        return next(new Error("Unable to authorize user"));
+      }
+    }
   } else {
     res.status(400).json({ message: "Bad request" });
   }

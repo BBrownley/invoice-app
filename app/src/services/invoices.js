@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { storedToken } from "./tokenUtil";
+
 const baseUrl = process.env.baseURL || "http://localhost:5000";
 
 const getInvoices = async () => {
@@ -8,7 +10,11 @@ const getInvoices = async () => {
 
 const add = async invoice => {
   try {
-    const res = await axios.post(`${baseUrl}/invoices`, { invoice });
+    const res = await axios.post(
+      `${baseUrl}/invoices`,
+      { invoice },
+ 
+    );
     const newInvoice = res.data;
     return newInvoice;
   } catch (exception) {

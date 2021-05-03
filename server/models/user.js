@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const userSchema = mongoose.Schema({
   username: {
@@ -13,7 +14,8 @@ const userSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }]
 });
 
 const User = mongoose.model("user", userSchema);

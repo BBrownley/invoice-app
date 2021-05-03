@@ -1,5 +1,5 @@
 import axios from "axios";
-import { storedToken, setStoredToken } from "./tokenUtil";
+import {  setStoredToken } from "./tokenUtil";
 
 const baseUrl = process.env.baseURL || "http://localhost:5000";
 
@@ -13,14 +13,20 @@ const login = async (username, password) => {
     password
   };
 
-  try {
-    const req = await axios.post(`${baseUrl}/users/login`, user);
-    const token = req.data;
-    setStoredToken(token);
-    window.localStorage.setItem("loggedUser", token.data);
-  } catch (exception) {
-    console.log(exception);
-  }
+  return new Promise(async (resolve, reject) => {
+    try {
+      const req = await axios.post(`${baseUrl}/users/login`, user);
+      const token = req.data;
+      setStoredToken(token);
+      window.localStorage.setItem("loggedUser", token);
+      resolve();
+    } catch (exception) {
+      console.log(exception);
+      reject();
+    }
+  })
+
+  
 };
 
 const usersService = {

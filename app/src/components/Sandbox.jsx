@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { FormInput } from "./shared/FormInput.elements";
 import { Button } from "./shared/Button.elements";
 
 import usersService from "../services/users";
+import invoiceService from "../services/invoices";
 
 const Container = styled.div`
   position: absolute;
@@ -182,12 +183,17 @@ export default function Sandbox() {
 
   const [registering, setRegistering] = useState(false);
 
+  const history = useHistory();
+
   const register = () => {
     usersService.register({ newUsername, newEmail, newPassword, pwConfirm });
   };
 
-  const login = () => {
-    usersService.login(username, password);
+  const login = async () => {
+    await usersService.login(username, password);
+    const userInvoices = await invoiceService.getInvoices();
+    console.log(userInvoices);
+    history.push("/");
   };
 
   return (
