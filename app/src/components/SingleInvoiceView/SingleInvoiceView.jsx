@@ -28,7 +28,7 @@ export default function SingleInvoiceView() {
   const width = useScreenWidth();
 
   if (invoice === null) {
-    return <Redirect to="/" />;
+    return <Redirect to="/invoices" />;
   }
 
   const toggleStatus = () => {
@@ -45,7 +45,7 @@ export default function SingleInvoiceView() {
     <>
       <GoBack>
         <div>
-          <Link to="/">
+          <Link to="/invoices">
             <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
             <span> Go Back</span>
           </Link>

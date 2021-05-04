@@ -24,11 +24,7 @@ const toggleStatus = async invoice => {
       prevStatus: invoice.status
     };
 
-    const res = await axios.put(
-      `${baseUrl}/invoices/${invoice._id}/status`,
-      body
-    );
-    console.log(res.data);
+    axios.put(`${baseUrl}/invoices/${invoice._id}/status`, body);
   } catch (exception) {
     console.log(exception.message);
   }

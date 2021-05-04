@@ -10,7 +10,7 @@ import theme from "./theme";
 import Sidebar from "./components/Sidebar/Sidebar";
 import InvoicesView from "./components/InvoicesView/InvoicesView";
 import SingleInvoiceView from "./components/SingleInvoiceView/SingleInvoiceView";
-import Sandbox from "./components/Sandbox";
+import Login from "./components/Login/Login";
 
 function App() {
   const [selectedInvoice, setSelectedInvoice] = useState({});
@@ -23,7 +23,7 @@ function App() {
           <Switch>
             <Route
               exact
-              path="/"
+              path="/invoices"
               render={() => (
                 <InvoicesView handleSelectInvoice={setSelectedInvoice} />
               )}
@@ -33,7 +33,7 @@ function App() {
               path="/invoices/:id"
               render={() => <SingleInvoiceView invoice={selectedInvoice} />}
             />
-            <Route path="/sandbox" component={Sandbox} />
+            <Route path="/" component={Login} />
           </Switch>
         </Container>
       </InvoiceProvider>

@@ -87,11 +87,11 @@ invoiceRouter.put("/:id/status", async (req, res, next) => {
     (err, result) => {
       if (err) {
         return next(new Error("Unable to update invoice status"));
-      } else {
-        console.log(result);
       }
     }
   );
+
+  next();
 });
 
 module.exports = invoiceRouter;
