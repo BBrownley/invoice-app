@@ -1,7 +1,8 @@
 import { add, format } from "date-fns";
 
 const validateInvoice = invoice => {
-  if (invoice.status === "pending") {
+  console.log(invoice);
+  if (invoice.status === "pending" || invoice.status === "paid") {
     // Check that all fields are filled in
     for (const [key, value] of Object.entries(invoice)) {
       if (key === "items") {
@@ -28,8 +29,7 @@ const validateInvoice = invoice => {
       }
     }
   } else if (invoice.status !== "draft") {
-    // Submitted invoices must be either pending or draft
-    throw new Error("An unexpected error has occured");
+    throw new Error("Submitted invoices must be either pending or draft");
   }
   return invoice;
 };

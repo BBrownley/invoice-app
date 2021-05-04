@@ -38,10 +38,20 @@ const deleteInvoice = async invoice => {
   }
 };
 
+const updateInvoice = async invoice => {
+  try {
+    console.log(invoice);
+    await axios.put(`${baseUrl}/invoices/${invoice._id}`, invoice);
+  } catch (exception) {
+    console.log(exception.message);
+  }
+};
+
 const invoiceService = {
   getInvoices,
   add,
   toggleStatus,
+  updateInvoice,
   deleteInvoice
 };
 

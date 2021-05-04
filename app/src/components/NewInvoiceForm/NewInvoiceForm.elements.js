@@ -13,6 +13,7 @@ export const Container = styled.div`
   padding-right: 2.25rem;
   border-bottom-right-radius: 1.25rem;
   border-top-right-radius: 1.25rem;
+  z-index: 10000;
 
   h4 {
     color: ${props => props.theme.colors.primary};
@@ -90,7 +91,8 @@ export const FormBottom = styled.div`
     bottom: 3.5rem;
     color: ${props => props.theme.colors.red};
   }
-  .options {
+  .options .create-invoice-options,
+  .options .edit-invoice-options {
     position: fixed;
     bottom: 0;
     left: 100px;
@@ -118,5 +120,10 @@ export const FormBottom = styled.div`
       left: 0;
       border-radius: 0;
     }
+  }
+
+  .edit-invoice-options div {
+    margin-left: auto;
+    display: flex;
   }
 `;

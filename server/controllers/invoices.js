@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const invoiceRouter = express.Router();
 const Invoice = require("../models/Invoice");
+const validateInvoice = require("../helpers/validateInvoice");
 
 // Get invoices by user
 invoiceRouter.get("/", async (req, res) => {
@@ -22,34 +23,7 @@ invoiceRouter.post("/", async (req, res, next) => {
   if (invoice.status === "draft") {
   } else if (invoice.status === "pending") {
     // Check that all fields are filled in
-    for (const [key, value] of Object.entries(invoice)) {
-      if (key === "items") {
-        if (value.length === 0) {
-          return next(new Error("No items"));
-        } else {
-          // Make sure all items have a name
-          let hasUnnamedItem = false;
-          value.forEach(item => {
-            if (item.name.trim().length === 0) {
-              hasUnnamedItem = true;
-            }
-          });
-          if (hasUnnamedItem) {
-            return next(new Error("Please name all items"));
-          }
-        }
-      } else if (key === "clientAddress" || key === "senderAddress") {
-        const addressValid = Object.values(value).every(
-          field => field.trim().length !== 0
-        );
-
-        if (!addressValid) {
-          return next(new Error("Fill out all fields"));
-        }
-      } else if (typeof value === "string" && value.trim().length === 0) {
-        return next(new Error("Fill out all fields"));
-      }
-    }
+    validateInvoice(invoice, next);
 
     // Validation passes, create new invoice in DB if there's a user
 
@@ -92,6 +66,34 @@ invoiceRouter.put("/:id/status", async (req, res, next) => {
   );
 
   next();
+});
+
+// Update entire invoice
+
+invoiceRouter.put("/:id", async (req, res, next) => {
+  console.log(req.body);
+
+  // Verify user
+  if (req.decodedToken._id !== req.body.ownerId) {
+    return next(new Error("Invoice does not belong to this user"));
+  }
+
+  // Check that all fields are filled in
+  validateInvoice(req.body, next);
+
+  Invoice.findByIdAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        return next(new Error("Unable to update invoice"));
+      }
+      next();
+    }
+  );
+
+  console.log(req.body);
 });
 
 // Delete invoice

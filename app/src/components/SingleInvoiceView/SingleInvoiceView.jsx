@@ -9,6 +9,7 @@ import invoiceService from "../../services/invoices";
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
 import App from "../../App.js";
+import NewInvoiceForm from "../NewInvoiceForm/NewInvoiceForm";
 import ItemList from "../ItemList/ItemList";
 
 import { Button } from "../shared/Button.elements";
@@ -45,6 +46,7 @@ export default function SingleInvoiceView() {
 
   const [status, setStatus] = useState(invoice.status);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [editInvoiceOpen, setEditInvoiceOpen] = useState(false);
 
   if (invoice === null) {
     return <Redirect to="/invoices" />;
@@ -58,6 +60,10 @@ export default function SingleInvoiceView() {
       return "paid";
     });
     invoiceService.toggleStatus(invoice);
+  };
+
+  const editInvoice = () => {
+    setEditInvoiceOpen(true);
   };
 
   const deleteInvoice = async () => {
@@ -108,7 +114,9 @@ export default function SingleInvoiceView() {
               </StyledStatus>
             </div>
             <div>
-              <Button color="white">Edit</Button>
+              <Button color="white" onClick={() => setEditInvoiceOpen(true)}>
+                Edit
+              </Button>
               <Button color="red" onClick={() => setDeleteModalOpen(true)}>
                 Delete
               </Button>
@@ -170,6 +178,7 @@ export default function SingleInvoiceView() {
           <ItemList items={invoice.items} total={invoice.total} />
         </InvoiceInfo>
       </Container>
+
       {width < 701 && (
         <InvoiceActions>
           <div>
@@ -182,6 +191,9 @@ export default function SingleInvoiceView() {
             </Button>
           </div>
         </InvoiceActions>
+      )}
+      {editInvoiceOpen && (
+        <NewInvoiceForm handleFormOpened={setEditInvoiceOpen} editMode editedInvoice={invoice} />
       )}
     </>
   );

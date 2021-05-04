@@ -13,8 +13,7 @@ import { Button } from "../shared/Button.elements";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function FormItemList({items, setItems}) {
-
+export default function FormItemList({ items, setItems }) {
   const addItem = () => {
     setItems(prevState => [
       ...prevState,
@@ -24,7 +23,6 @@ export default function FormItemList({items, setItems}) {
 
   const deleteItem = index => {
     setItems(prevState => {
- 
       const result = [
         ...prevState.slice(0, index),
         ...prevState.slice(index + 1)
@@ -46,7 +44,6 @@ export default function FormItemList({items, setItems}) {
       let result = [];
 
       for (let i = 0; i < prevState.length; i++) {
-
         if (i === index) {
           // Update object
           let updatedObject = {
@@ -55,7 +52,7 @@ export default function FormItemList({items, setItems}) {
           };
           const updatedTotal = updatedObject.quantity * updatedObject.price;
           updatedObject = { ...updatedObject, total: updatedTotal };
-       
+
           result.push(updatedObject);
         } else {
           result.push(prevState[i]);
@@ -64,8 +61,9 @@ export default function FormItemList({items, setItems}) {
 
       return result;
     });
-
   };
+
+  console.log(items);
 
   return (
     <Container>

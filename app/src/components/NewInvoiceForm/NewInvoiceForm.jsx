@@ -32,31 +32,45 @@ const netDays = [
   { value: 30, label: "Net 30 Days" }
 ];
 
-export default function NewInvoiceForm({ handleFormOpened, setAllInvoices }) {
+export default function NewInvoiceForm({
+  handleFormOpened,
+  setAllInvoices,
+  editMode,
+  editedInvoice
+}) {
   const [formValues, setFormValues] = useState({
-    fromStreet: "",
-    fromCity: "",
-    fromPostCode: "",
-    fromCountry: "",
-    clientName: "",
-    clientEmail: "",
-    clientStreet: "",
-    clientCity: "",
-    clientPostCode: "",
-    clientCountry: "",
-    description: "",
+    fromStreet: editedInvoice ? editedInvoice.senderAddress.street : "",
+    fromCity: editedInvoice ? editedInvoice.senderAddress.city : "",
+    fromPostCode: editedInvoice ? editedInvoice.senderAddress.postCode : "",
+    fromCountry: editedInvoice ? editedInvoice.senderAddress.country : "",
+    clientName: editedInvoice?.clientName || "",
+    clientEmail: editedInvoice?.clientEmail || "",
+    clientStreet: editedInvoice ? editedInvoice.clientAddress.street : "",
+    clientCity: editedInvoice ? editedInvoice.clientAddress.city : "",
+    clientPostCode: editedInvoice ? editedInvoice.clientAddress.postCode : "",
+    clientCountry: editedInvoice ? editedInvoice.clientAddress.country : "",
+    description: editedInvoice?.description || "",
     createdAt: new Date(),
-    paymentTerms: netDays[netDays.length - 1] // {label: string, value: int}
+    paymentTerms: editedInvoice
+      ? {
+          label: `Net ${editedInvoice?.paymentTerms} Days`,
+          value: editedInvoice?.paymentTerms
+        }
+      : netDays[netDays.length - 1] // {label: string, value: int}
   });
 
-  const [items, setItems] = useState([
-    {
-      name: "",
-      quantity: 0,
-      price: 0,
-      total: 0
-    }
-  ]);
+  const [items, setItems] = useState(
+    editedInvoice
+      ? editedInvoice.items
+      : [
+          {
+            name: "",
+            quantity: 0,
+            price: 0,
+            total: 0
+          }
+        ]
+  );
 
   const [formError, setFormError] = useState("All fields must be added");
 
@@ -77,14 +91,12 @@ export default function NewInvoiceForm({ handleFormOpened, setAllInvoices }) {
   };
 
   const handleDate = e => {
-    // format(e, "L-d-yyyy")
     setFormValues(prevState => {
       return { ...prevState, createdAt: e };
     });
   };
 
   const handleFormSubmit = async status => {
-    // Format data
     const newInvoice = helpers.formatInvoice(formValues, items, status);
 
     try {
@@ -93,14 +105,40 @@ export default function NewInvoiceForm({ handleFormOpened, setAllInvoices }) {
       handleFormOpened(false);
       setAllInvoices(validatedInvoice);
     } catch (exception) {
-      setFormError(exception.message); 
+      setFormError(exception.message);
+    }
+  };
+
+  console.log(editedInvoice?.status);
+
+  const handleEditInvoice = async () => {
+    const newInvoice = helpers.formatInvoice(
+      formValues,
+      items,
+      editedInvoice.status
+    );
+    try {
+      const validatedInvoice = await helpers.validateInvoice(newInvoice);
+      invoiceService.updateInvoice({
+        ...validatedInvoice,
+        ownerId: editedInvoice.ownerId,
+        _id: editedInvoice._id
+      });
+    } catch (exception) {
+      setFormError(exception.message);
     }
   };
 
   return (
     <Container>
       <Wrapper>
-        <h2>New Invoice</h2>
+        <h2>
+          {editMode
+            ? `Edit #...${editedInvoice._id
+                .toUpperCase()
+                .substring(editedInvoice._id.length - 6)}`
+            : "New Invoice"}
+        </h2>
         <form>
           <h4>Bill From</h4>
 
@@ -251,26 +289,43 @@ export default function NewInvoiceForm({ handleFormOpened, setAllInvoices }) {
       <FormBottom>
         <p className="form-error">{formError}</p>
         <div className="options">
-          <div>
-            {" "}
-            <Button color="white" onClick={() => handleFormOpened(false)}>
-              Discard
-            </Button>
-          </div>
+          {!editMode && (
+            <div className="create-invoice-options">
+              <div>
+                {" "}
+                <Button color="white" onClick={() => handleFormOpened(false)}>
+                  Discard
+                </Button>
+              </div>
 
-          <div className="btns-right">
-            {" "}
-            <Button
-              className="save-as"
-              color="black"
-              onClick={() => handleFormSubmit("draft")}
-            >
-              Save as Draft
-            </Button>
-            <Button onClick={() => handleFormSubmit("pending")}>
-              Save &#38; Send
-            </Button>
-          </div>
+              <div className="btns-right">
+                {" "}
+                <Button
+                  className="save-as"
+                  color="black"
+                  onClick={() => handleFormSubmit("draft")}
+                >
+                  Save as Draft
+                </Button>
+                <Button onClick={() => handleFormSubmit("pending")}>
+                  Save &#38; Send
+                </Button>
+              </div>
+            </div>
+          )}
+          {editMode && (
+            <div className="edit-invoice-options">
+              <div>
+                {" "}
+                <Button color="white" onClick={() => handleFormOpened(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => handleEditInvoice()}>
+                  Save Changes
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </FormBottom>
       <DarkBkg></DarkBkg>
