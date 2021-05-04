@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
 import { format } from "date-fns";
+import invoiceService from "../../services/invoices";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
@@ -23,11 +24,22 @@ import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function SingleInvoiceView() {
   const invoice = useInvoice();
+  const [status, setStatus] = useState(invoice.status);
   const width = useScreenWidth();
 
   if (invoice === null) {
     return <Redirect to="/" />;
   }
+
+  const toggleStatus = () => {
+    setStatus(prevState => {
+      if (prevState === "paid") {
+        return "pending";
+      }
+      return "paid";
+    });
+    invoiceService.toggleStatus(invoice);
+  };
 
   return (
     <>
@@ -44,17 +56,19 @@ export default function SingleInvoiceView() {
           <InvoiceActions>
             <div>
               <span>Status</span>
-              <StyledStatus status={invoice.status} className="status">
+              <StyledStatus status={status} className="status">
                 <span>
                   <FontAwesomeIcon icon={faCircle} className="fa-circle" />
-                  {_.capitalize(invoice.status)}
+                  {_.capitalize(status)}
                 </span>
               </StyledStatus>
             </div>
             <div>
               <Button color="white">Edit</Button>
               <Button color="red">Delete</Button>
-              <Button>Mark as Paid</Button>
+              <Button onClick={() => toggleStatus()}>
+                Mark as {status === "pending" ? "Paid" : "Pending"}
+              </Button>
             </div>
           </InvoiceActions>
         )}
@@ -115,7 +129,9 @@ export default function SingleInvoiceView() {
           <div>
             <Button color="white">Edit</Button>
             <Button color="red">Delete</Button>
-            <Button>Mark as Paid</Button>
+            <Button onClick={() => toggleStatus()}>
+              Mark as {status === "pending" ? "Paid" : "Pending"}
+            </Button>
           </div>
         </InvoiceActions>
       )}

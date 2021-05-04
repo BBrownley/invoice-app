@@ -71,4 +71,27 @@ invoiceRouter.post("/", async (req, res, next) => {
   }
 });
 
+// Toggle invoice status
+
+invoiceRouter.put("/:id/status", async (req, res, next) => {
+  const newStatus = req.body.prevStatus === "pending" ? "paid" : "pending";
+
+  // Verify user
+  if (req.decodedToken._id !== req.body.ownerId) {
+    return next(new Error("Invoice does not belong to this user"));
+  }
+
+  Invoice.findByIdAndUpdate(
+    req.params.id,
+    { status: newStatus },
+    (err, result) => {
+      if (err) {
+        return next(new Error("Unable to update invoice status"));
+      } else {
+        console.log(result);
+      }
+    }
+  );
+});
+
 module.exports = invoiceRouter;
