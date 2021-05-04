@@ -94,4 +94,15 @@ invoiceRouter.put("/:id/status", async (req, res, next) => {
   next();
 });
 
+// Delete invoice
+
+invoiceRouter.delete("/:id", async (req, res, next) => {
+  Invoice.findByIdAndDelete(req.params.id, (err, results) => {
+    if (err) {
+      return next(new Error("Unable to delete invoice"));
+    }
+  });
+  next();
+});
+
 module.exports = invoiceRouter;

@@ -24,7 +24,15 @@ const toggleStatus = async invoice => {
       prevStatus: invoice.status
     };
 
-    axios.put(`${baseUrl}/invoices/${invoice._id}/status`, body);
+    await axios.put(`${baseUrl}/invoices/${invoice._id}/status`, body);
+  } catch (exception) {
+    console.log(exception.message);
+  }
+};
+
+const deleteInvoice = async invoice => {
+  try {
+    await axios.delete(`${baseUrl}/invoices/${invoice._id}`);
   } catch (exception) {
     console.log(exception.message);
   }
@@ -33,7 +41,8 @@ const toggleStatus = async invoice => {
 const invoiceService = {
   getInvoices,
   add,
-  toggleStatus
+  toggleStatus,
+  deleteInvoice
 };
 
 export default invoiceService;

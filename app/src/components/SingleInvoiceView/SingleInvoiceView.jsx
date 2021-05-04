@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
@@ -41,6 +41,7 @@ const customStyles = {
 export default function SingleInvoiceView() {
   const invoice = useInvoice();
   const width = useScreenWidth();
+  const history = useHistory();
 
   const [status, setStatus] = useState(invoice.status);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -57,6 +58,11 @@ export default function SingleInvoiceView() {
       return "paid";
     });
     invoiceService.toggleStatus(invoice);
+  };
+
+  const deleteInvoice = async () => {
+    await invoiceService.deleteInvoice(invoice);
+    history.push("/invoices");
   };
 
   return (
@@ -76,7 +82,7 @@ export default function SingleInvoiceView() {
           <Button color="white" onClick={() => setDeleteModalOpen(false)}>
             Cancel
           </Button>
-          <Button color="red" className="delete-button">
+          <Button color="red" className="delete-button" onClick={deleteInvoice}>
             Delete
           </Button>
         </div>
