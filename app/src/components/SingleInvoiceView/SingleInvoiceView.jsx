@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
+import Modal from "react-modal";
 import { useInvoice } from "../../InvoiceContext";
 import _ from "lodash";
 import { format } from "date-fns";
@@ -7,6 +8,7 @@ import invoiceService from "../../services/invoices";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
+import App from "../../App.js";
 import ItemList from "../ItemList/ItemList";
 
 import { Button } from "../shared/Button.elements";
@@ -15,17 +17,33 @@ import {
   GoBack,
   InvoiceActions,
   InvoiceInfo,
-  StyledStatus
+  StyledStatus,
+  StyledModal
 } from "./SingleInvoiceView.elements";
 import { Status } from "../Invoice/Invoice.elements";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    zIndex: 100000
+  }
+};
+
 export default function SingleInvoiceView() {
   const invoice = useInvoice();
-  const [status, setStatus] = useState(invoice.status);
   const width = useScreenWidth();
+
+  const [status, setStatus] = useState(invoice.status);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   if (invoice === null) {
     return <Redirect to="/invoices" />;
@@ -43,6 +61,26 @@ export default function SingleInvoiceView() {
 
   return (
     <>
+      <StyledModal
+        isOpen={deleteModalOpen}
+        onRequestClose={() => setDeleteModalOpen(false)}
+        contentLabel="Example Modal"
+        ariaHideApp={false}
+      >
+        <h2>Confirm Deletion</h2>
+        <p>
+          Are you sure you want to delete invoice #{invoice._id}? This action
+          cannot be undone.
+        </p>
+        <div className="modal-buttons">
+          <Button color="white" onClick={() => setDeleteModalOpen(false)}>
+            Cancel
+          </Button>
+          <Button color="red" className="delete-button">
+            Delete
+          </Button>
+        </div>
+      </StyledModal>
       <GoBack>
         <div>
           <Link to="/invoices">
@@ -65,7 +103,9 @@ export default function SingleInvoiceView() {
             </div>
             <div>
               <Button color="white">Edit</Button>
-              <Button color="red">Delete</Button>
+              <Button color="red" onClick={() => setDeleteModalOpen(true)}>
+                Delete
+              </Button>
               <Button onClick={() => toggleStatus()}>
                 Mark as {status === "pending" ? "Paid" : "Pending"}
               </Button>
@@ -128,7 +168,9 @@ export default function SingleInvoiceView() {
         <InvoiceActions>
           <div>
             <Button color="white">Edit</Button>
-            <Button color="red">Delete</Button>
+            <Button color="red" onClick={() => setDeleteModalOpen(true)}>
+              Delete
+            </Button>
             <Button onClick={() => toggleStatus()}>
               Mark as {status === "pending" ? "Paid" : "Pending"}
             </Button>

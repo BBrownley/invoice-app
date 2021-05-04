@@ -183,3 +183,37 @@ p {
   line-height: 18px;
   letter-spacing: -0.23px;
 }
+
+@keyframes openModalOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ReactModal__Overlay,
+.ReactModal__Overlay--after-open {
+  z-index: 100000;
+  animation-name: openModalOverlay;
+  animation-duration: 0.35s;
+  font-family: "Spartan", sans-serif;
+  background-color: rgba(0, 0, 0, 0.75) !important; /* :( */
+}
+
+@keyframes openModalContent {
+  from {
+    top: 0;
+    
+  }
+  to {
+    top: none;
+    
+  }
+}
+
+.ReactModal__Content {
+  animation-name: openModalContent;
+  animation-duration: 0.35s;
+}

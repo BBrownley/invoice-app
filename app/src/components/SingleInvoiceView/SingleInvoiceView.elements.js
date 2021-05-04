@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Status } from "../Invoice/Invoice.elements";
 import ScrollbarStyle from "../shared/mixins/Scrollbar.elements";
+import Modal from "react-modal";
 
 export const StyledStatus = styled(Status)`
   @media (max-width: 700px) {
@@ -204,6 +205,40 @@ export const InvoiceInfo = styled.div`
         margin-right: 0;
         margin-bottom: 0;
       }
+    }
+  }
+`;
+
+export const StyledModal = styled(Modal)`
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  z-index: 100000;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 3.25rem;
+  max-width: 480px;
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: ${props => props.theme.colors.gray500};
+    line-height: 1.375rem;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    .delete-button {
+      margin-left: .75rem;
     }
   }
 `;
