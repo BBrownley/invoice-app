@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import uniqid from "uniqid";
 
 import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
@@ -100,16 +101,31 @@ export default function NewInvoiceForm({
     const newInvoice = helpers.formatInvoice(formValues, items, status);
 
     try {
-      const validatedInvoice = await helpers.validateInvoice(newInvoice);
-      invoiceService.add(validatedInvoice);
+      const validatedInvoice = helpers.validateInvoice(newInvoice);
+
+      if (!localStorage.getItem("loggedUser")) {
+        const prevGuestInvoices = JSON.parse(
+          localStorage.getItem("guestInvoices")
+        );
+        const updatedGuestInvoices = [
+          ...prevGuestInvoices,
+          { ...newInvoice, _id: uniqid() }
+        ];
+        console.log(updatedGuestInvoices);
+        localStorage.setItem(
+          "guestInvoices",
+          JSON.stringify(updatedGuestInvoices)
+        );
+      } else {
+        invoiceService.add(validatedInvoice);
+      }
+
       handleFormOpened(false);
-      setAllInvoices(validatedInvoice);
+      // setAllInvoices(validatedInvoice);
     } catch (exception) {
       setFormError(exception.message);
     }
   };
-
-  console.log(editedInvoice?.status);
 
   const handleEditInvoice = async () => {
     const newInvoice = helpers.formatInvoice(

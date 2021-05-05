@@ -62,6 +62,15 @@ export default function InvoicesView() {
         setInvoices(invoices);
         setAllInvoices(invoices);
       } else {
+        // Set up guest invoices
+        if (!localStorage.getItem("guestInvoices")) {
+          const starterInvoices = await invoiceService.getGuestInvoices();
+          localStorage.setItem(
+            "guestInvoices",
+            JSON.stringify(starterInvoices)
+          );
+        }
+
         const guestInvoices = JSON.parse(localStorage.getItem("guestInvoices"));
         setInvoices(guestInvoices);
         setAllInvoices(guestInvoices);

@@ -63,8 +63,6 @@ export default function FormItemList({ items, setItems }) {
     });
   };
 
-  console.log(items);
-
   return (
     <Container>
       <h2>Item List</h2>

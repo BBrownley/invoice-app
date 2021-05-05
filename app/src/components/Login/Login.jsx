@@ -44,10 +44,7 @@ export default function Sandbox() {
   };
 
   const continueAsGuest = async () => {
-    if (!localStorage.getItem("guestInvoices")) {
-      const starterInvoices = await invoiceService.getGuestInvoices();
-      localStorage.setItem("guestInvoices", JSON.stringify(starterInvoices));
-    }
+    
     history.push("/invoices");
   };
 
