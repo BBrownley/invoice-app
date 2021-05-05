@@ -60,7 +60,6 @@ export default function InvoicesView() {
       const invoices = await invoiceService.getInvoices();
       setInvoices(invoices);
       setAllInvoices(invoices);
-      console.log(selectOpened.current);
     };
     fetchInvoices();
   }, []);

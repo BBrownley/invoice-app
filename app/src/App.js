@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
+
+import { setStoredToken } from "./services/tokenUtil";
 
 import { Container } from "./App.elements";
 
@@ -14,6 +16,15 @@ import Login from "./components/Login/Login";
 
 function App() {
   const [selectedInvoice, setSelectedInvoice] = useState({});
+  const history = useHistory();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("loggedUser");
+    if (storedUser) {
+      setStoredToken(storedUser);
+      history.push("/invoices");
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

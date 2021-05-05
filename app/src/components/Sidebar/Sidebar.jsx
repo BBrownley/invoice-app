@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { ejectTokenInterceptor } from "../../services/tokenUtil";
+
 import logo from "../../assets/logo.svg";
 import {
   Sidebar as Container,
@@ -13,6 +16,14 @@ import {
 } from "./Sidebar.elements";
 
 export default function Sidebar() {
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem("loggedUser");
+    ejectTokenInterceptor();
+    history.push("/");
+  };
+
   return (
     <Container>
       <div>
@@ -28,7 +39,7 @@ export default function Sidebar() {
         </ToggleContainer>
 
         <ProfilePictureContainer>
-          <ProfilePicture></ProfilePicture>
+          <ProfilePicture onClick={logout}></ProfilePicture>
         </ProfilePictureContainer>
       </div>
     </Container>

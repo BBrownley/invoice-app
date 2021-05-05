@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  setStoredToken } from "./tokenUtil";
+import { setStoredToken } from "./tokenUtil";
 
 const baseUrl = process.env.baseURL || "http://localhost:5000";
 
@@ -24,9 +24,7 @@ const login = async (username, password) => {
       console.log(exception);
       reject();
     }
-  })
-
-  
+  });
 };
 
 const usersService = {

@@ -5,7 +5,7 @@ const Invoice = require("../models/Invoice");
 const validateInvoice = require("../helpers/validateInvoice");
 
 // Get invoices by user
-invoiceRouter.get("/", async (req, res) => {
+invoiceRouter.get("/", async (req, res, next) => {
   if (req.isGuest) {
     next(); // Their invoices are in localStorage
   }
