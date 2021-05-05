@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Switch, Route, Link, useHistory } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Switch, Route, Link, useHistory, useLocation } from "react-router-dom";
+import useComponentWillMount from "./components/custom-hooks/useComponentWillMount";
 
 import { setStoredToken } from "./services/tokenUtil";
 
@@ -17,14 +18,17 @@ import Login from "./components/Login/Login";
 function App() {
   const [selectedInvoice, setSelectedInvoice] = useState({});
   const history = useHistory();
+  const location = useLocation();
 
-  useEffect(() => {
+  useComponentWillMount(() => {
     const storedUser = localStorage.getItem("loggedUser");
     if (storedUser) {
       setStoredToken(storedUser);
-      history.push("/invoices");
+      if (location.pathname === "/") {
+        history.push("/invoices");
+      }
     }
-  }, []);
+  });
 
   return (
     <ThemeProvider theme={theme}>
