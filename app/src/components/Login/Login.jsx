@@ -5,6 +5,7 @@ import { FormInput } from "../shared/FormInput.elements";
 import { Button } from "../shared/Button.elements";
 
 import usersService from "../../services/users";
+import invoiceService from "../../services/invoices";
 
 import {
   Container,
@@ -39,6 +40,14 @@ export default function Sandbox() {
 
   const login = async () => {
     await usersService.login(username, password);
+    history.push("/invoices");
+  };
+
+  const continueAsGuest = async () => {
+    if (!localStorage.getItem("guestInvoices")) {
+      const starterInvoices = await invoiceService.getGuestInvoices();
+      localStorage.setItem("guestInvoices", JSON.stringify(starterInvoices));
+    }
     history.push("/invoices");
   };
 
@@ -92,7 +101,9 @@ export default function Sandbox() {
                   </Button>
                 </Buttons>
                 <Link to="/invoices">
-                  <Button className="use-as-guest">Use as guest</Button>
+                  <Button className="use-as-guest" onClick={continueAsGuest}>
+                    Use as guest
+                  </Button>
                 </Link>
               </>
             )}

@@ -67,8 +67,22 @@ export default function SingleInvoiceView() {
   };
 
   const deleteInvoice = async () => {
-    await invoiceService.deleteInvoice(invoice);
-    history.push("/invoices");
+    if (localStorage.getItem("loggedUser")) {
+      await invoiceService.deleteInvoice(invoice);
+      history.push("/invoices");
+    } else {
+      const guestInvoices = JSON.parse(localStorage.getItem("guestInvoices"));
+
+      const updatedGuestInvoices = guestInvoices.filter(guestInvoice => {
+        return guestInvoice.id !== invoice.id;
+      });
+
+      localStorage.setItem(
+        "guestInvoices",
+        JSON.stringify(updatedGuestInvoices)
+      );
+      history.push("/invoices");
+    }
   };
 
   return (
@@ -193,7 +207,11 @@ export default function SingleInvoiceView() {
         </InvoiceActions>
       )}
       {editInvoiceOpen && (
-        <NewInvoiceForm handleFormOpened={setEditInvoiceOpen} editMode editedInvoice={invoice} />
+        <NewInvoiceForm
+          handleFormOpened={setEditInvoiceOpen}
+          editMode
+          editedInvoice={invoice}
+        />
       )}
     </>
   );

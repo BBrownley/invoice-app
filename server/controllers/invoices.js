@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const invoiceRouter = express.Router();
 const Invoice = require("../models/Invoice");
+const GuestInvoice = require("../models/GuestInvoice");
 const validateInvoice = require("../helpers/validateInvoice");
 
 // Get invoices by user
@@ -12,6 +13,16 @@ invoiceRouter.get("/", async (req, res, next) => {
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
   const invoices = await Invoice.find({ ownerId: decodedToken._id }).exec();
   res.status(200).json(invoices);
+});
+
+// Get guest starter invoices for first-time users who do not want to make an account
+invoiceRouter.get("/guest", async (req, res, next) => {
+  // Confirm guest user
+  if (!req.isGuest) {
+    return next(new Error("Expected guest user to get guest starter invoices"));
+  }
+  const guestInvoices = await GuestInvoice.find({}).exec();
+  res.json(guestInvoices);
 });
 
 // Add a new invoice

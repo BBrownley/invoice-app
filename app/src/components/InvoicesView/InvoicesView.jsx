@@ -57,9 +57,15 @@ export default function InvoicesView() {
 
   useEffect(() => {
     const fetchInvoices = async () => {
-      const invoices = await invoiceService.getInvoices();
-      setInvoices(invoices);
-      setAllInvoices(invoices);
+      if (localStorage.getItem("loggedUser")) {
+        const invoices = await invoiceService.getInvoices();
+        setInvoices(invoices);
+        setAllInvoices(invoices);
+      } else {
+        const guestInvoices = JSON.parse(localStorage.getItem("guestInvoices"));
+        setInvoices(guestInvoices);
+        setAllInvoices(guestInvoices);
+      }
     };
     fetchInvoices();
   }, []);
@@ -154,7 +160,12 @@ export default function InvoicesView() {
           </div>
         </Header>
         <InvoicesList invoices={invoices} handleSelectInvoice />
-        {formOpened && <NewInvoiceForm handleFormOpened={setFormOpened} setAllInvoices={setAllInvoices} />}
+        {formOpened && (
+          <NewInvoiceForm
+            handleFormOpened={setFormOpened}
+            setAllInvoices={setAllInvoices}
+          />
+        )}
       </Wrapper>
     </Container>
   );

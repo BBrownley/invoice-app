@@ -7,6 +7,11 @@ const getInvoices = async () => {
   return res.data;
 };
 
+const getGuestInvoices = async () => {
+  const res = await axios.get(`${baseUrl}/invoices/guest`);
+  return res.data;
+};
+
 const add = async invoice => {
   try {
     const res = await axios.post(`${baseUrl}/invoices`, { invoice });
@@ -49,6 +54,7 @@ const updateInvoice = async invoice => {
 
 const invoiceService = {
   getInvoices,
+  getGuestInvoices,
   add,
   toggleStatus,
   updateInvoice,
