@@ -176,6 +176,7 @@ export default function InvoicesView() {
             <NewInvoiceForm
               handleFormOpened={setFormOpened}
               setAllInvoices={setAllInvoices}
+              setInvoices={setInvoices}
             />
           )}
         </Wrapper>

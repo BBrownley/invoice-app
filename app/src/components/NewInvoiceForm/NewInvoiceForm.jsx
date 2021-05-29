@@ -36,6 +36,7 @@ const netDays = [
 export default function NewInvoiceForm({
   handleFormOpened,
   setAllInvoices,
+  setInvoices,
   editMode,
   editedInvoice
 }) {
@@ -102,6 +103,7 @@ export default function NewInvoiceForm({
 
     try {
       const validatedInvoice = helpers.validateInvoice(newInvoice);
+      let serverGeneratedInvoice;
 
       if (!localStorage.getItem("loggedUser")) {
         const prevGuestInvoices = JSON.parse(
@@ -111,17 +113,19 @@ export default function NewInvoiceForm({
           ...prevGuestInvoices,
           { ...newInvoice, _id: uniqid() }
         ];
-        console.log(updatedGuestInvoices);
         localStorage.setItem(
           "guestInvoices",
           JSON.stringify(updatedGuestInvoices)
         );
       } else {
-        invoiceService.add(validatedInvoice);
+        serverGeneratedInvoice = await invoiceService.add(validatedInvoice);
       }
 
+      console.log(serverGeneratedInvoice);
+
       handleFormOpened(false);
-      // setAllInvoices(validatedInvoice);
+      setInvoices(prevState => [...prevState, serverGeneratedInvoice]);
+      setAllInvoices(prevState => [...prevState, serverGeneratedInvoice]);
     } catch (exception) {
       setFormError(exception.message);
     }
