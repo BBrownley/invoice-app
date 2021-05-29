@@ -82,7 +82,7 @@ invoiceRouter.put("/:id/status", async (req, res, next) => {
 // Update entire invoice
 
 invoiceRouter.put("/:id", async (req, res, next) => {
-  console.log(req.body);
+  if (req.isGuest) return next();
 
   // Verify user
   if (req.decodedToken._id !== req.body.ownerId) {

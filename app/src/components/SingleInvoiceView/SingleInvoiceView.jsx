@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
-import { useInvoice } from "../../InvoiceContext";
+import { useInvoice, useInvoiceUpdate } from "../../InvoiceContext";
 import _ from "lodash";
 import { format } from "date-fns";
 import invoiceService from "../../services/invoices";
@@ -26,23 +26,20 @@ import { Status } from "../Invoice/Invoice.elements";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    position: "absolute",
-    zIndex: 100000
-  }
-};
-
 export default function SingleInvoiceView() {
-  const invoice = useInvoice();
+  let invoice = useInvoice();
+
+  if (!invoice) {
+    invoice = JSON.parse(window.localStorage.getItem("currentInvoice"));
+  }
+
   const width = useScreenWidth();
   const history = useHistory();
+
+  // Save current invoice to local storage so it persists between refreshes
+  useState(() => {
+    window.localStorage.setItem("currentInvoice", JSON.stringify(invoice));
+  }, [invoice]);
 
   const [status, setStatus] = useState(invoice.status);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -60,10 +57,6 @@ export default function SingleInvoiceView() {
       return "paid";
     });
     invoiceService.toggleStatus(invoice);
-  };
-
-  const editInvoice = () => {
-    setEditInvoiceOpen(true);
   };
 
   const deleteInvoice = async () => {

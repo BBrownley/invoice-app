@@ -24,7 +24,7 @@ export default function Invoice({ invoice }) {
   return (
     <OuterContainer>
       <Link
-        to={`/invoices/${invoice.id}`}
+        to={`/invoices/${invoice._id}`}
         onClick={() => selectInvoice(invoice)}
       >
         <Container>
