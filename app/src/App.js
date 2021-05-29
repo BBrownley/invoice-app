@@ -34,7 +34,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <InvoiceProvider>
         <Container>
-          <Sidebar />
           <Switch>
             <Route
               exact

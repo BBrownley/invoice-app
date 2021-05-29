@@ -8,7 +8,7 @@ import invoiceService from "../../services/invoices";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
-import App from "../../App.js";
+import Sidebar from "../Sidebar/Sidebar";
 import NewInvoiceForm from "../NewInvoiceForm/NewInvoiceForm";
 import ItemList from "../ItemList/ItemList";
 
@@ -80,6 +80,7 @@ export default function SingleInvoiceView() {
 
   return (
     <>
+      <Sidebar />
       <StyledModal
         isOpen={deleteModalOpen}
         onRequestClose={() => setDeleteModalOpen(false)}

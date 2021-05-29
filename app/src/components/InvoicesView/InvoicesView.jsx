@@ -3,6 +3,7 @@ import invoiceService from "../../services/invoices";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
 
+import Sidebar from "../Sidebar/Sidebar";
 import InvoicesList from "../InvoicesList/InvoicesList";
 import NewInvoiceForm from "../NewInvoiceForm/NewInvoiceForm";
 
@@ -100,82 +101,85 @@ export default function InvoicesView() {
   };
 
   return (
-    <Container>
-      <Wrapper>
-        <Header>
-          <div>
-            <h1>Invoices</h1>
-            <p className="invoice-count">
-              {invoices.length > 0
-                ? `There are ${invoices.length} total invoices`
-                : "No invoices"}
-            </p>
-          </div>
-          <div>
-            <CustomDropdown>
-              <CustomDropdownHeader
-                opened={filterSelectOpen}
-                onClick={handleFilterSelectOpen}
-              >
-                {width > 630 ? "Filter by status" : "Filter"}{" "}
-                <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
-              </CustomDropdownHeader>
-              {selectOpened && (
-                <Options opened={filterSelectOpen} ref={optionsRef}>
-                  <label className="container draft">
-                    Draft
-                    <input
-                      type="checkbox"
-                      id="filter-draft"
-                      name="filter-draft"
-                      value="draft"
-                      checked={filters.includes("draft")}
-                      onChange={e => handleFilterCheckbox(e)}
-                    />
-                    <span className="checkmark"></span>
-                  </label>
-                  <label className="container pending">
-                    Pending
-                    <input
-                      type="checkbox"
-                      id="filter-pending"
-                      name="filter-pending"
-                      value="pending"
-                      checked={filters.includes("pending")}
-                      onChange={e => handleFilterCheckbox(e)}
-                    />
-                    <span className="checkmark"></span>
-                  </label>
-                  <label className="container paid">
-                    Paid
-                    <input
-                      type="checkbox"
-                      id="filter-paid"
-                      name="filter-paid"
-                      value="paid"
-                      checked={filters.includes("paid")}
-                      onChange={e => handleFilterCheckbox(e)}
-                    />
-                    <span className="checkmark"></span>
-                  </label>
-                </Options>
-              )}
-            </CustomDropdown>
+    <>
+      <Sidebar />
+      <Container>
+        <Wrapper>
+          <Header>
+            <div>
+              <h1>Invoices</h1>
+              <p className="invoice-count">
+                {invoices.length > 0
+                  ? `There are ${invoices.length} total invoices`
+                  : "No invoices"}
+              </p>
+            </div>
+            <div>
+              <CustomDropdown>
+                <CustomDropdownHeader
+                  opened={filterSelectOpen}
+                  onClick={handleFilterSelectOpen}
+                >
+                  {width > 630 ? "Filter by status" : "Filter"}{" "}
+                  <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
+                </CustomDropdownHeader>
+                {selectOpened && (
+                  <Options opened={filterSelectOpen} ref={optionsRef}>
+                    <label className="container draft">
+                      Draft
+                      <input
+                        type="checkbox"
+                        id="filter-draft"
+                        name="filter-draft"
+                        value="draft"
+                        checked={filters.includes("draft")}
+                        onChange={e => handleFilterCheckbox(e)}
+                      />
+                      <span className="checkmark"></span>
+                    </label>
+                    <label className="container pending">
+                      Pending
+                      <input
+                        type="checkbox"
+                        id="filter-pending"
+                        name="filter-pending"
+                        value="pending"
+                        checked={filters.includes("pending")}
+                        onChange={e => handleFilterCheckbox(e)}
+                      />
+                      <span className="checkmark"></span>
+                    </label>
+                    <label className="container paid">
+                      Paid
+                      <input
+                        type="checkbox"
+                        id="filter-paid"
+                        name="filter-paid"
+                        value="paid"
+                        checked={filters.includes("paid")}
+                        onChange={e => handleFilterCheckbox(e)}
+                      />
+                      <span className="checkmark"></span>
+                    </label>
+                  </Options>
+                )}
+              </CustomDropdown>
 
-            <StyledButton name="new" onClick={() => setFormOpened(true)}>
-              <div className="plus-button"></div>
-              <span>{width >= 550 ? "New Invoice" : "New"}</span>
-            </StyledButton>
-          </div>
-        </Header>
-        <InvoicesList invoices={invoices} handleSelectInvoice />
-        {formOpened && (
-          <NewInvoiceForm
-            handleFormOpened={setFormOpened}
-            setAllInvoices={setAllInvoices}
-          />
-        )}
-      </Wrapper>
-    </Container>
+              <StyledButton name="new" onClick={() => setFormOpened(true)}>
+                <div className="plus-button"></div>
+                <span>{width >= 550 ? "New Invoice" : "New"}</span>
+              </StyledButton>
+            </div>
+          </Header>
+          <InvoicesList invoices={invoices} handleSelectInvoice />
+          {formOpened && (
+            <NewInvoiceForm
+              handleFormOpened={setFormOpened}
+              setAllInvoices={setAllInvoices}
+            />
+          )}
+        </Wrapper>
+      </Container>
+    </>
   );
 }
