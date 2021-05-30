@@ -1,5 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ScrollbarStyle from "../shared/mixins/Scrollbar.elements";
+
+const openContainer = (leftStart, leftEnd) => keyframes`
+  from {
+    opacity: 0;
+    left: ${leftStart};
+  }
+  to {
+    opacity: 1;
+    left: ${leftEnd};
+  }
+`;
 
 export const Container = styled.div`
   position: absolute;
@@ -13,7 +24,8 @@ export const Container = styled.div`
   padding-right: 2.25rem;
   border-bottom-right-radius: 1.25rem;
   border-top-right-radius: 1.25rem;
-  z-index: 10000;
+  z-index: 10;
+  animation: ${openContainer("-32rem", "6rem")} 0.25s ease;
 
   h4 {
     color: ${props => props.theme.colors.primary};
@@ -35,6 +47,7 @@ export const Container = styled.div`
   @media (max-width: 768px) {
     left: 0;
     padding-top: 10.25rem;
+    animation: ${openContainer("-32rem", "0rem")} 0.25s ease;
   }
   @media (max-width: 700px) {
     width: 100vw;
@@ -84,6 +97,15 @@ export const Wrapper = styled.div`
   }
 `;
 
+const invoiceFormOptions = keyframes`
+  from {
+    bottom: -7rem;
+  }
+  to {
+    bottom: 0rem;
+  }
+`;
+
 export const FormBottom = styled.div`
   .form-error {
     position: absolute;
@@ -96,11 +118,12 @@ export const FormBottom = styled.div`
     position: fixed;
     bottom: 0;
     left: 100px;
+    z-index: 100;
     width: 615px;
     display: flex;
     justify-content: space-between;
     padding: 2rem 3.5rem;
-
+    animation: ${invoiceFormOptions} 0.25s ease-in-out;
     background: white;
     -webkit-box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
     box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);

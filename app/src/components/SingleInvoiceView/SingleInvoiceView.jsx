@@ -190,7 +190,9 @@ export default function SingleInvoiceView() {
       {width < 701 && (
         <InvoiceActions>
           <div>
-            <Button color="white">Edit</Button>
+            <Button color="white" onClick={() => setEditInvoiceOpen(true)}>
+              Edit
+            </Button>
             <Button color="red" onClick={() => setDeleteModalOpen(true)}>
               Delete
             </Button>

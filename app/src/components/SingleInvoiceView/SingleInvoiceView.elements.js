@@ -52,7 +52,7 @@ export const GoBack = styled.div`
   top: 3.75rem;
   left: 6rem;
   right: 0;
-  z-index: 10000;
+  z-index: 10;
   /* border: 2px dashed red; */
   > div {
     max-width: 1084px;
@@ -123,7 +123,7 @@ export const InvoiceActions = styled.div`
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 10000;
+    z-index: 10;
     margin-bottom: 0;
   }
 `;
