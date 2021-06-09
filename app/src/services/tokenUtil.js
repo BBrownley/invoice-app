@@ -1,17 +1,14 @@
 import axios from "axios";
 
-let tokenInterceptor;
+let storedToken = null;
 
 export const setStoredToken = token => {
-  tokenInterceptor = axios.interceptors.request.use(req => {
-    req.headers.Authorization = token;
-
-    return req;
-  });
-  console.log(tokenInterceptor);
+  storedToken = token;
+  axios.defaults.headers.common["Authorization"] = storedToken;
 };
 
-export const ejectTokenInterceptor = () => {
-  console.log(tokenInterceptor);
-  axios.interceptors.request.eject(tokenInterceptor);
+export const removeStoredToken = () => {
+  storedToken = null;
 };
+
+export default storedToken;

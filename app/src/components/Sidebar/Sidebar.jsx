@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { ejectTokenInterceptor } from "../../services/tokenUtil";
+import { removeStoredToken } from "../../services/tokenUtil";
 
 import logo from "../../assets/logo.svg";
 import {
@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   const logout = () => {
     localStorage.removeItem("loggedUser");
-    ejectTokenInterceptor();
+    removeStoredToken();
     history.push("/");
   };
 

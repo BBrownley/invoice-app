@@ -40,6 +40,7 @@ export default function Sandbox() {
 
   const login = async () => {
     await usersService.login(username, password);
+    
     history.push("/invoices");
   };
 
