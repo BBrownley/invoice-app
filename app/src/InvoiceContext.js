@@ -15,6 +15,7 @@ export const InvoiceProvider = ({ children }) => {
   const [invoice, setInvoice] = useState(null);
 
   const handleSetInvoice = invoice => {
+    console.log(invoice);
     setInvoice(invoice);
   };
 

@@ -28,6 +28,7 @@ import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function SingleInvoiceView() {
   let invoice = useInvoice();
+  const updateInvoice = useInvoiceUpdate();
 
   if (!invoice) {
     invoice = JSON.parse(window.localStorage.getItem("currentInvoice"));
@@ -50,11 +51,19 @@ export default function SingleInvoiceView() {
   }
 
   const toggleStatus = () => {
+    // Toggle invoice status between paid/pending
     setStatus(prevState => {
-      if (prevState === "paid") {
-        return "pending";
-      }
-      return "paid";
+      const updatedStatus = prevState === "paid" ? "pending" : "paid";
+      const updatedInvoice = { ...invoice, status: updatedStatus };
+
+      // Update context with the new status and store it in localStorage
+      updateInvoice(updatedInvoice);
+      window.localStorage.setItem(
+        "currentInvoice",
+        JSON.stringify(updatedInvoice)
+      );
+
+      return updatedStatus;
     });
     invoiceService.toggleStatus(invoice);
   };
