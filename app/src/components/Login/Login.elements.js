@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Container = styled.div`
   position: absolute;
@@ -8,6 +8,17 @@ export const Container = styled.div`
   bottom: 0;
   z-index: 100000;
   overflow: auto;
+  form {
+    position: relative;
+    margin-bottom: 1rem;
+    .form-warning {
+      color: red;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      position: absolute;
+      bottom: -2rem;
+    }
+  }
 `;
 
 export const BgTop = styled.div`

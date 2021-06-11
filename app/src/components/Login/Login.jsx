@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { FormInput } from "../shared/FormInput.elements";
@@ -32,20 +32,73 @@ export default function Sandbox() {
 
   const [registering, setRegistering] = useState(false);
 
+  const [formWarning, setFormWarning] = useState(null);
+
   const history = useHistory();
 
-  const register = () => {
-    usersService.register({ newUsername, newEmail, newPassword, pwConfirm });
+  // Clear form warnings on input or form change
+  useEffect(() => {
+    setFormWarning(null);
+  }, [
+    username,
+    password,
+    newUsername,
+    newEmail,
+    newPassword,
+    pwConfirm,
+    registering
+  ]);
+
+  const register = async () => {
+    // Check that all fields are filled in
+    if (
+      newUsername.trim().length === 0 ||
+      newEmail.trim().length === 0 ||
+      newPassword.trim().length === 0 ||
+      pwConfirm.trim().length === 0
+    ) {
+      return setFormWarning("All fields must be filled");
+    }
+
+    // new password matches confirm pw
+    if (newPassword !== pwConfirm) {
+      return setFormWarning("Passwords do not match");
+    }
+
+    // Attempt to create account
+    const registration = await usersService.register({
+      newUsername,
+      newEmail,
+      newPassword,
+      pwConfirm
+    });
+
+    // Errors returned from the server (usually a username or email already in use)
+    if (registration?.error) {
+      return setFormWarning(registration.error);
+    }
+
+    history.push("/invoices");
   };
 
   const login = async () => {
-    await usersService.login(username, password);
-    
+    // Check that both fields are filled in
+    if (username.trim().length === 0 || password.trim().length === 0) {
+      return setFormWarning("Both fields must be filled");
+    }
+
+    // Validate username and password
+    const userLogin = await usersService.login(username, password);
+
+    // Errors returned from the server (usually invalid username/pw)
+    if (userLogin?.error) {
+      return setFormWarning(userLogin.error);
+    }
+
     history.push("/invoices");
   };
 
   const continueAsGuest = async () => {
-    
     history.push("/invoices");
   };
 
@@ -90,6 +143,7 @@ export default function Sandbox() {
                       onChange={e => setPassword(e.target.value)}
                     />
                   </FormField>
+                  <span className="form-warning">{formWarning}</span>
                 </form>
 
                 <Buttons>
@@ -149,6 +203,7 @@ export default function Sandbox() {
                       onChange={e => setPwConfirm(e.target.value)}
                     />
                   </FormField>
+                  <span className="form-warning">{formWarning}</span>
                 </form>
 
                 <Buttons>

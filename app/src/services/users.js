@@ -3,8 +3,14 @@ import { setStoredToken } from "./tokenUtil";
 
 const baseUrl = process.env.baseURL || "http://localhost:5000";
 
-const register = credentials => {
-  axios.post(`${baseUrl}/users`, credentials);
+const register = async credentials => {
+  try {
+    await axios.post(`${baseUrl}/users`, credentials);
+    return;
+  } catch (error) {
+    console.log(error.response.data);
+    return error.response.data;
+  }
 };
 
 const login = async (username, password) => {
@@ -13,18 +19,15 @@ const login = async (username, password) => {
     password
   };
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      const req = await axios.post(`${baseUrl}/users/login`, user);
-      const token = req.data;
-      setStoredToken(token);
-      window.localStorage.setItem("loggedUser", token);
-      resolve();
-    } catch (exception) {
-      console.log(exception);
-      reject();
-    }
-  });
+  try {
+    const req = await axios.post(`${baseUrl}/users/login`, user);
+    const token = req.data;
+    setStoredToken(token);
+    window.localStorage.setItem("loggedUser", token);
+    return;
+  } catch (error) {
+    return error.response.data;
+  }
 };
 
 const usersService = {

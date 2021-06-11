@@ -32,14 +32,30 @@ userRouter.post("/", async (req, res, next) => {
   }
 
   try {
+    // Username must not be in use
+    User.findOne({ username: newUsername }, (err, user) => {
+      if (user !== null) {
+        return next(new Error("Username already in use"));
+      }
+    });
+
+    // Email must not be in use
+    User.findOne({ email: newEmail }, (err, user) => {
+      if (user !== null) {
+        return next(new Error("Email already in use"));
+      }
+    });
+
     const generatedSalt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(newPassword, generatedSalt);
 
-    const newUser = await User.create({
+    await User.create({
       username: newUsername,
       email: newEmail,
       hashedPassword: hashedPassword
     });
+
+    res.status(200);
   } catch (exception) {
     return next(new Error(exception));
   }
