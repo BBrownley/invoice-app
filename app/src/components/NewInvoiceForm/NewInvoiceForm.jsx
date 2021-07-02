@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
+import { useInvoiceUpdate } from "../../InvoiceContext";
 
 import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
@@ -76,6 +77,8 @@ export default function NewInvoiceForm({
 
   const [formError, setFormError] = useState("All fields must be added");
 
+  const updateInvoice = useInvoiceUpdate();
+
   useEffect(() => {
     setFormError("");
   }, [items, formValues]);
@@ -132,18 +135,30 @@ export default function NewInvoiceForm({
   };
 
   const handleEditInvoice = async () => {
-    const newInvoice = helpers.formatInvoice(
+    const formattedInvoice = helpers.formatInvoice(
       formValues,
       items,
       editedInvoice.status
     );
     try {
-      const validatedInvoice = await helpers.validateInvoice(newInvoice);
-      invoiceService.updateInvoice({
+      const validatedInvoice = await helpers.validateInvoice(formattedInvoice);
+      const updatedInvoice = {
         ...validatedInvoice,
         ownerId: editedInvoice.ownerId,
         _id: editedInvoice._id
-      });
+      };
+
+      // Update invoice in backend
+      invoiceService.updateInvoice(updatedInvoice);
+      // Update invoice in current view
+      updateInvoice(updatedInvoice);
+      // Persist updated invoice values when refreshing
+      window.localStorage.setItem(
+        "currentInvoice",
+        JSON.stringify(updatedInvoice)
+      );
+
+      handleFormOpened(false);
     } catch (exception) {
       setFormError(exception.message);
     }
