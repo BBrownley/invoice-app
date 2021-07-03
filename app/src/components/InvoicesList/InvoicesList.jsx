@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Invoice from "../Invoice/Invoice";
 import imgEmpty from "../../assets/illustration-empty.svg";
+
+import { useDarkMode } from "../../darkModeContext";
 
 import { Container, EmptyWarning, EmptyImg } from "./InvoicesList.elements";
 
@@ -21,6 +23,7 @@ export default function InvoicesList({ invoices }) {
       {invoices.map((invoice, key) => {
         return <Invoice invoice={invoice} key={key} />;
       })}
+      <p>Dark mode is currently {useDarkMode() ? "on" : "off"}</p>
     </Container>
   );
 }

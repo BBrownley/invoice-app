@@ -78,12 +78,41 @@ userRouter.post("/login", async (req, res, next) => {
       throw new Error();
     }
 
-    // Username/pw correct, sign token
+    // Username/pw correct, sign token and setup user preferences
     const userToken = jwt.sign(JSON.stringify(user), process.env.SECRET);
-    res.json(`Bearer ${userToken}`);
+    const userPreferences = {
+      darkModeEnabled: user.darkMode
+    };
+    res.json({ userToken: `Bearer ${userToken}`, userPreferences });
   } catch (exception) {
     return next(new Error("Incorrect password"));
   }
+});
+
+// Get dark mode preference
+userRouter.get("/darkmode", async (req, res, next) => {
+  const currentUser = await User.findOne({ _id: req.decodedToken._id });
+  const userPref = currentUser.darkMode;
+  res.json(userPref);
+});
+
+// Toggle dark mode
+userRouter.put("/darkmode", async (req, res, next) => {
+  const currentUser = await User.findOne({ _id: req.decodedToken._id });
+  const userPref = currentUser.darkMode;
+
+  User.findByIdAndUpdate(
+    { _id: req.decodedToken._id },
+    { ...req.decodedToken, darkMode: !userPref },
+    (err, results) => {
+      if (err) {
+        return next(new Error("Unable to update dark mode preference"));
+      } else {
+        console.log("Dark mode preference toggled");
+      }
+      next();
+    }
+  );
 });
 
 module.exports = userRouter;

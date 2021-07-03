@@ -15,7 +15,11 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }]
+  invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }],
+  darkMode: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const User = mongoose.model("user", userSchema);

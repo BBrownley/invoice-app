@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
+
 import { useInvoice, useInvoiceUpdate } from "../../InvoiceContext";
+
 import _ from "lodash";
 import { format } from "date-fns";
 import invoiceService from "../../services/invoices";

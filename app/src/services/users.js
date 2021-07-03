@@ -21,7 +21,8 @@ const login = async (username, password) => {
 
   try {
     const req = await axios.post(`${baseUrl}/users/login`, user);
-    const token = req.data;
+
+    const token = req.data.userToken;
     setStoredToken(token);
     window.localStorage.setItem("loggedUser", token);
     return;
@@ -30,9 +31,31 @@ const login = async (username, password) => {
   }
 };
 
+const getDarkModePref = async () => {
+  try {
+    const req = await axios.get(`${baseUrl}/users/darkmode`);
+
+    return req.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+const toggleDarkModePref = async () => {
+  try {
+    const req = await axios.put(`${baseUrl}/users/darkmode`);
+
+    console.log(req);
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 const usersService = {
   register,
-  login
+  login,
+  getDarkModePref,
+  toggleDarkModePref
 };
 
 export default usersService;

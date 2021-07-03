@@ -7,6 +7,8 @@ import { setStoredToken } from "./services/tokenUtil";
 import { Container } from "./App.elements";
 
 import { InvoiceProvider } from "./InvoiceContext";
+import { DarkModeProvider } from "./darkModeContext";
+
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 
@@ -33,23 +35,25 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <InvoiceProvider>
-        <Container>
-          <Switch>
-            <Route
-              exact
-              path="/invoices"
-              render={() => (
-                <InvoicesView handleSelectInvoice={setSelectedInvoice} />
-              )}
-            />
-            <Route
-              exact
-              path="/invoices/:id"
-              render={() => <SingleInvoiceView invoice={selectedInvoice} />}
-            />
-            <Route path="/" component={Login} />
-          </Switch>
-        </Container>
+        <DarkModeProvider>
+          <Container>
+            <Switch>
+              <Route
+                exact
+                path="/invoices"
+                render={() => (
+                  <InvoicesView handleSelectInvoice={setSelectedInvoice} />
+                )}
+              />
+              <Route
+                exact
+                path="/invoices/:id"
+                render={() => <SingleInvoiceView invoice={selectedInvoice} />}
+              />
+              <Route path="/" component={Login} />
+            </Switch>
+          </Container>
+        </DarkModeProvider>
       </InvoiceProvider>
     </ThemeProvider>
   );
