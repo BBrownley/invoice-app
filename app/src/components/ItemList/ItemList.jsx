@@ -1,5 +1,6 @@
 import React from "react";
 import useScreenWidth from "../custom-hooks/useScreenWidth";
+import { usedarkMode, useDarkMode } from "../../darkModeContext";
 
 import Item from "../Item/Item";
 
@@ -13,10 +14,11 @@ import {
 
 export default function ItemList({ items, total }) {
   const width = useScreenWidth();
+  const darkMode = useDarkMode();
 
   return (
     <Container>
-      <ListWrapper>
+      <ListWrapper darkMode={darkMode}>
         <div className="header">
           <span>Item Name</span>
           <span>QTY.</span>
@@ -29,7 +31,7 @@ export default function ItemList({ items, total }) {
           })}
         </List>
       </ListWrapper>
-      <Total>
+      <Total darkMode={darkMode}>
         <span className="amt-due">
           {width >= 701 ? "Amount Due" : "Grand Total"}
         </span>

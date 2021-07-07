@@ -4,6 +4,18 @@ import ScrollbarStyle from "../shared/mixins/Scrollbar.elements";
 import Modal from "react-modal";
 
 export const StyledStatus = styled(Status)`
+  span {
+    background-color: ${props => {
+      switch (props.status) {
+        case "paid":
+          return props.darkMode ? "#1f2b3f" : "";
+        case "pending":
+          return props.darkMode ? "2b2736" : "";
+        default:
+          break;
+      }
+    }};
+  }
   @media (max-width: 700px) {
     position: absolute;
     top: 3rem;
@@ -62,9 +74,10 @@ export const GoBack = styled.div`
     a {
       text-decoration: none;
       font-weight: bold;
+      color: ${props => props.theme.colors.black600};
 
       span {
-        color: black;
+        color: ${props => (props.darkMode ? "white" : "black")};
       }
       &:visited {
         color: ${props => props.theme.colors.black600};
@@ -100,8 +113,9 @@ export const InvoiceActions = styled.div`
   padding: 1.5rem 2rem;
   -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
-  background-color: white;
   border-radius: 0.5rem;
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black400 : "white"};
 
   > div:nth-of-type(1) {
     display: flex;
@@ -131,11 +145,12 @@ export const InvoiceActions = styled.div`
 export const InvoiceInfo = styled.div`
   /* border: 3px dashed; */
   padding: 3.25rem;
-  background-color: white;
   -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   border-radius: 0.5rem;
   position: relative;
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black400 : "white"};
 
   > * {
     display: flex;
@@ -143,7 +158,10 @@ export const InvoiceInfo = styled.div`
   span {
     display: block;
     line-height: 1.125rem;
-    color: ${props => props.theme.colors.gray500};
+    color: ${props =>
+      props.darkMode
+        ? props.theme.colors.blueGrayLight
+        : props.theme.colors.gray500};
   }
   h2 {
     margin-top: 0.625rem;
@@ -238,7 +256,7 @@ export const StyledModal = styled(Modal)`
     display: flex;
     justify-content: flex-end;
     .delete-button {
-      margin-left: .75rem;
+      margin-left: 0.75rem;
     }
   }
 `;

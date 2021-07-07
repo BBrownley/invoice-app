@@ -4,6 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+
   > * {
     padding: 3rem;
   }
@@ -17,14 +18,18 @@ export const Container = styled.div`
 export const ListWrapper = styled.div`
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-  background-color: #f5f5f5;
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black300 : "#f5f5f5"};
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     > * {
       flex: 1;
-      /* border: 1px dashed; */
+      color: ${props =>
+        props.darkMode
+          ? props.theme.colors.blueGrayLight
+          : props.theme.colors.gray500};
     }
     span:nth-of-type(1) {
       flex: 2;
@@ -46,7 +51,8 @@ export const ListWrapper = styled.div`
 `;
 
 export const Total = styled.div`
-  background-color: ${props => props.theme.colors.gray400};
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black600 : props.theme.colors.gray400};
   color: white;
   display: flex;
   justify-content: space-between;

@@ -3,6 +3,7 @@ import { Redirect, Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 
 import { useInvoice, useInvoiceUpdate } from "../../InvoiceContext";
+import { useDarkMode } from "../../darkModeContext";
 
 import _ from "lodash";
 import { format } from "date-fns";
@@ -31,6 +32,7 @@ import { faChevronLeft, faCircle } from "@fortawesome/free-solid-svg-icons";
 export default function SingleInvoiceView() {
   let invoice = useInvoice();
   const updateInvoice = useInvoiceUpdate();
+  const darkMode = useDarkMode();
 
   if (!invoice) {
     invoice = JSON.parse(window.localStorage.getItem("currentInvoice"));
@@ -112,7 +114,7 @@ export default function SingleInvoiceView() {
           </Button>
         </div>
       </StyledModal>
-      <GoBack>
+      <GoBack darkMode={darkMode}>
         <div>
           <Link to="/invoices">
             <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
@@ -122,10 +124,14 @@ export default function SingleInvoiceView() {
       </GoBack>
       <Container>
         {width >= 701 && (
-          <InvoiceActions>
+          <InvoiceActions darkMode={darkMode}>
             <div>
               <span>Status</span>
-              <StyledStatus status={status} className="status">
+              <StyledStatus
+                status={status}
+                className="status"
+                darkMode={darkMode}
+              >
                 <span>
                   <FontAwesomeIcon icon={faCircle} className="fa-circle" />
                   {_.capitalize(status)}
@@ -146,14 +152,18 @@ export default function SingleInvoiceView() {
           </InvoiceActions>
         )}
         {width < 701 && (
-          <StyledStatus status={invoice.status} className="status">
+          <StyledStatus
+            status={invoice.status}
+            className="status"
+            darkMode={darkMode}
+          >
             <span>
               <FontAwesomeIcon icon={faCircle} className="fa-circle" />
               {_.capitalize(invoice.status)}
             </span>
           </StyledStatus>
         )}
-        <InvoiceInfo>
+        <InvoiceInfo darkMode={darkMode}>
           <div>
             <div>
               <h2 className="invoice-id">
@@ -194,12 +204,16 @@ export default function SingleInvoiceView() {
               <h2>{invoice.clientEmail}</h2>
             </div>
           </div>
-          <ItemList items={invoice.items} total={invoice.total} />
+          <ItemList
+            items={invoice.items}
+            total={invoice.total}
+            darkMode={darkMode}
+          />
         </InvoiceInfo>
       </Container>
 
       {width < 701 && (
-        <InvoiceActions>
+        <InvoiceActions darkMode={darkMode}>
           <div>
             <Button color="white" onClick={() => setEditInvoiceOpen(true)}>
               Edit
