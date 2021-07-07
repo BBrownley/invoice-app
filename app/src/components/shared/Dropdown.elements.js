@@ -7,7 +7,11 @@ export const StyledSelect = styled(Select)`
   margin-top: 0;
   margin-bottom: 0;
   .css-yk16xz-control {
+    transition: none;
     height: 52px;
+    background: ${props => props.darkMode && props.theme.colors.black400};
+    border-color: ${props => props.darkMode && props.theme.colors.black300};
+
     &:hover {
       cursor: pointer;
       border: 1px solid ${props => props.theme.colors.primary};
@@ -36,6 +40,8 @@ export const StyledSelect = styled(Select)`
     height: 52px;
     box-shadow: none;
     border: 1px solid ${props => props.theme.colors.primary};
+    background: ${props => props.darkMode && props.theme.colors.black400};
+    border-color: ${props => props.darkMode && props.theme.colors.black300};
     &:hover {
       cursor: pointer;
     }
@@ -57,6 +63,7 @@ export const StyledSelect = styled(Select)`
   }
   .css-1uccc91-singleValue {
     font-weight: bold;
+    color: ${props => props.darkMode && "white"};
   }
   .css-26l3qy-menu {
     margin: 0;
@@ -73,13 +80,19 @@ export const StyledSelect = styled(Select)`
   }
   .css-4ljt47-MenuList {
     border: none;
+    border-radius: 0.5rem;
     padding: 0;
     font-weight: bold;
     width: 100%;
     > * {
+      background: ${props => props.darkMode && props.theme.colors.black400};
       padding: 1.25rem;
       &:not(:last-child) {
-        border-bottom: 1px solid ${props => props.theme.colors.white500};
+        border-bottom: 1px solid
+          ${props =>
+            props.darkMode
+              ? props.theme.colors.black500
+              : props.theme.colors.white500};
       }
       &:hover {
         color: ${props => props.theme.colors.primary};
@@ -115,5 +128,8 @@ export const StyledSelect = styled(Select)`
         `;
       }
     }}
+  }
+  .css-tj5bde-Svg {
+    color: ${props => props.theme.colors.primary};
   }
 `;

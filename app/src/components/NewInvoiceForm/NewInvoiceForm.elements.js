@@ -18,7 +18,8 @@ export const Container = styled.div`
   top: 0;
   bottom: 0;
   width: 615px;
-  background-color: white;
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black500 : "white"};
   padding: 3.5rem;
   padding-bottom: 6rem;
   padding-right: 2.25rem;
@@ -51,6 +52,19 @@ export const Container = styled.div`
   }
   @media (max-width: 700px) {
     width: 100vw;
+  }
+`;
+
+export const InvoiceForm = styled.form`
+  label {
+    color: ${props => (props.darkMode ? "white" : "")};
+  }
+  input {
+    background-color: ${props =>
+      props.darkMode ? props.theme.colors.black400 : ""};
+    border-color: ${props =>
+      props.darkMode ? props.theme.colors.black300 : ""};
+    color: ${props => (props.darkMode ? "white" : "")};
   }
 `;
 
@@ -124,7 +138,8 @@ export const FormBottom = styled.div`
     justify-content: space-between;
     padding: 2rem 3.5rem;
     animation: ${invoiceFormOptions} 0.25s ease-in-out;
-    background: white;
+    background: ${props =>
+      props.darkMode ? props.theme.colors.black500 : "white"};
     -webkit-box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
     box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
     border-top-right-radius: 1.25rem;

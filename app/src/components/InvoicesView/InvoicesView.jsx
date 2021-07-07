@@ -33,6 +33,8 @@ export default function InvoicesView() {
 
   let optionsRef = useRef(null);
 
+  const darkMode = useDarkMode();
+
   const handleFilterSelectOpen = () => {
     if (!selectOpened) {
       setSelectOpened(true);
@@ -125,7 +127,7 @@ export default function InvoicesView() {
                   <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
                 </CustomDropdownHeader>
                 {selectOpened && (
-                  <Options opened={filterSelectOpen} ref={optionsRef}>
+                  <Options opened={filterSelectOpen} ref={optionsRef} darkMode={darkMode}>
                     <label className="container draft">
                       Draft
                       <input

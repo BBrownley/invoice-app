@@ -76,8 +76,9 @@ export const Options = styled.div`
   padding-left: 1.5rem;
   -webkit-box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
   box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
-  background-color: white;
-  /* display: none; */
+  background: ${props => props.darkMode ? props.theme.colors.black400 : "white"};
+  border-color: ${props => props.darkMode && props.theme.colors.black300};
+
   flex-direction: column;
 
   @media (max-width: 630px) {

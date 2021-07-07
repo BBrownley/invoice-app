@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
+
+import { useDarkMode } from "../../darkModeContext";
 import { useInvoiceUpdate } from "../../InvoiceContext";
 
 import invoiceService from "../../services/invoices";
@@ -14,6 +16,7 @@ import {
 import { StyledSelect as Select } from "../shared/Dropdown.elements";
 import {
   Container,
+  InvoiceForm,
   DarkBkg,
   Wrapper,
   FormBottom
@@ -77,6 +80,7 @@ export default function NewInvoiceForm({
 
   const [formError, setFormError] = useState("All fields must be added");
 
+  const darkMode = useDarkMode();
   const updateInvoice = useInvoiceUpdate();
 
   useEffect(() => {
@@ -124,8 +128,6 @@ export default function NewInvoiceForm({
         serverGeneratedInvoice = await invoiceService.add(validatedInvoice);
       }
 
-      console.log(serverGeneratedInvoice);
-
       handleFormOpened(false);
       setInvoices(prevState => [...prevState, serverGeneratedInvoice]);
       setAllInvoices(prevState => [...prevState, serverGeneratedInvoice]);
@@ -165,7 +167,7 @@ export default function NewInvoiceForm({
   };
 
   return (
-    <Container>
+    <Container darkMode={darkMode}>
       <Wrapper>
         <h2>
           {editMode
@@ -174,7 +176,7 @@ export default function NewInvoiceForm({
                 .substring(editedInvoice._id.length - 6)}`
             : "New Invoice"}
         </h2>
-        <form>
+        <InvoiceForm darkMode={darkMode}>
           <h4>Bill From</h4>
 
           <label htmlFor="fromStreet">Street Address</label>
@@ -282,7 +284,7 @@ export default function NewInvoiceForm({
           <div className="form-row secondary">
             <div>
               <label htmlFor="invoiceDate">Invoice Date</label>
-              <StyledDatePickerContainer id="datepicker">
+              <StyledDatePickerContainer id="datepicker" darkMode={darkMode}>
                 <StyledDatePicker
                   selected={formValues.createdAt}
                   onChange={date => handleDate(date)}
@@ -305,6 +307,7 @@ export default function NewInvoiceForm({
                 value={formValues.paymentTerms}
                 name="paymentTerms"
                 onChange={handleTerms}
+                darkMode={darkMode}
               />
             </div>
           </div>
@@ -317,11 +320,11 @@ export default function NewInvoiceForm({
             value={formValues.description}
             onChange={handleFormInput}
           />
-        </form>
+        </InvoiceForm>
         <FormItemList items={items} setItems={setItems} />
       </Wrapper>
 
-      <FormBottom>
+      <FormBottom darkMode={darkMode}>
         <p className="form-error">{formError}</p>
         <div className="options">
           {!editMode && (

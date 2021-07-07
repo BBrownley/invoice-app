@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDarkMode } from "../../darkModeContext";
 
 import {
   Container,
@@ -14,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function FormItemList({ items, setItems }) {
+  const darkMode = useDarkMode();
+
   const addItem = () => {
     setItems(prevState => [
       ...prevState,
@@ -66,7 +69,7 @@ export default function FormItemList({ items, setItems }) {
   return (
     <Container>
       <h2>Item List</h2>
-      <TableHeaders>
+      <TableHeaders darkMode={darkMode}>
         <span>Item Name</span>
         <span>Qty.</span>
         <span>Price</span>
@@ -76,7 +79,7 @@ export default function FormItemList({ items, setItems }) {
         <List>
           {items.map((item, index) => {
             return (
-              <Item key={index}>
+              <Item key={index} darkMode={darkMode}>
                 <FormInput
                   value={item.name}
                   name="name"

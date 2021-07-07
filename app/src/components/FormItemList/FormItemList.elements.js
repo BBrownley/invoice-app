@@ -18,7 +18,7 @@ export const TableHeaders = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.5rem;
-  color: ${props => props.theme.colors.gray500};
+  color: ${props => (props.darkMode ? "white" : props.theme.colors.gray500)};
   span:nth-of-type(1) {
     flex-basis: 214px;
   }
@@ -56,6 +56,9 @@ export const Item = styled.li`
   }
   input {
     margin-bottom: 0;
+    background: ${props => props.darkMode && props.theme.colors.black400};
+    border-color: ${props => props.darkMode && props.theme.colors.black300};
+    color: ${props => props.darkMode && "white"};
   }
   div {
     margin-right: 0;
@@ -64,7 +67,7 @@ export const Item = styled.li`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${props => props.theme.colors.gray500};
+    color: ${props => (props.darkMode ? "white" : props.theme.colors.gray500)};
 
     height: 50px;
   }
