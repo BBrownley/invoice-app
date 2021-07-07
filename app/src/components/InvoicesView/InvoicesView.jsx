@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import invoiceService from "../../services/invoices";
 
 import useScreenWidth from "../custom-hooks/useScreenWidth";
+import { useDarkMode } from "../../darkModeContext";
 
 import Sidebar from "../Sidebar/Sidebar";
 import InvoicesList from "../InvoicesList/InvoicesList";
@@ -105,7 +106,7 @@ export default function InvoicesView() {
       <Sidebar />
       <Container>
         <Wrapper>
-          <Header>
+          <Header darkMode={useDarkMode()}>
             <div>
               <h1>Invoices</h1>
               <p className="invoice-count">

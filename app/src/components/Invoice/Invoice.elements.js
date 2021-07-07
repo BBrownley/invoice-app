@@ -10,7 +10,6 @@ export const Container = styled.div`
   border-radius: 0.5rem;
   width: 100%;
   height: 72px;
-  background-color: white;
   margin-bottom: 1rem;
   position: relative;
   display: flex;
@@ -18,17 +17,33 @@ export const Container = styled.div`
   padding-right: 3rem;
   -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.03);
-  color: ${props => props.theme.colors.gray500};
+
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black400 : "white"};
+
+  color: ${props => (props.darkMode ? "white" : props.theme.colors.gray500)};
+
+  .invoice-info {
+    color: ${props => (props.darkMode ? "white" : props.theme.colors.black600)};
+  }
+
+  &:hover {
+    -webkit-box-shadow: 0px 0px 0px 1px ${props => props.theme.colors.primary};
+    box-shadow: 0px 0px 0px 1px ${props => props.theme.colors.primary};
+  }
+
   > * {
     align-self: center;
     padding-right: 1rem;
   }
+
   .fa-chevron-right {
     position: absolute;
     right: 1.5rem;
     padding-right: 0;
     color: ${props => props.theme.colors.primary};
   }
+
   @media (max-width: 700px) {
     height: 144px;
     margin-bottom: 1rem;
@@ -116,13 +131,13 @@ export const Status = styled.div`
       switch (props.status) {
         case "paid":
           return css`
-            background-color: #f3fdfa;
+            background-color: ${props => (props.darkMode ? "#1f2b3f" : "#f3fdfa")};
             color: #33d69f;
           `;
           break;
         case "pending":
           return css`
-            background-color: #fff9f0;
+            background-color: ${props => (props.darkMode ? "#2b2736" : "#fff9f0")};
             color: #ff9f00;
           `;
           break;

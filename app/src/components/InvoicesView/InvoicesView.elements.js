@@ -44,8 +44,11 @@ export const Header = styled.div`
     }
   }
   .invoice-count {
-    font-weight: normal;
-    color: ${props => props.theme.colors.gray500};
+    font-weight: 500;
+    color: ${props =>
+      props.darkMode
+        ? props.theme.colors.white500
+        : props.theme.colors.gray500};
     margin-top: 0.625rem;
   }
 `;
@@ -244,6 +247,7 @@ export const CustomDropdownHeader = styled.div`
     margin-left: 15px;
     transition: 0.25s;
     backface-visibility: hidden;
+    color: ${props => props.theme.colors.primary};
 
     ${props => {
       if (props.opened) {
