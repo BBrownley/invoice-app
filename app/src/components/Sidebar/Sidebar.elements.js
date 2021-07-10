@@ -96,6 +96,21 @@ export const NightToggle = styled.div`
   height: 20px;
   width: 20px;
   background-size: cover;
+  &:hover {
+    cursor: pointer;
+    filter: brightness(120%);
+  }
+`;
+
+export const DayToggle = styled.div`
+  background: url(${sun});
+  height: 20px;
+  width: 20px;
+  background-size: cover;
+  &:hover {
+    cursor: pointer;
+    filter: brightness(120%);
+  }
 `;
 
 export const ProfilePictureContainer = styled.div`

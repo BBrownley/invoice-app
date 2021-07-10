@@ -23,7 +23,6 @@ export default function InvoicesList({ invoices }) {
       {invoices.map((invoice, key) => {
         return <Invoice invoice={invoice} key={key} />;
       })}
-      <p>Dark mode is currently {useDarkMode() ? "on" : "off"}</p>
     </Container>
   );
 }

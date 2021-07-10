@@ -14,6 +14,7 @@ import {
   BgTop,
   BgBot,
   ToggleContainer,
+  DayToggle,
   NightToggle,
   ProfilePictureContainer,
   ProfilePicture
@@ -24,8 +25,6 @@ export default function Sidebar() {
   const setDarkMode = useDarkModeUpdate();
 
   const [darkModeEnabled, setDarkModeEnabled] = useState(useDarkMode());
-
-  console.log(useDarkMode());
 
   const logout = () => {
     localStorage.removeItem("loggedUser");
@@ -42,13 +41,6 @@ export default function Sidebar() {
   useEffect(() => {
     const getDarkModePref = async () => {
       const darkModePref = await usersService.getDarkModePref();
-
-      if (darkModePref) {
-        console.log("Dark mode is enabled");
-      } else {
-        console.log("Dark mode is off");
-      }
-
       setDarkModeEnabled(darkModePref);
     };
 
@@ -66,7 +58,11 @@ export default function Sidebar() {
       </div>
       <div>
         <ToggleContainer onClick={handleToggleDarkMode}>
-          <NightToggle></NightToggle>
+          {darkModeEnabled ? (
+            <DayToggle></DayToggle>
+          ) : (
+            <NightToggle></NightToggle>
+          )}
         </ToggleContainer>
 
         <ProfilePictureContainer>
