@@ -113,26 +113,50 @@ export const DayToggle = styled.div`
   }
 `;
 
-export const ProfilePictureContainer = styled.div`
+// export const ProfilePictureContainer = styled.div`
+//   position: relative;
+//   height: 100px;
+//   border-top: 1px solid ${props => props.theme.colors.blueGray};
+//   @media (max-width: ${breakpoints.tablet}) {
+//     height: 80px;
+//     flex-basis: 100px;
+//     border: none;
+//     border-left: 1px solid ${props => props.theme.colors.blueGray};
+//   }
+// `;
+
+// export const ProfilePicture = styled.div`
+//   height: 40px;
+//   width: 40px;
+//   background: url(${avatar});
+//   background-size: cover;
+//   border-radius: 40px;
+//   position: absolute;
+//   left: 50%;
+//   top: 50%;
+//   transform: translate(-50%, -50%);
+// `;
+
+export const LoginInfo = styled.div`
   position: relative;
   height: 100px;
   border-top: 1px solid ${props => props.theme.colors.blueGray};
-  @media (max-width: ${breakpoints.tablet}) {
-    height: 80px;
-    flex-basis: 100px;
-    border: none;
-    border-left: 1px solid ${props => props.theme.colors.blueGray};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  > * {
+    text-align: center;
+    margin: 0;
   }
-`;
-
-export const ProfilePicture = styled.div`
-  height: 40px;
-  width: 40px;
-  background: url(${avatar});
-  background-size: cover;
-  border-radius: 40px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  .username {
+    color: #858bb2;
+    margin-bottom: 0.5rem;
+  }
+  .logout {
+    margin-top: 0.5rem;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 `;

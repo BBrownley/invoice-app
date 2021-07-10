@@ -17,7 +17,8 @@ import {
   DayToggle,
   NightToggle,
   ProfilePictureContainer,
-  ProfilePicture
+  ProfilePicture,
+  LoginInfo
 } from "./Sidebar.elements";
 
 export default function Sidebar() {
@@ -25,9 +26,13 @@ export default function Sidebar() {
   const setDarkMode = useDarkModeUpdate();
 
   const [darkModeEnabled, setDarkModeEnabled] = useState(useDarkMode());
+  const [whosLoggedIn, setWhosLoggedIn] = useState(
+    localStorage.getItem("username") || "Guest"
+  );
 
   const logout = () => {
     localStorage.removeItem("loggedUser");
+    localStorage.removeItem("username");
     removeStoredToken();
     history.push("/");
   };
@@ -42,6 +47,11 @@ export default function Sidebar() {
     const getDarkModePref = async () => {
       const darkModePref = await usersService.getDarkModePref();
       setDarkModeEnabled(darkModePref);
+    };
+
+    const getUsername = async () => {
+      const username = await usersService.getDarkModePref();
+      setWhosLoggedIn(username);
     };
 
     getDarkModePref();
@@ -65,9 +75,16 @@ export default function Sidebar() {
           )}
         </ToggleContainer>
 
-        <ProfilePictureContainer>
+        {/* Need to add support for user-determined profile pictures */}
+        {/* <ProfilePictureContainer>
           <ProfilePicture onClick={logout}></ProfilePicture>
-        </ProfilePictureContainer>
+        </ProfilePictureContainer> */}
+        <LoginInfo>
+          <p className="username">{whosLoggedIn}</p>
+          <a onClick={logout} className="logout">
+            Logout
+          </a>
+        </LoginInfo>
       </div>
     </Container>
   );

@@ -95,6 +95,7 @@ export default function Sandbox() {
       return setFormWarning(userLogin.error);
     }
 
+    localStorage.setItem("username", username.trim());
     history.push("/invoices");
   };
 
