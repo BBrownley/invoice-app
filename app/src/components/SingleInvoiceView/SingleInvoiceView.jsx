@@ -99,6 +99,7 @@ export default function SingleInvoiceView() {
         onRequestClose={() => setDeleteModalOpen(false)}
         contentLabel="Example Modal"
         ariaHideApp={false}
+        darkMode={darkMode}
       >
         <h2>Confirm Deletion</h2>
         <p>

@@ -236,7 +236,8 @@ export const StyledModal = styled(Modal)`
   transform: translate(-50%, -50%);
   position: absolute;
   z-index: 100000;
-  background-color: white;
+  background-color: ${props =>
+    props.darkMode ? props.theme.colors.black400 : "white"};
   border-radius: 0.5rem;
   padding: 3.25rem;
   max-width: 480px;
@@ -245,10 +246,14 @@ export const StyledModal = styled(Modal)`
     font-size: 1.5rem;
     line-height: 2rem;
     margin-bottom: 1rem;
+    color: ${props => props.darkMode && "white"};
   }
 
   p {
-    color: ${props => props.theme.colors.gray500};
+    color: ${props =>
+      props.darkMode
+        ? props.theme.colors.white500
+        : props.theme.colors.gray500};
     line-height: 1.375rem;
   }
 
