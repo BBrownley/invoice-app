@@ -7,10 +7,13 @@ import { useDarkMode } from "../../darkModeContext";
 import { Container, EmptyWarning, EmptyImg } from "./InvoicesList.elements";
 
 export default function InvoicesList({ invoices }) {
+
+  const darkMode = useDarkMode();
+
   return (
     <Container>
       {invoices.length === 0 && (
-        <EmptyWarning>
+        <EmptyWarning darkMode={darkMode}>
           <EmptyImg></EmptyImg>
           <h2>There is nothing here</h2>
           <p>

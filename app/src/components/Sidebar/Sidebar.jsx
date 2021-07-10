@@ -49,11 +49,6 @@ export default function Sidebar() {
       setDarkModeEnabled(darkModePref);
     };
 
-    const getUsername = async () => {
-      const username = await usersService.getDarkModePref();
-      setWhosLoggedIn(username);
-    };
-
     getDarkModePref();
   }, []);
 

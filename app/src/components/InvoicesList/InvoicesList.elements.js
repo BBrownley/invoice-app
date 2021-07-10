@@ -8,7 +8,8 @@ export const Container = styled.div`
 export const EmptyWarning = styled.div`
   width: 240px;
   margin: 63px auto 0 auto;
-  color: ${props => props.theme.colors.gray500};
+  color: ${props =>
+    props.darkMode ? props.theme.colors.white500 : props.theme.colors.gray500};
   p {
     margin-top: 1.75rem;
     strong {
@@ -16,7 +17,10 @@ export const EmptyWarning = styled.div`
     }
   }
   h2 {
-    color: ${props => props.theme.colors.black600};
+    color: ${props =>
+      props.darkMode
+        ? props.theme.colors.white600
+        : props.theme.colors.black600};
   }
 `;
 

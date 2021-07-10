@@ -134,6 +134,9 @@ export const AppInfo = styled.div`
 
 export const Login = styled.div`
   padding-left: 2.25rem;
+  h2 {
+    color: black;
+  }
   @media (max-width: 1200px) {
     padding: 0;
     margin-top: 2rem;
@@ -144,6 +147,7 @@ export const FormField = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  color: black;
   label {
     margin-bottom: 1rem;
   }
