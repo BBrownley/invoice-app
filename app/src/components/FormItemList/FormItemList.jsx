@@ -102,7 +102,7 @@ export default function FormItemList({ items, setItems }) {
                   data-index={index}
                   onChange={updateItem}
                 />
-                <div>
+                <div className="info-right">
                   <span>{item.total.toFixed(2)}</span>
                   <DeleteItem onClick={() => deleteItem(index)}>
                     <FontAwesomeIcon icon={faTrash} />

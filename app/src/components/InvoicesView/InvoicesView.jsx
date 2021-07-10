@@ -45,11 +45,15 @@ export default function InvoicesView() {
   const width = useScreenWidth();
 
   const handleCloseDropdown = e => {
-    if (
-      e.target !== optionsRef.current &&
-      filterSelectOpen &&
-      !optionsRef.current.contains(e.target)
-    ) {
+    try {
+      if (
+        e.target !== optionsRef.current &&
+        filterSelectOpen &&
+        !optionsRef.current.contains(e.target)
+      ) {
+        setFilterSelectOpen(false);
+      }
+    } catch (exception) {
       setFilterSelectOpen(false);
     }
   };
@@ -127,7 +131,11 @@ export default function InvoicesView() {
                   <FontAwesomeIcon icon={faAngleDown} className="angle-icon" />
                 </CustomDropdownHeader>
                 {selectOpened && (
-                  <Options opened={filterSelectOpen} ref={optionsRef} darkMode={darkMode}>
+                  <Options
+                    opened={filterSelectOpen}
+                    ref={optionsRef}
+                    darkMode={darkMode}
+                  >
                     <label className="container draft">
                       Draft
                       <input

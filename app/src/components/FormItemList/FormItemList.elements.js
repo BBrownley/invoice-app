@@ -68,7 +68,7 @@ export const Item = styled.li`
     align-items: center;
     justify-content: space-between;
     color: ${props => (props.darkMode ? "white" : props.theme.colors.gray500)};
-
+    margin-bottom: 1.5rem;
     height: 50px;
   }
 `;
