@@ -67,11 +67,11 @@ export default function Sidebar() {
         </Branding>
       </div>
       <div>
-        <ToggleContainer onClick={handleToggleDarkMode}>
+        <ToggleContainer>
           {darkModeEnabled ? (
-            <DayToggle></DayToggle>
+            <DayToggle onClick={handleToggleDarkMode}></DayToggle>
           ) : (
-            <NightToggle></NightToggle>
+            <NightToggle onClick={handleToggleDarkMode}></NightToggle>
           )}
         </ToggleContainer>
 

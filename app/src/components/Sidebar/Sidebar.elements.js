@@ -151,9 +151,11 @@ export const LoginInfo = styled.div`
   .username {
     color: #858bb2;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
   }
   .logout {
     margin-top: 0.5rem;
+    color: white;
     &:hover {
       cursor: pointer;
       text-decoration: underline;
