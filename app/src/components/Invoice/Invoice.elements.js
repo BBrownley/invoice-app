@@ -131,22 +131,22 @@ export const Status = styled.div`
       switch (props.status) {
         case "paid":
           return css`
-            background-color: ${props => (props.darkMode ? "#1f2b3f" : "#f3fdfa")};
+            background-color: ${props =>
+              props.darkMode ? "#1f2b3f" : "#f3fdfa"};
             color: #33d69f;
           `;
-          break;
         case "pending":
           return css`
-            background-color: ${props => (props.darkMode ? "#2b2736" : "#fff9f0")};
+            background-color: ${props =>
+              props.darkMode ? "#2b2736" : "#fff9f0"};
             color: #ff9f00;
           `;
-          break;
         case "draft":
           return css`
-            background-color: #f4f4f5;
-            color: #373b53;
+            background-color: ${props =>
+              props.darkMode ? "#292c44" : "#f4f4f5"};
+            color: ${props => (props.darkMode ? "#dfe3fa" : "#373b53")};
           `;
-          break;
         default:
           break;
       }

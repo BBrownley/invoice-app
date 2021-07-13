@@ -146,9 +146,11 @@ export default function SingleInvoiceView() {
               <Button color="red" onClick={() => setDeleteModalOpen(true)}>
                 Delete
               </Button>
-              <Button onClick={() => toggleStatus()}>
-                Mark as {status === "pending" ? "Paid" : "Pending"}
-              </Button>
+              {status !== "draft" && (
+                <Button onClick={() => toggleStatus()}>
+                  Mark as {status === "pending" ? "Paid" : "Pending"}
+                </Button>
+              )}
             </div>
           </InvoiceActions>
         )}

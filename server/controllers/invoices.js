@@ -29,30 +29,30 @@ invoiceRouter.get("/guest", async (req, res, next) => {
 invoiceRouter.post("/", async (req, res, next) => {
   const invoice = req.body.invoice;
 
-  // Check if new invoice is draft or pending
-
-  if (invoice.status === "draft") {
-  } else if (invoice.status === "pending") {
-    // Check that all fields are filled in
-    validateInvoice(invoice, next);
-
-    // Validation passes, create new invoice in DB if there's a user
-
-    if (!req.isGuest) {
-      try {
-        const decodedToken = jwt.verify(req.token, process.env.SECRET);
-
-        const newInvoice = await Invoice.create({
-          ...invoice,
-          ownerId: decodedToken._id
-        });
-        res.status(200).json(newInvoice);
-      } catch (exception) {
-        return next(new Error("Unable to authorize user"));
-      }
-    }
-  } else {
+  // Newly created invoices must either be a draft or pending
+  if (invoice.status !== "draft" && invoice.status !== "pending") {
     res.status(400).json({ message: "Bad request" });
+  }
+
+  if (invoice.status === "pending") {
+    // Check that all fields are filled in unless it's a draft
+    validateInvoice(invoice, next);
+  }
+
+  // Validation passes, create new invoice in DB if there's a user
+
+  if (!req.isGuest) {
+    try {
+      const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+      const newInvoice = await Invoice.create({
+        ...invoice,
+        ownerId: decodedToken._id
+      });
+      res.status(200).json(newInvoice);
+    } catch (exception) {
+      return next(new Error("Unable to authorize user"));
+    }
   }
 });
 

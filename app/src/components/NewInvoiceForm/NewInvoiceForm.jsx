@@ -107,6 +107,7 @@ export default function NewInvoiceForm({
 
   const handleFormSubmit = async status => {
     const newInvoice = helpers.formatInvoice(formValues, items, status);
+    console.log(status);
 
     try {
       const validatedInvoice = helpers.validateInvoice(newInvoice);
@@ -125,7 +126,9 @@ export default function NewInvoiceForm({
           JSON.stringify(updatedGuestInvoices)
         );
       } else {
+        console.log(validatedInvoice);
         serverGeneratedInvoice = await invoiceService.add(validatedInvoice);
+        console.log(serverGeneratedInvoice);
       }
 
       handleFormOpened(false);
@@ -352,15 +355,22 @@ export default function NewInvoiceForm({
             </div>
           )}
           {editMode && (
-            <div className="edit-invoice-options">
-              <div>
-                {" "}
-                <Button color="white" onClick={() => handleFormOpened(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={() => handleEditInvoice()}>
-                  Save Changes
-                </Button>
+            <div>
+              {editedInvoice.status === "draft" && (
+                <h4>
+                  Invoice will remain as draft until all fields are filled and at least one item has been added
+                </h4>
+              )}
+              <div className="edit-invoice-options">
+                <div>
+                  {" "}
+                  <Button color="white" onClick={() => handleFormOpened(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => handleEditInvoice()}>
+                    Save Changes
+                  </Button>
+                </div>
               </div>
             </div>
           )}
