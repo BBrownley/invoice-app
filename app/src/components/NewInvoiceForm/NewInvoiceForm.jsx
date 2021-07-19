@@ -356,13 +356,24 @@ export default function NewInvoiceForm({
           )}
           {editMode && (
             <div>
-              {editedInvoice.status === "draft" && (
-                <h4>
-                  Invoice will remain as draft until all fields are filled and at least one item has been added
-                </h4>
-              )}
-              <div className="edit-invoice-options">
-                <div>
+              <div
+                className={[
+                  `edit-invoice-options edit-invoice-options${
+                    editedInvoice.status === "draft" ? "--draft" : ""
+                  }`
+                ]}
+              >
+                {editedInvoice.status === "draft" && (
+                  <p className="draft-warning">
+                    &bull; Invoice will remain as draft until all fields are
+                    filled and at least one item has been added
+                  </p>
+                )}
+                <div
+                  className={`edit-invoice-options__btns edit-invoice-options__btns${
+                    editedInvoice.status === "draft" ? "--draft" : ""
+                  }`}
+                >
                   {" "}
                   <Button color="white" onClick={() => handleFormOpened(false)}>
                     Cancel

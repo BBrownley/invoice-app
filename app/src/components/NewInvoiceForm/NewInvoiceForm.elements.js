@@ -127,6 +127,11 @@ export const FormBottom = styled.div`
     bottom: 3.5rem;
     color: ${props => props.theme.colors.red};
   }
+  .draft-warning {
+    position: absolute;
+    color: yellow;
+    width: 15rem;
+  }
   .options .create-invoice-options,
   .options .edit-invoice-options {
     position: fixed;
@@ -144,6 +149,7 @@ export const FormBottom = styled.div`
     box-shadow: -2px -25px 20px 0px rgba(0, 0, 0, 0.07);
     border-top-right-radius: 1.25rem;
     border-bottom-right-radius: 1.25rem;
+
     .btns-right {
       display: flex;
       .save-as {
@@ -160,8 +166,25 @@ export const FormBottom = styled.div`
     }
   }
 
-  .edit-invoice-options div {
+  .edit-invoice-options__btns {
     margin-left: auto;
     display: flex;
+  }
+
+  .edit-invoice-options button:first-of-type {
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .options .edit-invoice-options--draft {
+      text-align: center;
+      padding-top: 4rem;
+      .draft-warning {
+        top: 1rem;
+        left: 3.5rem;
+        right: 3.5rem;
+        width: auto;
+      }
+    }
   }
 `;
