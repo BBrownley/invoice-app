@@ -42,7 +42,8 @@ export default function NewInvoiceForm({
   setAllInvoices,
   setInvoices,
   editMode,
-  editedInvoice
+  editedInvoice,
+  setStatus
 }) {
   const [formValues, setFormValues] = useState({
     fromStreet: editedInvoice ? editedInvoice.senderAddress.street : "",
@@ -145,16 +146,30 @@ export default function NewInvoiceForm({
       items,
       editedInvoice.status
     );
+
     try {
-      const validatedInvoice = await helpers.validateInvoice(formattedInvoice);
-      const updatedInvoice = {
+      // Invoices that are pending or paid need to be validated first
+      const validatedInvoice =
+        editedInvoice.status !== "draft"
+          ? await helpers.validateInvoice(formattedInvoice)
+          : formattedInvoice;
+
+      let updatedInvoice = {
         ...validatedInvoice,
         ownerId: editedInvoice.ownerId,
         _id: editedInvoice._id
       };
 
       // Update invoice in backend
-      invoiceService.updateInvoice(updatedInvoice);
+      const data = await invoiceService.updateInvoice(updatedInvoice);
+
+      if (editedInvoice.status === "draft" && data?.makePending) {
+        // makePending is defined when all fields are filled in
+        invoiceService.setStatus(editedInvoice, "pending");
+        updatedInvoice = { ...updatedInvoice, status: "pending" };
+        setStatus("pending");
+      }
+
       // Update invoice in current view
       updateInvoice(updatedInvoice);
       // Persist updated invoice values when refreshing
@@ -366,7 +381,7 @@ export default function NewInvoiceForm({
                 {editedInvoice.status === "draft" && (
                   <p className="draft-warning">
                     &bull; Invoice will remain as draft until all fields are
-                    filled and at least one item has been added
+                    filled and at least one item has been named
                   </p>
                 )}
                 <div

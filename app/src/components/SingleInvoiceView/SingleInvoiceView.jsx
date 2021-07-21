@@ -235,6 +235,7 @@ export default function SingleInvoiceView() {
           handleFormOpened={setEditInvoiceOpen}
           editMode
           editedInvoice={invoice}
+          setStatus={setStatus}
         />
       )}
     </>

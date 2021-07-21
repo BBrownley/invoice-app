@@ -27,6 +27,7 @@ const validateInvoice = (invoice, next) => {
       return next(new Error("Fill out all fields"));
     }
   }
-}
+  return true;
+};
 
 module.exports = validateInvoice;

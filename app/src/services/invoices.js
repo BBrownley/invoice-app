@@ -23,6 +23,19 @@ const add = async invoice => {
   }
 };
 
+const setStatus = async (invoice, newStatus) => {
+  try {
+    const body = {
+      ownerId: invoice.ownerId,
+      newStatus
+    };
+
+    await axios.put(`${baseUrl}/invoices/${invoice._id}/status?setstatus=${newStatus}`, body);
+  } catch (exception) {
+    console.log(exception.message);
+  }
+};
+
 const toggleStatus = async invoice => {
   try {
     const body = {
@@ -46,8 +59,11 @@ const deleteInvoice = async invoice => {
 
 const updateInvoice = async invoice => {
   try {
-    console.log(invoice);
-    await axios.put(`${baseUrl}/invoices/${invoice._id}`, invoice);
+    const res = await axios.put(
+      `${baseUrl}/invoices/${invoice._id}?draft=${invoice.status === "draft"}`,
+      invoice
+    );
+    return res.data;
   } catch (exception) {
     console.log(exception.message);
   }
@@ -57,6 +73,7 @@ const invoiceService = {
   getInvoices,
   getGuestInvoices,
   add,
+  setStatus,
   toggleStatus,
   updateInvoice,
   deleteInvoice

@@ -35,6 +35,7 @@ const validateInvoice = invoice => {
   return invoice;
 };
 
+// Takes all the form values from the invoice form and formats it into a single object
 const formatInvoice = (formValues, items, status) => {
   const {
     createdAt,

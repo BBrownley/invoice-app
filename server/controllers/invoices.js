@@ -56,10 +56,17 @@ invoiceRouter.post("/", async (req, res, next) => {
   }
 });
 
-// Toggle invoice status
+// Toggle or set invoice status
 
 invoiceRouter.put("/:id/status", async (req, res, next) => {
-  const newStatus = req.body.prevStatus === "pending" ? "paid" : "pending";
+  let newStatus;
+
+  if (req.query.setstatus) {
+    newStatus = req.query.setstatus;
+  } else {
+    // Toggle
+    newStatus = req.body.prevStatus === "pending" ? "paid" : "pending";
+  }
 
   // Verify user
   if (req.decodedToken._id !== req.body.ownerId) {
@@ -82,29 +89,35 @@ invoiceRouter.put("/:id/status", async (req, res, next) => {
 // Update entire invoice
 
 invoiceRouter.put("/:id", async (req, res, next) => {
-  if (req.isGuest) return next();
+  if (req.isGuest) return next(); // Guest invoices remain on client
 
   // Verify user
   if (req.decodedToken._id !== req.body.ownerId) {
     return next(new Error("Invoice does not belong to this user"));
   }
 
-  // Check that all fields are filled in
-  validateInvoice(req.body, next);
+  // Check that all fields are filled in if not draft
+  if (req.query.draft == "false") {
+    validateInvoice(req.body, next);
+  }
 
   Invoice.findByIdAndUpdate(
     { _id: req.params.id },
     req.body,
     (err, results) => {
       if (err) {
-        console.log(err);
+        console.log(err.message);
         return next(new Error("Unable to update invoice"));
+      } else {
+        if (req.query.draft == "false") return next();
+
+        // If invoice status was prev draft and all fields are now filled in, make it pending
+        if (validateInvoice(req.body, next)) {
+          res.status(200).json({ makePending: true });
+        }
       }
-      next();
     }
   );
-
-  console.log(req.body);
 });
 
 // Delete invoice
