@@ -77,11 +77,15 @@ export default function InvoicesView() {
             "guestInvoices",
             JSON.stringify(starterInvoices)
           );
+          setInvoices(starterInvoices);
+          setAllInvoices(starterInvoices);
+        } else {
+          const guestInvoices = await JSON.parse(
+            localStorage.getItem("guestInvoices")
+          );
+          setInvoices(guestInvoices);
+          setAllInvoices(guestInvoices);
         }
-
-        const guestInvoices = JSON.parse(localStorage.getItem("guestInvoices"));
-        setInvoices(guestInvoices);
-        setAllInvoices(guestInvoices);
       }
     };
     fetchInvoices();

@@ -18,4 +18,5 @@ In the end I solidified my understanding of building full stack applications and
 * Guest accessibility
 * CRUD (Create/Read/Update/Delete) operations on invoices
 * Create lists of items for a specific invoice
+* Dark mode
 * Fully responsive
