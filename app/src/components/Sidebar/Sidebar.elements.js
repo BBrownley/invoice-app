@@ -161,4 +161,9 @@ export const LoginInfo = styled.div`
       text-decoration: underline;
     }
   }
+  @media (max-width: 768px) {
+    border-top: none;
+    height: auto;
+    width: 100px;
+  }
 `;
