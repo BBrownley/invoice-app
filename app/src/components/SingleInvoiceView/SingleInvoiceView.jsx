@@ -69,7 +69,29 @@ export default function SingleInvoiceView() {
 
       return updatedStatus;
     });
-    invoiceService.toggleStatus(invoice);
+
+    if (localStorage.getItem("loggedUser")) {
+      invoiceService.toggleStatus(invoice);
+    } else {
+      const currentInvoiceId = invoice._id;
+      const updatedGuestInvoices = JSON.parse(
+        localStorage.getItem("guestInvoices")
+      ).map(invoice => {
+        if (invoice._id === currentInvoiceId) {
+          if (invoice.status === "pending") {
+            return { ...invoice, status: "paid" };
+          } else {
+            return { ...invoice, status: "pending" };
+          }
+        }
+        return invoice;
+      });
+
+      localStorage.setItem(
+        "guestInvoices",
+        JSON.stringify(updatedGuestInvoices)
+      );
+    }
   };
 
   const deleteInvoice = async () => {
