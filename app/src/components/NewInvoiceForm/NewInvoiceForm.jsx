@@ -108,7 +108,6 @@ export default function NewInvoiceForm({
 
   const handleFormSubmit = async status => {
     const newInvoice = helpers.formatInvoice(formValues, items, status);
-    console.log(status);
 
     try {
       const validatedInvoice = helpers.validateInvoice(newInvoice);
@@ -126,15 +125,15 @@ export default function NewInvoiceForm({
           "guestInvoices",
           JSON.stringify(updatedGuestInvoices)
         );
+        setInvoices(updatedGuestInvoices);
+        setAllInvoices(updatedGuestInvoices);
       } else {
-        console.log(validatedInvoice);
         serverGeneratedInvoice = await invoiceService.add(validatedInvoice);
-        console.log(serverGeneratedInvoice);
+        setInvoices(prevState => [...prevState, serverGeneratedInvoice]);
+        setAllInvoices(prevState => [...prevState, serverGeneratedInvoice]);
       }
 
       handleFormOpened(false);
-      setInvoices(prevState => [...prevState, serverGeneratedInvoice]);
-      setAllInvoices(prevState => [...prevState, serverGeneratedInvoice]);
     } catch (exception) {
       setFormError(exception.message);
     }

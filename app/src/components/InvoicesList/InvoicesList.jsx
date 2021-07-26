@@ -7,8 +7,8 @@ import { useDarkMode } from "../../darkModeContext";
 import { Container, EmptyWarning, EmptyImg } from "./InvoicesList.elements";
 
 export default function InvoicesList({ invoices }) {
-
   const darkMode = useDarkMode();
+  console.log(invoices);
 
   return (
     <Container>
