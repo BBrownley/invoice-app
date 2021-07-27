@@ -100,12 +100,10 @@ export default function SingleInvoiceView() {
       history.push("/invoices");
     } else {
       const guestInvoices = JSON.parse(localStorage.getItem("guestInvoices"));
-      console.log(guestInvoices);
 
       const updatedGuestInvoices = guestInvoices.filter(guestInvoice => {
         return guestInvoice._id !== invoice._id;
       });
-      console.log(updatedGuestInvoices);
 
       localStorage.setItem(
         "guestInvoices",
