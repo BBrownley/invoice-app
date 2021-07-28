@@ -22,6 +22,7 @@ export const StyledStatus = styled(Status)`
     right: 3rem;
     bottom: none;
     height: 50px;
+    z-index: 10000;
   }
 `;
 
