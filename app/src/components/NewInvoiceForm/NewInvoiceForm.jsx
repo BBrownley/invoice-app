@@ -159,14 +159,28 @@ export default function NewInvoiceForm({
         _id: editedInvoice._id
       };
 
-      // Update invoice in backend
-      const data = await invoiceService.updateInvoice(updatedInvoice);
+      if (localStorage.getItem("username") !== null) {
+        // Update invoice in backend
+        const data = await invoiceService.updateInvoice(updatedInvoice);
 
-      if (editedInvoice.status === "draft" && data?.makePending) {
-        // makePending is defined when all fields are filled in
-        invoiceService.setStatus(editedInvoice, "pending");
-        updatedInvoice = { ...updatedInvoice, status: "pending" };
-        setStatus("pending");
+        if (editedInvoice.status === "draft" && data?.makePending) {
+          // makePending is defined when all fields are filled in
+          invoiceService.setStatus(editedInvoice, "pending");
+          updatedInvoice = { ...updatedInvoice, status: "pending" };
+          setStatus("pending");
+        }
+      } else {
+        // update guest invoices
+        const invoiceId = updatedInvoice._id;
+        const updatedInvoices = JSON.parse(
+          localStorage.getItem("guestInvoices")
+        ).map(invoice => {
+          if (invoiceId === invoice._id) {
+            return updatedInvoice;
+          }
+          return invoice;
+        });
+        localStorage.setItem("guestInvoices", JSON.stringify(updatedInvoices));
       }
 
       // Update invoice in current view
