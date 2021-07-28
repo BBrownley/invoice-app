@@ -23,7 +23,7 @@ import {
 
 export default function Sidebar() {
   const history = useHistory();
-  const setDarkMode = useDarkModeUpdate();
+  const setDarkModeContext = useDarkModeUpdate();
 
   const [darkModeEnabled, setDarkModeEnabled] = useState(useDarkMode());
   const [whosLoggedIn, setWhosLoggedIn] = useState(
@@ -38,14 +38,28 @@ export default function Sidebar() {
   };
 
   const handleToggleDarkMode = async () => {
-    setDarkMode(!darkModeEnabled);
+    setDarkModeContext(!darkModeEnabled);
     setDarkModeEnabled(prevState => !prevState);
-    await usersService.toggleDarkModePref();
+
+    if (localStorage.getItem("username") === null) {
+      const prevGuestDarkMode = eval(localStorage.getItem("guestDarkMode"));
+      localStorage.setItem("guestDarkMode", !prevGuestDarkMode);
+    } else {
+      await usersService.toggleDarkModePref();
+    }
   };
 
   useEffect(() => {
     const getDarkModePref = async () => {
-      const darkModePref = await usersService.getDarkModePref();
+      let darkModePref;
+
+      if (localStorage.getItem("username") === null) {
+        darkModePref = eval(localStorage.getItem("guestDarkMode"));
+      } else {
+        darkModePref = await usersService.getDarkModePref();
+      }
+
+      setDarkModeContext(darkModePref);
       setDarkModeEnabled(darkModePref);
     };
 

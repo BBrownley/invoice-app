@@ -96,10 +96,15 @@ export default function Sandbox() {
     }
 
     localStorage.setItem("username", username.trim());
+
     history.push("/invoices");
   };
 
   const continueAsGuest = async () => {
+    if (localStorage.getItem("guestDarkMode") === null) {
+      localStorage.setItem("guestDarkMode", false);
+    }
+
     history.push("/invoices");
   };
 
