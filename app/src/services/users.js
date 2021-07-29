@@ -1,7 +1,11 @@
 import axios from "axios";
 import { setStoredToken } from "./tokenUtil";
+import dotenv from "dotenv";
 
-const baseUrl = process.env.baseURL || "http://localhost:5000";
+dotenv.config({ path: "../../../config.env" });
+
+//const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+const baseUrl = "https://pure-castle-11971.herokuapp.com";
 
 const register = async credentials => {
   try {
