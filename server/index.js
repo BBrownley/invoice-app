@@ -47,6 +47,10 @@ mongoose
     console.log("error connecting to MongoDB: ", err.message);
   });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("app/build"));
+}
+
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);
   console.log(connection);

@@ -1,0 +1,32 @@
+{
+  "name": "invoice-app",
+  "version": "1.0.0",
+  "description": "This is a full stack web application that tracks user invoices. Users login, create and view their invoices, while also being able to edit and delete them. There is also accessibility for guests to use the app if they do not want to make an account; localStorage is instead utilized for this use case.",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "react-modal": "^3.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "uniqid": "^5.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd app && npm run build",
+    "install-client": "cd app && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "cd server && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BBrownley/invoice-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BBrownley/invoice-app/issues"
+  },
+  "homepage": "https://github.com/BBrownley/invoice-app#readme"
+}
