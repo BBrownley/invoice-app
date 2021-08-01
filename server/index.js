@@ -31,10 +31,6 @@ const invoiceRouter = require("./controllers/invoices");
 const userRouter = require("./controllers/users");
 const errorHandler = require("./utils/errorHandler");
 
-// app.get("/", (req, res) => {
-//   res.send("Api running");
-// });
-
 app.use("/invoices", invoiceRouter);
 app.use("/users", userRouter);
 
@@ -57,6 +53,10 @@ if (process.env.NODE_ENV === "production") {
 
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "app", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api running");
   });
 }
 
