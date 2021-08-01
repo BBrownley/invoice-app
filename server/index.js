@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const http = require("http");
+const path = require("path");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -30,6 +31,10 @@ const invoiceRouter = require("./controllers/invoices");
 const userRouter = require("./controllers/users");
 const errorHandler = require("./utils/errorHandler");
 
+// app.get("/", (req, res) => {
+//   res.send("Api running");
+// });
+
 app.use("/invoices", invoiceRouter);
 app.use("/users", userRouter);
 
@@ -47,8 +52,12 @@ mongoose
     console.log("error connecting to MongoDB: ", err.message);
   });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("app/build"));
+if (process.env.NODE_ENV !== "production") {
+  app.use(express.static("../app/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "app", "build", "index.html"));
+  });
 }
 
 app.listen(PORT, () => {
