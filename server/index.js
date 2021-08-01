@@ -52,7 +52,7 @@ mongoose
     console.log("error connecting to MongoDB: ", err.message);
   });
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("../app/build"));
 
   app.get("*", (req, res) => {
