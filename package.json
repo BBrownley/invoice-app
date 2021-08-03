@@ -2,7 +2,7 @@
   "name": "invoice-app",
   "version": "1.0.0",
   "description": "This is a full stack web application that tracks user invoices. Users login, create and view their invoices, while also being able to edit and delete them. There is also accessibility for guests to use the app if they do not want to make an account; localStorage is instead utilized for this use case.",
-  "main": "index.js",
+  "main": "./server/index.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
