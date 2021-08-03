@@ -1,7 +1,7 @@
 import axios from "axios";
 import storedToken from "./tokenUtil";
 
-const baseUrl = process.env.baseURL || "http://localhost:5000";
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 const getInvoices = async () => {
   const res = await axios.get(`${baseUrl}/invoices`);
@@ -30,7 +30,10 @@ const setStatus = async (invoice, newStatus) => {
       newStatus
     };
 
-    await axios.put(`${baseUrl}/invoices/${invoice._id}/status?setstatus=${newStatus}`, body);
+    await axios.put(
+      `${baseUrl}/invoices/${invoice._id}/status?setstatus=${newStatus}`,
+      body
+    );
   } catch (exception) {
     console.log(exception.message);
   }

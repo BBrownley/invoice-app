@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setStoredToken } from "./tokenUtil";
 
-const baseUrl = process.env.baseURL || "http://localhost:5000";
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 const register = async credentials => {
   try {
