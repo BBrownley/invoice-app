@@ -1,7 +1,8 @@
-require("dotenv").config({path: "../../config.env"});
-
 import axios from "axios";
 import { setStoredToken } from "./tokenUtil";
+import dotenv from "dotenv";
+
+dotenv.config({ path: "../../config.env" });
 
 const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
