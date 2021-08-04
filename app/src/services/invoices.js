@@ -1,7 +1,10 @@
 import axios from "axios";
 import storedToken from "./tokenUtil";
 
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+const production = "https://pure-castle-11971.herokuapp.com/";
+const development = "http://localhost:5000";
+
+const baseUrl = process.env.NODE_ENV ? production : development;
 
 const getInvoices = async () => {
   const res = await axios.get(`${baseUrl}/invoices`);
