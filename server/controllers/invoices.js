@@ -8,7 +8,7 @@ const validateInvoice = require("../helpers/validateInvoice");
 // Get invoices by user
 invoiceRouter.get("/", async (req, res, next) => {
   if (req.isGuest) {
-    next(); // Their invoices are in localStorage
+    return next(); // Their invoices are in localStorage
   }
   const decodedToken = jwt.verify(req.token, process.env.SECRET);
   const invoices = await Invoice.find({ ownerId: decodedToken._id }).exec();
