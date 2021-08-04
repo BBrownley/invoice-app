@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({path: "../../config.env"});
 
 import axios from "axios";
 import { setStoredToken } from "./tokenUtil";
