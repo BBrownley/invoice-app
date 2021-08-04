@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import axios from "axios";
 import storedToken from "./tokenUtil";
 
