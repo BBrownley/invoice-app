@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../../../config.env" });
 
 //const baseUrl = process.env.BASE_URL || "http://localhost:5000";
-const baseUrl = "https://pure-castle-11971.herokuapp.com/";
+const baseUrl = "https://pure-castle-11971.herokuapp.com";
 
 const register = async credentials => {
   try {
