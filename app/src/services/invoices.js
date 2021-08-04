@@ -1,7 +1,7 @@
 import axios from "axios";
 import storedToken from "./tokenUtil";
 
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+const baseUrl = process.env.BASE_URL;
 
 const getInvoices = async () => {
   const res = await axios.get(`${baseUrl}/invoices`);
