@@ -114,16 +114,25 @@ export default function InvoicesView() {
   return (
     <>
       <Sidebar />
-      <Container>
+      <Container darkMode={useDarkMode()}>
         <Wrapper>
           <Header darkMode={useDarkMode()}>
             <div>
               <h1>Invoices</h1>
-              <p className="invoice-count">
-                {invoices.length > 0
-                  ? `There are ${invoices.length} total invoices`
-                  : "No invoices"}
-              </p>
+              {width >= 550 && (
+                <p className="invoice-count">
+                  {invoices.length > 0
+                    ? `There are ${invoices.length} total invoices`
+                    : "No invoices"}
+                </p>
+              )}
+              {width < 550 && (
+                <p className="invoice-count">
+                  {invoices.length > 0
+                    ? `${invoices.length} invoices`
+                    : "No invoices"}
+                </p>
+              )}
             </div>
             <div>
               <CustomDropdown>
@@ -180,10 +189,12 @@ export default function InvoicesView() {
                 )}
               </CustomDropdown>
 
-              <StyledButton name="new" onClick={() => setFormOpened(true)}>
-                <div className="plus-button"></div>
-                <span>{width >= 550 ? "New Invoice" : "New"}</span>
-              </StyledButton>
+              {width >= 475 && (
+                <StyledButton name="new" onClick={() => setFormOpened(true)}>
+                  <div className="plus-button"></div>
+                  <span>{width >= 550 ? "New Invoice" : "New"}</span>
+                </StyledButton>
+              )}
             </div>
           </Header>
           <InvoicesList invoices={invoices} handleSelectInvoice />
@@ -195,6 +206,14 @@ export default function InvoicesView() {
             />
           )}
         </Wrapper>
+        {width < 475 && (
+          <div className="mobile-add-invoice">
+            <StyledButton name="new" onClick={() => setFormOpened(true)}>
+              <div className="plus-button"></div>
+              <span>New Invoice</span>
+            </StyledButton>
+          </div>
+        )}
       </Container>
     </>
   );
