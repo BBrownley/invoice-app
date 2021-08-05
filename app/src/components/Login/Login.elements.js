@@ -76,6 +76,13 @@ export const Wrapper = styled.div`
     left: 3rem;
     right: 3rem;
   }
+
+  @media (max-width: 550px), (max-height: 650px) {
+    left: 0;
+    right: 0;
+    top: auto;
+    transform: none;
+  }
 `;
 
 export const MainContent = styled.div`
@@ -119,6 +126,13 @@ export const MainContent = styled.div`
     > * {
       padding: 0;
     }
+  }
+  @media (max-width: 550px), (max-height: 650px) {
+    min-height: 100vh;
+    border-radius: 0;
+  }
+  @media (max-width: 400px) {
+    padding: 1rem;
   }
 `;
 
