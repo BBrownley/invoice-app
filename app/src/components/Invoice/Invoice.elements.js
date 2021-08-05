@@ -57,6 +57,10 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
+
+  @media (max-width: 350px) {
+    height: 6rem;
+  }
 `;
 
 export const InvoiceId = styled.div`
@@ -68,6 +72,10 @@ export const InvoiceId = styled.div`
     position: absolute;
     left: 15px;
     top: 25px;
+  }
+  @media (max-width: 350px) {
+    left: 0.5rem;
+    top: 0.5rem;
   }
 `;
 
@@ -81,6 +89,10 @@ export const PaymentDue = styled.div`
     bottom: 62px;
     padding-left: 0;
   }
+  @media (max-width: 350px) {
+    left: 0.5rem;
+    bottom: 2.25rem;
+  }
 `;
 
 export const Name = styled.div`
@@ -90,6 +102,10 @@ export const Name = styled.div`
     position: absolute;
     right: 25px;
     top: 25px;
+  }
+  @media (max-width: 350px) {
+    right: 0.5rem;
+    top: 0.5rem;
   }
 `;
 
@@ -103,6 +119,10 @@ export const Total = styled.h3`
     position: absolute;
     left: 25px;
     bottom: 25px;
+  }
+  @media (max-width: 350px) {
+    left: 0.5rem;
+    bottom: 0.5rem;
   }
 `;
 
@@ -157,5 +177,10 @@ export const Status = styled.div`
     position: absolute;
     right: 25px;
     bottom: 25px;
+  }
+  @media (max-width: 350px) {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
   }
 `;

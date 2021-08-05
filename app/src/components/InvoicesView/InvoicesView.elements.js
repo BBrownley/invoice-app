@@ -16,22 +16,50 @@ export const Container = styled.div`
     padding-left: 0;
     padding-top: 60px;
   }
+
+  @media (max-width: 475px) {
+    padding-bottom: 3rem;
+  }
+
+  .mobile-add-invoice {
+    width: 100%;
+    height: 5rem;
+    background: ${props =>
+      props.darkMode ? props.theme.colors.black400 : "#f0f0f0"};
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 `;
 
 export const Wrapper = styled.div`
   width: 90%;
   max-width: 1200px;
-  padding: 80px 10px 0 10px;
+  padding: 5rem 0.625rem 5rem 0.625rem;
   margin: 0 auto;
   height: 100vh;
   overflow: scroll;
+  overflow-x: hidden;
   ${ScrollbarStyle}
+  @media (max-width: 575px) {
+    width: 95%;
+  }
+  @media (max-width: 475px) {
+    padding: 3.5rem 0.625rem 8.5rem 0.625rem;
+  }
 `;
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 130px;
+  margin-bottom: 2rem;
   > div:nth-of-type(2) {
     align-items: flex-start;
     display: flex;
@@ -51,6 +79,16 @@ export const Header = styled.div`
         : props.theme.colors.gray500};
     margin-top: 0.625rem;
   }
+  @media (max-width: 350px) {
+    margin-bottom: 0;
+    h1 {
+      font-size: 1.25rem;
+      line-height: 0.5rem;
+    }
+    > div:nth-of-type(2) {
+      margin-top: -1.25rem;
+    }
+  }
 `;
 
 const openOptions = keyframes`
@@ -68,6 +106,7 @@ const openOptions = keyframes`
 `;
 
 export const Options = styled.div`
+  position: absolute;
   width: 192px;
   height: 128px;
   border-radius: 0.5rem;
@@ -76,7 +115,8 @@ export const Options = styled.div`
   padding-left: 1.5rem;
   -webkit-box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
   box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.12);
-  background: ${props => props.darkMode ? props.theme.colors.black400 : "white"};
+  background: ${props =>
+    props.darkMode ? props.theme.colors.black400 : "white"};
   border-color: ${props => props.darkMode && props.theme.colors.black300};
 
   flex-direction: column;
@@ -84,6 +124,10 @@ export const Options = styled.div`
   @media (max-width: 630px) {
     margin-left: 18px;
     width: 140px;
+  }
+
+  @media (max-width: 475px) {
+    margin-left: -0.5rem;
   }
 
   [class="closing"] {
@@ -196,7 +240,6 @@ export const Options = styled.div`
 
   animation: ${openOptions} 0.25s linear;
   transition: 0.25s;
-  position: relative;
 
   ${props => {
     if (props.opened) {
@@ -233,7 +276,7 @@ export const CustomDropdown = styled.div`
   margin-top: 7px;
   margin-right: -37px;
   @media (max-width: 630px) {
-    margin-right: -66px;
+    margin-right: -3rem;
   }
 `;
 
