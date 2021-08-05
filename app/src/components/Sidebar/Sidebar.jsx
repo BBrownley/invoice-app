@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import usersService from "../../services/users";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { removeStoredToken } from "../../services/tokenUtil";
 
 import { useDarkMode, useDarkModeUpdate } from "../../darkModeContext";
@@ -69,11 +69,13 @@ export default function Sidebar() {
   return (
     <Container>
       <div>
-        <Branding>
-          <BgTop></BgTop>
-          <BgBot></BgBot>
-          <Logo></Logo>
-        </Branding>
+        <Link to="/invoices">
+          <Branding>
+            <BgTop></BgTop>
+            <BgBot></BgBot>
+            <Logo></Logo>
+          </Branding>
+        </Link>
       </div>
       <div>
         <ToggleContainer>

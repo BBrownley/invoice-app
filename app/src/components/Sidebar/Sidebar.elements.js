@@ -45,6 +45,9 @@ export const Branding = styled.div`
   background-color: ${props => props.theme.colors.primary};
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
   @media (max-width: ${breakpoints.tablet}) {
     /* flex-direction: row; */
     width: 80px;
@@ -54,13 +57,14 @@ export const Branding = styled.div`
 
 export const Logo = styled.div`
   background: url(${logo});
-  height: 39.3px;
+  height: 39px;
   width: 42px;
   background-size: cover;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
   @media (max-width: ${breakpoints.tablet}) {
     height: 31px;
     width: 34px;
