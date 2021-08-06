@@ -143,6 +143,18 @@ export default function SingleInvoiceView() {
             <FontAwesomeIcon icon={faChevronLeft} className="fa-chevron-left" />
             <span> Go Back</span>
           </Link>
+          {width < 475 && (
+            <StyledStatus
+              status={status}
+              className="status--mobile"
+              darkMode={darkMode}
+            >
+              <span>
+                <FontAwesomeIcon icon={faCircle} className="fa-circle" />
+                {_.capitalize(status)}
+              </span>
+            </StyledStatus>
+          )}
         </div>
       </GoBack>
       <Container>
@@ -152,7 +164,7 @@ export default function SingleInvoiceView() {
               <span>Status</span>
               <StyledStatus
                 status={status}
-                className="status"
+                className="status--normal"
                 darkMode={darkMode}
               >
                 <span>
@@ -179,7 +191,7 @@ export default function SingleInvoiceView() {
         {width < 701 && (
           <StyledStatus
             status={invoice.status}
-            className="status"
+            className="status--normal"
             darkMode={darkMode}
           >
             <span>
@@ -189,7 +201,7 @@ export default function SingleInvoiceView() {
           </StyledStatus>
         )}
         <InvoiceInfo darkMode={darkMode}>
-          <div>
+          <div className="info-section-1">
             <div>
               <h2 className="invoice-id">
                 <span>#</span>
@@ -204,18 +216,18 @@ export default function SingleInvoiceView() {
               <span>{invoice.senderAddress.country}</span>
             </div>
           </div>
-          <div>
+          <div className="invoice-main">
             <div>
-              <div>
+              <div className="invoice-date">
                 <span>Invoice Date</span>
                 <h2>{format(new Date(invoice.createdAt), "L-d-yyyy")}</h2>
               </div>
-              <div>
+              <div className="payment-due">
                 <span>Payment Due</span>
                 <h2>{format(new Date(invoice.paymentDue), "L-d-yyyy")}</h2>
               </div>
             </div>
-            <div>
+            <div className="bill-to">
               <span>Bill To</span>
               <h2>{invoice.clientName}</h2>
               <span>{invoice.clientAddress.street}</span>

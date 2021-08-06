@@ -24,6 +24,15 @@ export const StyledStatus = styled(Status)`
     height: 50px;
     z-index: 10000;
   }
+  @media (max-width: 475px) {
+    &.status--mobile {
+      top: -1rem;
+      right: 2rem;
+    }
+    &.status--normal {
+      display: none;
+    }
+  }
 `;
 
 export const Container = styled.div`
@@ -51,12 +60,15 @@ export const Container = styled.div`
   }
 
   @media (max-width: 700px) {
-    bottom: 8.75rem;
+    bottom: 5.875rem;
     padding-top: 0;
 
     left: 1rem;
     right: 1rem;
     width: auto;
+  }
+  @media (max-width: 450px) {
+    bottom: 4rem;
   }
 `;
 
@@ -134,12 +146,18 @@ export const InvoiceActions = styled.div`
   }
   @media (max-width: 700px) {
     justify-content: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 10;
     margin-bottom: 0;
+  }
+  @media (max-width: 450px) {
+    padding: 1rem 0;
+    button {
+      padding: .5rem;
+    }
   }
 `;
 
@@ -175,13 +193,13 @@ export const InvoiceInfo = styled.div`
       display: inline;
     }
   }
-  > div:nth-of-type(1) {
+  .info-section-1 {
     justify-content: space-between;
     .sender-address {
       text-align: right;
     }
   }
-  > div:nth-of-type(2) {
+  .invoice-main {
     margin-top: 1.5rem;
     flex-wrap: wrap;
     div:nth-of-type(1) {
@@ -193,10 +211,13 @@ export const InvoiceInfo = styled.div`
       }
     }
     div:nth-of-type(1),
-    div:nth-of-type(2) {
+    .bill-to {
       margin-right: 4rem;
       margin-bottom: 2rem;
     }
+  }
+  .payment-due {
+    margin-bottom: 2rem;
   }
   .break {
     flex-basis: 100%;
@@ -217,12 +238,26 @@ export const InvoiceInfo = styled.div`
       }
     }
 
-    > div:nth-of-type(2) {
+    > .invoice-main {
       justify-content: space-between;
       div:nth-of-type(1),
       div:nth-of-type(2) {
         margin-right: 0;
         margin-bottom: 0;
+      }
+    }
+  }
+  @media (max-width: 475px) {
+    padding: 0;
+    background: none;
+    .invoice-main {
+      flex-direction: column;
+      margin-top: 0;
+      .invoice-date,
+      .payment-due,
+      .bill-to,
+      .client-email {
+        margin-top: 2rem;
       }
     }
   }

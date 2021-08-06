@@ -62,6 +62,11 @@ export const Total = styled.div`
   .amt-due {
     color: white;
   }
+  @media (max-width: 450px) {
+    h2 {
+      font-size: 0.75rem;
+    }
+  }
 `;
 
 export const List = styled.ul``;
