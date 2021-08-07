@@ -52,6 +52,15 @@ export const Container = styled.div`
   }
   @media (max-width: 700px) {
     width: 100vw;
+    padding: 2rem;
+    padding-top: 5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 6.5rem;
+    h2 {
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -65,6 +74,34 @@ export const InvoiceForm = styled.form`
     border-color: ${props =>
       props.darkMode ? props.theme.colors.black300 : ""};
     color: ${props => (props.darkMode ? "white" : "")};
+  }
+  .break {
+    height: 0;
+  }
+  @media (max-width: 700px) {
+    .form-row.main {
+      flex-wrap: wrap;
+    }
+    .form-field.from-city,
+    .form-field.from-post-code,
+    .form-field.client-city,
+    .form-field.client-post-code {
+      flex: 1;
+    }
+    .form-field.from-city,
+    .form-field.client-city {
+      margin-right: 1rem;
+    }
+    .form-field.from-post-code,
+    .form-field.client-post-code {
+      margin-right: 0;
+      margin-left: 1rem;
+    }
+    .form-field.from-country,
+    .form-field.client-country {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 `;
 
@@ -106,6 +143,24 @@ export const Wrapper = styled.div`
       }
       &:last-of-type {
         margin-right: 0;
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    .form-row .select-wrapper {
+      margin-left: 0;
+      margin-bottom: 1.5rem;
+      /* width: 100%; */
+      flex: 1;
+    }
+    .form-row.secondary {
+      flex-wrap: wrap;
+      .form-field.invoice-date {
+        width: 100%;
+        margin-right: 0;
+        .react-datepicker-wrapper {
+          width: 100%;
+        }
       }
     }
   }

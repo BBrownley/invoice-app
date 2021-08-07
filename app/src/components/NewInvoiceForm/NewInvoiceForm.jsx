@@ -3,6 +3,7 @@ import uniqid from "uniqid";
 
 import { useDarkMode } from "../../darkModeContext";
 import { useInvoiceUpdate } from "../../InvoiceContext";
+import useScreenWidth from "../custom-hooks/useScreenWidth";
 
 import invoiceService from "../../services/invoices";
 import FormItemList from "../FormItemList/FormItemList";
@@ -81,6 +82,7 @@ export default function NewInvoiceForm({
 
   const [formError, setFormError] = useState("All fields must be added");
 
+  const width = useScreenWidth();
   const darkMode = useDarkMode();
   const updateInvoice = useInvoiceUpdate();
 
@@ -220,7 +222,7 @@ export default function NewInvoiceForm({
           />
 
           <div className="form-row main">
-            <div>
+            <div className="form-field from-city">
               <label htmlFor="fromCity">City</label>
               <FormInput
                 type="text"
@@ -230,7 +232,7 @@ export default function NewInvoiceForm({
                 onChange={handleFormInput}
               />
             </div>
-            <div>
+            <div className="form-field from-post-code">
               <label htmlFor="fromPostCode">Post Code</label>
               <FormInput
                 type="text"
@@ -240,7 +242,8 @@ export default function NewInvoiceForm({
                 onChange={handleFormInput}
               />
             </div>
-            <div>
+            {width < 700 && <div className="break"></div>}
+            <div className="form-field from-country">
               <label htmlFor="fromCountry">Country</label>
               <FormInput
                 type="text"
@@ -280,7 +283,7 @@ export default function NewInvoiceForm({
           />
 
           <div className="form-row main">
-            <div>
+            <div className="form-field client-city">
               <label htmlFor="clientCity">City</label>
               <FormInput
                 type="text"
@@ -290,7 +293,7 @@ export default function NewInvoiceForm({
                 onChange={handleFormInput}
               />
             </div>
-            <div>
+            <div className="form-field client-post-code">
               <label htmlFor="clientPostCode">Post Code</label>
               <FormInput
                 type="text"
@@ -300,7 +303,8 @@ export default function NewInvoiceForm({
                 onChange={handleFormInput}
               />
             </div>
-            <div>
+            {width < 700 && <div className="break"></div>}
+            <div className="form-field client-country">
               <label htmlFor="clientCountry">Country</label>
               <FormInput
                 type="text"
@@ -313,7 +317,7 @@ export default function NewInvoiceForm({
           </div>
 
           <div className="form-row secondary">
-            <div>
+            <div className="form-field invoice-date">
               <label htmlFor="invoiceDate">Invoice Date</label>
               <StyledDatePickerContainer id="datepicker" darkMode={darkMode}>
                 <StyledDatePicker
@@ -330,6 +334,7 @@ export default function NewInvoiceForm({
                 />
               </StyledDatePickerContainer>
             </div>
+            {width < 700 && <div className="break"></div>}
             <div className="select-wrapper">
               <label htmlFor="paymentTerms">Payment Terms</label>
               <Select
