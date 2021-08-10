@@ -33,14 +33,14 @@ userRouter.post("/", async (req, res, next) => {
 
   try {
     // Username must not be in use
-    User.findOne({ username: newUsername }, (err, user) => {
+    User.findOne({ username: newUsername.toLowerCase() }, (err, user) => {
       if (user !== null) {
         return next(new Error("Username already in use"));
       }
     });
 
     // Email must not be in use
-    User.findOne({ email: newEmail }, (err, user) => {
+    User.findOne({ email: newEmail.toLowerCase() }, (err, user) => {
       if (user !== null) {
         return next(new Error("Email already in use"));
       }
@@ -72,7 +72,11 @@ userRouter.post("/login", async (req, res, next) => {
 
   try {
     // Verify user
-    const user = await User.findOne({ username });
+    const user = await User.findOne({
+      username: {
+        $regex: new RegExp(username, "i")
+      }
+    });
     const match = await bcrypt.compare(password, user.hashedPassword);
     if (!match) {
       throw new Error();
