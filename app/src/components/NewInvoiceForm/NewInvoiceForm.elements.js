@@ -62,6 +62,9 @@ export const Container = styled.div`
       font-size: 1.5rem;
     }
   }
+  @media (max-width: 350px) {
+    padding-bottom: 8.5rem;
+  }
 `;
 
 export const InvoiceForm = styled.form`
@@ -218,6 +221,31 @@ export const FormBottom = styled.div`
       width: 100vw;
       left: 0;
       border-radius: 0;
+    }
+    @media (max-width: 500px) {
+      padding: 1rem;
+      button {
+        padding: 0.5rem;
+      }
+    }
+    @media (max-width: 350px) {
+      display: flex;
+      flex-direction: column-reverse;
+      padding-top: 0;
+
+      * {
+        flex: 1;
+        width: 100%;
+      }
+
+      button {
+        margin-top: 1rem;
+      }
+
+      .btns-right {
+        display: flex;
+        flex-direction: column-reverse;
+      }
     }
   }
 

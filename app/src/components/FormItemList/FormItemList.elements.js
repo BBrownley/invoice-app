@@ -145,9 +145,10 @@ export const Item = styled.li`
     }
   }
   @media (max-width: 400px) {
+    .item-name__input,
     .quantity__input,
     .price__input {
-      padding: 0;
+      padding: 0.25rem;
     }
     .info-right {
       flex: 1;
