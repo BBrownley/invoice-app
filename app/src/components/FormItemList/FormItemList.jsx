@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useScreenWidth from "../custom-hooks/useScreenWidth";
 import { useDarkMode } from "../../darkModeContext";
 
 import {
@@ -16,6 +17,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function FormItemList({ items, setItems }) {
   const darkMode = useDarkMode();
+  const width = useScreenWidth();
 
   const addItem = () => {
     setItems(prevState => [
@@ -80,29 +82,36 @@ export default function FormItemList({ items, setItems }) {
           {items.map((item, index) => {
             return (
               <Item key={index} darkMode={darkMode}>
-                <FormInput
-                  value={item.name}
-                  name="name"
-                  className="item-name"
-                  data-index={index}
-                  onChange={updateItem}
-                  placeholder="Item name"
-                />
-                <FormInput
-                  value={item.quantity}
-                  name="quantity"
-                  className="quantity"
-                  data-index={index}
-                  onChange={updateItem}
-                />
-                <FormInput
-                  value={item.price}
-                  name="price"
-                  className="price"
-                  data-index={index}
-                  onChange={updateItem}
-                />
-                <div className="info-right">
+                <div className="item-name form-field">
+                  <FormInput
+                    value={item.name}
+                    name="name"
+                    className="item-name__input"
+                    data-index={index}
+                    onChange={updateItem}
+                    placeholder="Item name"
+                  />
+                </div>
+                {width <= 550 && <div className="break"></div>}
+                <div className="quantity form-field">
+                  <FormInput
+                    value={item.quantity}
+                    name="quantity"
+                    className="quantity__input"
+                    data-index={index}
+                    onChange={updateItem}
+                  />
+                </div>
+                <div className="price form-field">
+                  <FormInput
+                    value={item.price}
+                    name="price"
+                    className="price__input"
+                    data-index={index}
+                    onChange={updateItem}
+                  />
+                </div>
+                <div className="info-right form-field">
                   <span>{item.total.toFixed(2)}</span>
                   <DeleteItem onClick={() => deleteItem(index)}>
                     <FontAwesomeIcon icon={faTrash} />
