@@ -5,6 +5,7 @@ import Modal from "react-modal";
 
 export const StyledStatus = styled(Status)`
   span {
+    margin-left: 1rem;
     background-color: ${props => {
       switch (props.status) {
         case "paid":
@@ -156,7 +157,7 @@ export const InvoiceActions = styled.div`
   @media (max-width: 450px) {
     padding: 1rem 0;
     button {
-      padding: .5rem;
+      padding: 0.5rem;
     }
   }
 `;
