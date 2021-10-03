@@ -43,7 +43,6 @@ export const Item = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2.5rem;
 
   .item-name {
     margin-left: 0;
@@ -66,6 +65,7 @@ export const Item = styled.li`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transform: translateY(-.75rem);
   }
   input {
     margin-bottom: 0;

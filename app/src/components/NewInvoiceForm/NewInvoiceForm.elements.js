@@ -187,7 +187,7 @@ export const FormBottom = styled.div`
   }
   .draft-warning {
     position: absolute;
-    color: yellow;
+    color: ${props => (props.darkMode ? "yellow" : "red")};
     width: 15rem;
   }
   .options .create-invoice-options,

@@ -269,7 +269,7 @@ export const Select = styled(StyledSelect)`
 `;
 
 export const StyledButton = styled(Button)`
-  align-self: end;
+  align-self: start;
 `;
 
 export const CustomDropdown = styled.div`
